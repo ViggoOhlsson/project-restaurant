@@ -1,3 +1,6 @@
 export function Layout() {
-  return <>Layout</>;
+  return <>
+    <p>Layout</p>
+    
+  </>;
 }
