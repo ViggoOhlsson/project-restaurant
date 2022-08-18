@@ -1,0 +1,13 @@
+/getbooking
+    PARAMS:
+        id: "bokningens mongodb _id"
+    Hämtar en bokning som matchar id:t
+
+/getallbookings
+    Hämtar alla bokningar
+
+/getbookingsbycustomer
+    PARAMS:
+        id: "id:t i bokningens 'customer' egenskap"
+    Hämtar alla bokningar som kunden med matchande ID har gjort
+
