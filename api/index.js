@@ -19,11 +19,11 @@ app.use(function (req, res, next) {
 app.get("/", async (req,res) => {
 
     res.send({
-        newBooking,
-        newCustomer
+        msg: "Hello World!"
     })
 })
 
+// Hämtar bokningen som matchar id:t som man skickar i queryn
 app.get("/getbooking", async (req,res) => {
     let { id } = req.query
     try {
@@ -36,6 +36,7 @@ app.get("/getbooking", async (req,res) => {
     }
 })
 
+//Hämtar alla bokningar, bör användas av ändast av admin
 app.get("/getallbookings", async (req,res) => {
     let { id } = req.query
     try {
@@ -48,6 +49,7 @@ app.get("/getallbookings", async (req,res) => {
     }
 })
 
+//Hämtar alla bokningar som ställts av kunden vars id du skickar med queryn
 app.get("/getbookingsbycustomer", async (req,res) => {
     let {id} = req.body
     try {
@@ -56,6 +58,29 @@ app.get("/getbookingsbycustomer", async (req,res) => {
         return
     } catch (err) {
         res.send(err)
+        return
+    }
+})
+
+//Kollar ifall en kund med givet email redan existerar, returnerar true eller false
+app.get("/checkcustomer", async (req, res) => {
+    let email = req.query.email || null
+
+    try {
+        let customer = await CustomerModel.findOne({email: email}).lean();
+        // (customer) ? res.send({msg: "Customer Exists!", customer}) : res.send({msg: "Customer Does Not Exist!", customer});
+
+        (customer) ? res.send({
+            value: true, 
+            msg: "Customer exists"
+        }) : res.send({
+            value: false, 
+            msg: "Customer does not exist"
+        })
+
+        return
+    } catch(err) {
+        res.send(err.message)
         return
     }
 })
@@ -79,6 +104,7 @@ app.post("/book", async (req,res) => {
 
 
 })
+
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
