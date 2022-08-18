@@ -1,2 +1,6 @@
 @use "./base/root";
 @use "./base/typography";
+
+@use "./layouts/admin";
+@use "./layouts/booking";
+@use "./layouts/error";
