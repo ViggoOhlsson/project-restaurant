@@ -1,9 +1,14 @@
 const CustomerModel = require("./models/CustomerModel")
 
 const utils = {
-    checkIfCustomerExists: async (email) => {
+    customerExists: async (email) => {
         try {
-            return !!await CustomerModel.findOne({email: email})
+            let customer = await CustomerModel.findOne({email: email})
+            if (customer) {
+                return customer
+            } else {
+                return false
+            }
         } catch (err) {
             return err
         }

@@ -1,13 +1,15 @@
-require("dotenv").config();
-require("./mongoose");
-const express = require("express");
-const { Types } = require("mongoose");
-const BookingModel = require("./models/BookingModel");
-const CustomerModel = require("./models/CustomerModel");
-const { checkIfCustomerExists } = require("./utils");
-const port = 8000;
-const app = express();
+require("dotenv").config()
+require("./mongoose")
+const express = require("express")
+const { Types } = require("mongoose")
+const BookingModel = require("./models/BookingModel")
+const CustomerModel = require("./models/CustomerModel")
+const { checkIfCustomerExists } = require("./utils")
+const port = 8000
+const app = express()
 
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
@@ -74,38 +76,38 @@ app.get("/checkcustomer", async (req, res) => {
     let customer = await CustomerModel.findOne({ email: email }).lean();
     // (customer) ? res.send({msg: "Customer Exists!", customer}) : res.send({msg: "Customer Does Not Exist!", customer});
 
-    customer
-      ? res.send({
-          value: true,
-          msg: "Customer exists",
+        (customer) ? res.send({
+            value: true, 
+            msg: "Customer exists"
+        }) : res.send({
+            value: false, 
+            msg: "Customer does not exist"
         })
-      : res.send({
-          value: false,
-          msg: "Customer does not exist",
-        });
 
-    return;
-  } catch (err) {
-    res.send(err.message);
-    return;
-  }
-});
+        return
+    } catch(err) {
+        res.send(err.message)
+        return
+    }
+})
 
-app.post("/book", async (req, res) => {
-  let { year, month, day, time, guests, name, email, phone } = req.body;
+app.post("/book", async (req,res) => {
+    let { year, month, day, time, guests, name, email, phone } = req.body
 
-  let customer = new CustomerModel({
-    name: name,
-    email: email,
-    phone: phone,
-  })(checkIfCustomerExists(email));
-  let booking = new BookingModel({
-    date: new Date(year, month, day),
-    time: time,
-    guests: guests,
-    customer: newCustomer._id,
-  });
-});
+    let customer = new CustomerModel({
+        name: name,
+        email: email,
+        phone: phone
+    })
+    (checkIfCustomerExists(email))
+    let booking = new BookingModel({
+        date: new Date(year, month, day),
+        time: time,
+        guests: guests,
+        customer: newCustomer._id
+    })
+
+
 
 //Tar bort en bokning via admin sidan
 app.post("/admindeletebooking/:id", async (req, res) => {
