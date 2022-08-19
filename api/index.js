@@ -87,6 +87,18 @@ app.get("/checkcustomer", async (req, res) => {
     }
 })
 
+app.post("/cleardb", async (req, res) => {
+    try {
+        await BookingModel.deleteMany({})
+        await CustomerModel.deleteMany({})
+        res.send({msg: "Database successfully cleared!"})
+    } catch (err) {
+        console.log(err)
+        res.send({err})
+    }
+
+}) 
+
 app.post("/book", async (req,res) => {
     let { date, time, guests, name, email, phone } = req.body
 	if (guests < 1) guests = 1

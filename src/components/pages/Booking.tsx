@@ -33,8 +33,12 @@ export function Booking() {
     const placeBooking = async () => {
         let body = {time, date, guests, name, email, phone}
         console.log(body)
-        let res = await axios.post("http://localhost:8000/book", body)
-        console.log(res)
+        try {
+            let res = await axios.post("http://localhost:8000/book", body)
+            console.log(res)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
