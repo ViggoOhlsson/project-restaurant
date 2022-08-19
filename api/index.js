@@ -4,10 +4,12 @@ const express = require("express")
 const { Types } = require("mongoose")
 const BookingModel = require("./models/BookingModel")
 const CustomerModel = require("./models/CustomerModel")
-const { checkIfCustomerExists } = require("./utils")
+const { customerExists } = require("./utils")
 const port = 8000
 const app = express()
 
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', );
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -86,20 +88,34 @@ app.get("/checkcustomer", async (req, res) => {
 })
 
 app.post("/book", async (req,res) => {
-    let { year, month, day, time, guests, name, email, phone } = req.body
-
+    let { date, time, guests, name, email, phone } = req.body
     let customer = new CustomerModel({
         name: name,
         email: email,
         phone: phone
     })
-    (checkIfCustomerExists(email))
     let booking = new BookingModel({
-        date: new Date(year, month, day),
+        date: date,
         time: time,
         guests: guests,
-        customer: newCustomer._id
+        customer: customer._id
     })
+	let existingCustomer = await customerExists(customer.email)
+	console.log(existingCustomer)
+	if (existingCustomer) {
+		booking.customer = new Types.ObjectId(existingCustomer._id)
+		console.log("Customer with that email already exists, replacing customer id on booking...")
+	} else {
+		console.log("Customer is new, saving new customer to database...")
+		await customer.save()
+	}
+	await booking.save()
+
+    console.log(req.body)
+    res.send({
+		booking,
+		customer
+	})
 
 
 
