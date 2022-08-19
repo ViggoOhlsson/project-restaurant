@@ -1,111 +1,124 @@
-require("dotenv").config()
-require("./mongoose")
-const express = require("express")
-const { Types } = require("mongoose")
-const BookingModel = require("./models/BookingModel")
-const CustomerModel = require("./models/CustomerModel")
-const { checkIfCustomerExists } = require("./utils")
-const port = 8000
-const app = express()
+require("dotenv").config();
+require("./mongoose");
+const express = require("express");
+const { Types } = require("mongoose");
+const BookingModel = require("./models/BookingModel");
+const CustomerModel = require("./models/CustomerModel");
+const { checkIfCustomerExists } = require("./utils");
+const port = 8000;
+const app = express();
 
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000', );
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
 });
 
-app.get("/", async (req,res) => {
-
-    res.send({
-        msg: "Hello World!"
-    })
-})
+app.get("/", async (req, res) => {
+  res.send({
+    msg: "Hello World!",
+  });
+});
 
 // Hämtar bokningen som matchar id:t som man skickar i queryn
-app.get("/getbooking", async (req,res) => {
-    let { id } = req.query
-    try {
-        const booking = await BookingModel.findOne({_id: id}).lean()
-        res.send(booking)
-        return
-    } catch (err) {
-        res.send(err)
-        return
-    }
-})
+app.get("/getbooking", async (req, res) => {
+  let { id } = req.query;
+  try {
+    const booking = await BookingModel.findOne({ _id: id }).lean();
+    res.send(booking);
+    return;
+  } catch (err) {
+    res.send(err);
+    return;
+  }
+});
 
 //Hämtar alla bokningar, bör användas av ändast av admin
-app.get("/getallbookings", async (req,res) => {
-    let { id } = req.query
-    try {
-        const booking = await BookingModel.find({}).limit(500).lean()
-        res.send(booking)
-        return
-    } catch (err) {
-        res.send(err)
-        return
-    }
-})
+app.get("/getallbookings", async (req, res) => {
+  try {
+    const booking = await BookingModel.find({}).limit(500).lean();
+    res.send(booking);
+    return;
+  } catch (err) {
+    res.send(err);
+    return;
+  }
+});
 
 //Hämtar alla bokningar som ställts av kunden vars id du skickar med queryn
-app.get("/getbookingsbycustomer", async (req,res) => {
-    let {id} = req.body
-    try {
-        const bookings = await BookingModel.find({ customer: id }).lean()
-        res.send(bookings)
-        return
-    } catch (err) {
-        res.send(err)
-        return
-    }
-})
+app.get("/getbookingsbycustomer", async (req, res) => {
+  let { id } = req.body;
+  try {
+    const bookings = await BookingModel.find({ customer: id }).lean();
+    res.send(bookings);
+    return;
+  } catch (err) {
+    res.send(err);
+    return;
+  }
+});
 
 //Kollar ifall en kund med givet email redan existerar, returnerar true eller false
 app.get("/checkcustomer", async (req, res) => {
-    let email = req.query.email || null
+  let email = req.query.email || null;
 
-    try {
-        let customer = await CustomerModel.findOne({email: email}).lean();
-        // (customer) ? res.send({msg: "Customer Exists!", customer}) : res.send({msg: "Customer Does Not Exist!", customer});
+  try {
+    let customer = await CustomerModel.findOne({ email: email }).lean();
+    // (customer) ? res.send({msg: "Customer Exists!", customer}) : res.send({msg: "Customer Does Not Exist!", customer});
 
-        (customer) ? res.send({
-            value: true, 
-            msg: "Customer exists"
-        }) : res.send({
-            value: false, 
-            msg: "Customer does not exist"
+    customer
+      ? res.send({
+          value: true,
+          msg: "Customer exists",
         })
+      : res.send({
+          value: false,
+          msg: "Customer does not exist",
+        });
 
-        return
-    } catch(err) {
-        res.send(err.message)
-        return
-    }
-})
+    return;
+  } catch (err) {
+    res.send(err.message);
+    return;
+  }
+});
 
-app.post("/book", async (req,res) => {
-    let { year, month, day, time, guests, name, email, phone } = req.body
+app.post("/book", async (req, res) => {
+  let { year, month, day, time, guests, name, email, phone } = req.body;
 
-    let customer = new CustomerModel({
-        name: name,
-        email: email,
-        phone: phone
-    })
-    (checkIfCustomerExists(email))
-    let booking = new BookingModel({
-        date: new Date(year, month, day),
-        time: time,
-        guests: guests,
-        customer: newCustomer._id
-    })
+  let customer = new CustomerModel({
+    name: name,
+    email: email,
+    phone: phone,
+  })(checkIfCustomerExists(email));
+  let booking = new BookingModel({
+    date: new Date(year, month, day),
+    time: time,
+    guests: guests,
+    customer: newCustomer._id,
+  });
+});
 
+//Tar bort en bokning via admin sidan
+app.post("/admindeletebooking/:id", async (req, res) => {
+  let { id } = req.body;
+  await BookingModel.deleteOne({ _id: id });
+});
 
-
-})
-
+//Redigerar en bokning via admin sidan
+app.post("/admineditbooking/:id", async (req, res) => {
+  let { id } = req.body;
+  await BookingModel.updateOne({ _id: id });
+});
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`)
-})
+  console.log(`http://localhost:${port}`);
+});
