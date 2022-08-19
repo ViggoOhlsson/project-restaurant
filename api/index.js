@@ -89,6 +89,7 @@ app.get("/checkcustomer", async (req, res) => {
 
 app.post("/book", async (req,res) => {
     let { date, time, guests, name, email, phone } = req.body
+	if (guests < 1) guests = 1
 
     let customer = new CustomerModel({ name: name, email: email, phone: phone })
     let booking = new BookingModel({date: date, time: time, guests: guests, tables: guestsToTables(guests), customer: customer._id,})
