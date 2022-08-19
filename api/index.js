@@ -4,7 +4,7 @@ const express = require("express")
 const { Types } = require("mongoose")
 const BookingModel = require("./models/BookingModel")
 const CustomerModel = require("./models/CustomerModel")
-const { customerExists } = require("./utils")
+const { customerExists, isFullyBooked } = require("./utils")
 const port = 8000
 const app = express()
 
@@ -89,6 +89,11 @@ app.get("/checkcustomer", async (req, res) => {
 
 app.post("/book", async (req,res) => {
     let { date, time, guests, name, email, phone } = req.body
+
+	if (await isFullyBooked(date, time)) {
+		res.send({msg: "That day and time is fully booked."})
+		return
+	}
     let customer = new CustomerModel({
         name: name,
         email: email,
@@ -101,7 +106,6 @@ app.post("/book", async (req,res) => {
         customer: customer._id
     })
 	let existingCustomer = await customerExists(customer.email)
-	console.log(existingCustomer)
 	if (existingCustomer) {
 		booking.customer = new Types.ObjectId(existingCustomer._id)
 		console.log("Customer with that email already exists, replacing customer id on booking...")

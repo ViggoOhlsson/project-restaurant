@@ -1,3 +1,4 @@
+const BookingModel = require("./models/BookingModel")
 const CustomerModel = require("./models/CustomerModel")
 
 const utils = {
@@ -12,6 +13,12 @@ const utils = {
         } catch (err) {
             return err
         }
+    },
+    isFullyBooked: async (date, time) => {
+        let bookings = (await BookingModel.find({date: date, time: time}).lean()).length
+        fullyBooked = bookings > 14
+        console.log("fully booked:", fullyBooked)
+        return (fullyBooked)
     }
 }
 

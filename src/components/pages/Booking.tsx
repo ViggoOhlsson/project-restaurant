@@ -31,7 +31,7 @@ export function Booking() {
     const changePhone = (e:ChangeEvent<HTMLInputElement>) => setPhone(parseInt(e.target.value))
 
     const placeBooking = async () => {
-        let body = {time, date, guests, name, email, phone, gamer: "wowzers"}
+        let body = {time, date, guests, name, email, phone}
         console.log(body)
         let res = await axios.post("http://localhost:8000/book", body)
         console.log(res)
