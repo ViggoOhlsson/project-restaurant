@@ -11,6 +11,12 @@ export function Admin() {
 
   const [editBookingObject, setEditBookingObject] = useState({});
 
+  const [editing, setEditing] = useState({
+    date: new Date(),
+    time: 0,
+    guests: 0,
+  });
+
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
     axios.get("http://localhost:8000/getallbookings").then((res) => {
@@ -22,7 +28,7 @@ export function Admin() {
   //Anropar api och skickar ett id till en post som raderar bokning
   useEffect(() => {
     axios
-      .get("http://localhost:8000/admindeletebookingid/" + deleteBookingId)
+      .post("http://localhost:8000/admindeletebookingid/" + deleteBookingId)
       .then((res) => {
         console.log(res);
       });
@@ -31,7 +37,7 @@ export function Admin() {
   //Anropar api och skickar ett objekt till en post som redigerar bokning
   useEffect(() => {
     axios
-      .get("http://localhost:8000/admineditbookingobject/" + editBookingObject)
+      .post("http://localhost:8000/admineditbookingobject/" + editBookingObject)
       .then((res) => {
         console.log(res);
       });
@@ -57,5 +63,34 @@ export function Admin() {
       </div>
     );
   });
-  return <></>;
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.type === "number") {
+      setEditing({ ...editing, [e.target.name]: +e.target.value });
+    } else {
+      setEditing({ ...editing, [e.target.name]: e.target.value });
+    }
+  }
+
+  function handleSave(e: FormEvent) {
+    e.preventDefault();
+
+    setEditing({
+      date: new Date(),
+      time: 0,
+      guests: 0,
+    });
+  }
+
+  return (
+    <>
+      {/* <form onSubmit={handleSave}>
+
+<input type="date" name="date" value={booking.date} onChange={handleChange} placeholder="Date"/>
+<input type="text" name="guests" value={booking.guests} onChange={handleChange} placeholder="Guests"/>
+<input type="number" name="time" value={booking.time} onChange={handleChange} placeholder="Time"/>
+<button>Skapa ny film</button>
+</form> */}
+    </>
+  );
 }

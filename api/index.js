@@ -110,7 +110,8 @@ app.post("/book", async (req, res) => {
 //Tar bort en bokning via admin sidan
 app.post("/admindeletebooking/:id", async (req, res) => {
   let { id } = req.body;
-  await BookingModel.deleteOne({ _id: id });
+  const deletedbooking = await BookingModel.deleteOne({ _id: id });
+  res.send(deletedbooking);
 });
 
 //Redigerar en bokning via admin sidan
