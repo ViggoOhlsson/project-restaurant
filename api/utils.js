@@ -14,11 +14,17 @@ const utils = {
             return err
         }
     },
-    isFullyBooked: async (date, time) => {
-        let bookings = (await BookingModel.find({date: date, time: time}).lean()).length
-        fullyBooked = bookings > 14
-        console.log("fully booked:", fullyBooked)
-        return (fullyBooked)
+    isFullyBooked: async (date, time, tables) => {
+        let bookings = await BookingModel.find({date:date, time:time}, {_id: -1, tables: 1}).lean()
+        let bookedTables = bookings.reduce((amt, booking) => {
+            return amt + booking.tables
+        }, 0)
+        return bookedTables + tables > 15
+
+    },
+    guestsToTables: (guests) => {
+        let tables = Math.ceil(guests / 6)
+        return tables
     }
 }
 
