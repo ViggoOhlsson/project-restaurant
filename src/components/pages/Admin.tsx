@@ -27,13 +27,21 @@ export function Admin() {
   }
 
   function findBooking(findDate: string) {
+    let newDate = new Date(findDate);
     for (let i = 0; i < bookings.length; i++) {
-      let newDate = new Date(findDate);
-
+      let found = false;
       if (bookings[i].date.toString() === newDate.toISOString()) {
-        console.log(3);
-
-        setSortedBookings([...sortedBookings, bookings[i]]);
+        for (let i = 0; i < sortedBookings.length; i++) {
+          if (sortedBookings[i]._id === bookings[i]._id) {
+            found = true;
+          }
+        }
+        if (!found) {
+          setSortedBookings((sortedBookings) => [
+            ...sortedBookings,
+            bookings[i],
+          ]);
+        }
       }
     }
   }
