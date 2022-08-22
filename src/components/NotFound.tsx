@@ -7,7 +7,7 @@ export function NotFound() {
         <span className="info__text">Page not found</span>
 
         <a className="info__btn" href="/">
-          Back to home page
+          Back to homepage
         </a>
       </div>
     </main>

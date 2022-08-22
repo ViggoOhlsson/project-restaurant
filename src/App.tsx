@@ -4,6 +4,7 @@ import { NotFound } from "./components/NotFound";
 import { Admin } from "./components/pages/Admin";
 import { Booking } from "./components/pages/Booking";
 import { Home } from "./components/pages/Home";
+import "./scss/main.scss";
 
 function App() {
   return (

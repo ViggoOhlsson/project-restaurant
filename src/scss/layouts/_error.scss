@@ -3,3 +3,46 @@
 //////////////////
 @use "../mixins";
 @use "../base/typography";
+@use "../variables";
+
+///////////////////////
+//ERROR PAGE STYLING//
+/////////////////////
+.error-page {
+  --font-size: clamp(1.125rem, 2.25vw, 1.75rem);
+  color: White;
+
+  @include typography.inter();
+  @include mixins.flex(column, center, center, 2rem);
+
+  background-image: url("../../../public/error-background.svg");
+  background-color: #2c2531;
+  height: 100vh;
+
+  ///////////////
+  // SECTIONS //
+  /////////////
+  &__section {
+    &--heading {
+      color: #e9a8a8;
+      font-size: 52pt;
+    }
+
+    &--info {
+      color: #dcd4e2;
+      @include mixins.flex(column, center, center, 2rem);
+
+      .info__btn {
+        @include mixins.flex(column, center, center, 1rem);
+        padding: calc(var(--font-size) * 0.5);
+        margin-top: 1.25rem;
+        background-color: #DCD4E2;
+        color: #2c2531;
+        width: min(34vw, 250px);
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+    }
+  }
+}
