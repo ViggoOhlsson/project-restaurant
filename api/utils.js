@@ -1,3 +1,4 @@
+const BookingModel = require("./models/BookingModel")
 const CustomerModel = require("./models/CustomerModel")
 
 const utils = {
@@ -12,6 +13,18 @@ const utils = {
         } catch (err) {
             return err
         }
+    },
+    isFullyBooked: async (date, time, tables) => {
+        let bookings = await BookingModel.find({date:date, time:time}, {_id: -1, tables: 1}).lean()
+        let bookedTables = bookings.reduce((amt, booking) => {
+            return amt + booking.tables
+        }, 0)
+        return bookedTables + tables > 15
+
+    },
+    guestsToTables: (guests) => {
+        let tables = Math.ceil(guests / 6)
+        return tables
     }
 }
 

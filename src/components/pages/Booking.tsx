@@ -20,9 +20,9 @@ export function Booking() {
         setDate(e.target.value)
     }
     const changeGuests = (e:ChangeEvent<HTMLInputElement>) => {
-        let guests = parseInt(e.target.value)
-        if (guests < 1) guests = 1
-        if (guests > 6) guests = 6
+        let guests = parseInt(e.target.value || "0")
+        if (guests < 0) guests = 0
+        if (guests > 90) guests = 90
         setGuests(guests)
         console.log(guests)
     }
@@ -31,10 +31,14 @@ export function Booking() {
     const changePhone = (e:ChangeEvent<HTMLInputElement>) => setPhone(parseInt(e.target.value))
 
     const placeBooking = async () => {
-        let body = {time, date, guests, name, email, phone, gamer: "wowzers"}
+        let body = {time, date, guests, name, email, phone}
         console.log(body)
-        let res = await axios.post("http://localhost:8000/book", body)
-        console.log(res)
+        try {
+            let res = await axios.post("http://localhost:8000/book", body)
+            console.log(res)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -49,7 +53,7 @@ export function Booking() {
             <input type="date" defaultValue={date} onChange={changeDate}></input>
             <p>Time</p>
             <select name="time" onChange={changeTime}>
-                <option disabled>Select a time</option>
+                <option disabled>Select a time</option> 
                 <option value="18">18:00 to 20:59</option>
                 <option value="21">21:00 to 23:59</option>
             </select>

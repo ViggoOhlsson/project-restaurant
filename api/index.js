@@ -4,7 +4,7 @@ const express = require("express");
 const { Types } = require("mongoose");
 const BookingModel = require("./models/BookingModel");
 const CustomerModel = require("./models/CustomerModel");
-const { customerExists } = require("./utils");
+const { customerExists, isFullyBooked, guestsToTables } = require("./utils");
 const port = 8000;
 const app = express();
 
@@ -94,21 +94,38 @@ app.get("/checkcustomer", async (req, res) => {
   }
 });
 
+app.post("/cleardb", async (req, res) => {
+  try {
+    await BookingModel.deleteMany({});
+    await CustomerModel.deleteMany({});
+    res.send({ msg: "Database successfully cleared!" });
+  } catch (err) {
+    console.log(err);
+    res.send({ err });
+  }
+});
+
 app.post("/book", async (req, res) => {
   let { date, time, guests, name, email, phone } = req.body;
-  let customer = new CustomerModel({
-    name: name,
-    email: email,
-    phone: phone,
-  });
+  if (guests < 1) guests = 1;
+
+  let customer = new CustomerModel({ name: name, email: email, phone: phone });
   let booking = new BookingModel({
     date: date,
     time: time,
     guests: guests,
+    tables: guestsToTables(guests),
     customer: customer._id,
   });
+
+  if (await isFullyBooked(date, time, booking.tables)) {
+    console.log("Day & time is fully booked");
+    res.send({ msg: "That day and time is fully booked." });
+    return;
+  }
+  console.log("Day & time has available tables");
+
   let existingCustomer = await customerExists(customer.email);
-  console.log(existingCustomer);
   if (existingCustomer) {
     booking.customer = new Types.ObjectId(existingCustomer._id);
     console.log(
@@ -118,9 +135,10 @@ app.post("/book", async (req, res) => {
     console.log("Customer is new, saving new customer to database...");
     await customer.save();
   }
+
   await booking.save();
 
-  console.log(req.body);
+  console.log(booking, customer);
   res.send({
     booking,
     customer,
