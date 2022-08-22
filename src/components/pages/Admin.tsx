@@ -8,11 +8,7 @@ export function Admin() {
 
   const [sortedBookings, setSortedBookings] = useState<IBooking[]>([]);
 
-  const [deleteBookingId, setDeleteBookingId] = useState("");
-
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(18);
-  const [guests, setGuests] = useState(1);
+  const [date, setDate] = useState("");
 
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
@@ -22,33 +18,28 @@ export function Admin() {
     });
   }, []);
 
-  //Anropar api och skickar ett id till en post som raderar bokning
   useEffect(() => {
-    axios
-      .post("http://localhost:8000/admindeletebookingid/" + deleteBookingId)
-      .then((res) => {
-        console.log(res);
-      });
-  }, [deleteBookingId]);
+    setDate(new Date().toLocaleDateString());
+  }, []);
 
-  function deleteBooking(id: string) {
-    setDeleteBookingId(id);
+  function changeDate(e: ChangeEvent<HTMLInputElement>) {
+    setDate(e.target.value);
   }
 
-  function findBooking(findDate: Date) {
-    console.log(sortedBookings);
+  function findBooking(findDate: string) {
     for (let i = 0; i < bookings.length; i++) {
-      console.log(bookings[i].date);
-      console.log(findDate.toISOString());
+      let newDate = new Date(findDate);
 
-      if (bookings[i].date === findDate) {
+      if (bookings[i].date.toString() === newDate.toISOString()) {
+        console.log(3);
+
         setSortedBookings([...sortedBookings, bookings[i]]);
-        console.log(sortedBookings);
       }
     }
   }
 
   const displayBookings = sortedBookings.map((booking) => {
+    console.log(sortedBookings);
     return (
       <div key={booking._id} className="booking-container">
         <p>{booking.guests}</p>
@@ -60,13 +51,14 @@ export function Admin() {
 
   return (
     <>
-      <input
-        type="date"
-        defaultValue={date.toLocaleDateString()}
-        onChange={() => {
+      <input type="date" defaultValue={date} onChange={changeDate}></input>
+      <button
+        onClick={() => {
           findBooking(date);
         }}
-      ></input>
+      >
+        Sök bokningar
+      </button>
 
       {displayBookings}
 

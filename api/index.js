@@ -129,26 +129,27 @@ app.post("/book", async (req, res) => {
 
 //Tar bort en bokning via admin sidan
 app.post("/admindeletebooking/:id", async (req, res) => {
-  let { id } = req.body;
-  const deletedbooking = await BookingModel.deleteOne({ _id: id });
-  res.send(deletedbooking);
+  let id = req.params.id;
+  console.log(req.params.id);
+  BookingModel.deleteOne({ _id: id }, (err, result) => {
+    console.log(result);
+    res.send(result);
+  });
 });
 
 //Redigerar en bokning via admin sidan
-app.post("/admineditbooking/:editBookingObject", async (req, res) => {
-  let { date } = req.body.date;
-  let { time } = req.body.time;
-  let { guests } = req.body.guests;
-  let { id } = req.body._id;
-  let { customer } = req.body.customer;
+app.post("/admineditbooking/:booking", async (req, res) => {
+  console.log(req.params.booking);
+  console.log(JSON.parse(req.params.booking));
+  const booking = JSON.parse(req.params.booking);
 
-  let booking = { date, time, guests, id, customer };
-
-  await BookingModel.updateOne(
-    { _id: id },
-    { $set: booking },
+  BookingModel.updateOne(
+    { _id: booking._id },
+    {
+      $set: { date: booking.date, time: booking.time, guests: booking.guests },
+    },
     (err, result) => {
-      res.send("Success");
+      res.send(result);
     }
   );
 });

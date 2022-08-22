@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 
 // return <p>{params.get("userId")}</p>;
@@ -7,9 +8,9 @@ import { IBooking } from "../../models/IBooking";
 export function AdminEdit() {
   //   const [editBookingObject, setEditBookingObject] = useState({});
 
-  const [id, setId] = useState(
-    new URLSearchParams(window.location.pathname).get("_id")
-  );
+  const [params, setParams] = useState(useParams());
+
+  const [id, setId] = useState(params.id);
 
   const [bookings, setBookings] = useState<IBooking[]>([]);
 
@@ -21,7 +22,7 @@ export function AdminEdit() {
     _id: "",
   });
 
-  const [editing, setEditing] = useState({
+  const [editing, setEditing] = useState<IBooking>({
     date: new Date(),
     time: 0,
     guests: 0,
@@ -29,21 +30,52 @@ export function AdminEdit() {
     customer: "",
   });
 
+  const [deleteBookingId, setDeleteBookingId] = useState("");
+
   useEffect(() => {
     axios.get("http://localhost:8000/getallbookings").then((res) => {
       console.log(res);
       setBookings(res.data);
+      for (let i = 0; i < bookings.length; i++) {
+        if (bookings[i]._id === id) setEditing(bookings[i]);
+      }
     });
   }, []);
 
+  useEffect(() => {
+    for (let i = 0; i < bookings.length; i++) {
+      if (bookings[i]._id === id) setEditing(bookings[i]);
+    }
+  }, [bookings]);
+
   //Anropar api och skickar ett objekt till en post som redigerar bokning
   useEffect(() => {
+    if (booking.time === 0) return;
+    let bookingObject = JSON.stringify(booking);
     axios
-      .post("http://localhost:8000/admineditbooking/" + booking)
+      .post("http://localhost:8000/admineditbooking/" + bookingObject)
       .then((res) => {
         console.log(res);
       });
+    setBooking({
+      date: new Date(),
+      time: 0,
+      guests: 0,
+      customer: "",
+      _id: "",
+    });
   }, [booking]);
+
+  //Anropar api och skickar ett id till en post som raderar bokning
+  useEffect(() => {
+    if (deleteBookingId === "") return;
+    axios
+      .post("http://localhost:8000/admindeletebooking/" + deleteBookingId)
+      .then((res) => {
+        console.log(res);
+      });
+    setDeleteBookingId("");
+  }, [deleteBookingId]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.type === "number") {
@@ -56,16 +88,6 @@ export function AdminEdit() {
   function handleSave(e: FormEvent) {
     e.preventDefault();
 
-    for (let i = 0; i < bookings.length; i++) {
-      if (bookings[i]._id === id) {
-        setEditing({
-          ...editing,
-          [bookings[i]._id]: id,
-          [bookings[i].customer]: bookings[i]._id,
-        });
-      }
-    }
-
     setBooking(editing);
 
     setEditing({
@@ -76,13 +98,18 @@ export function AdminEdit() {
       customer: "",
     });
   }
+
+  function deleteBooking(id: string) {
+    setDeleteBookingId(id);
+  }
+
   return (
     <>
       <form onSubmit={handleSave}>
         <input
           type="date"
           name="date"
-          value={editing.date.toISOString()}
+          defaultValue={new Date(editing.date).toLocaleDateString()}
           onChange={handleChange}
           placeholder="Date"
         />
@@ -100,8 +127,16 @@ export function AdminEdit() {
           onChange={handleChange}
           placeholder="Time"
         />
-        <button>Skapa ny film</button>
+        <Link to={"/admin"}>Cancel</Link>
+        <button>Update reservation</button>
       </form>
+      <button
+        onClick={() => {
+          deleteBooking(editing._id);
+        }}
+      >
+        Remove reservation
+      </button>
     </>
   );
 }
