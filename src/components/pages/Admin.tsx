@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 
 export function Admin() {
@@ -9,13 +10,9 @@ export function Admin() {
 
   const [deleteBookingId, setDeleteBookingId] = useState("");
 
-  const [editBookingObject, setEditBookingObject] = useState({});
-
-  const [editing, setEditing] = useState({
-    date: new Date(),
-    time: 0,
-    guests: 0,
-  });
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(18);
+  const [guests, setGuests] = useState(1);
 
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
@@ -34,23 +31,19 @@ export function Admin() {
       });
   }, [deleteBookingId]);
 
-  //Anropar api och skickar ett objekt till en post som redigerar bokning
-  useEffect(() => {
-    axios
-      .post("http://localhost:8000/admineditbookingobject/" + editBookingObject)
-      .then((res) => {
-        console.log(res);
-      });
-  }, [editBookingObject]);
-
   function deleteBooking(id: string) {
     setDeleteBookingId(id);
   }
 
   function findBooking(findDate: Date) {
+    console.log(sortedBookings);
     for (let i = 0; i < bookings.length; i++) {
+      console.log(bookings[i].date);
+      console.log(findDate.toISOString());
+
       if (bookings[i].date === findDate) {
         setSortedBookings([...sortedBookings, bookings[i]]);
+        console.log(sortedBookings);
       }
     }
   }
@@ -60,37 +53,79 @@ export function Admin() {
       <div key={booking._id} className="booking-container">
         <p>{booking.guests}</p>
         <p>{booking.time}</p>
+        <Link to={"/edit-booking/" + booking._id}>Redigera</Link>
       </div>
     );
   });
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    if (e.target.type === "number") {
-      setEditing({ ...editing, [e.target.name]: +e.target.value });
-    } else {
-      setEditing({ ...editing, [e.target.name]: e.target.value });
-    }
-  }
-
-  function handleSave(e: FormEvent) {
-    e.preventDefault();
-
-    setEditing({
-      date: new Date(),
-      time: 0,
-      guests: 0,
-    });
-  }
-
   return (
     <>
-      {/* <form onSubmit={handleSave}>
+      <input
+        type="date"
+        defaultValue={date.toLocaleDateString()}
+        onChange={() => {
+          findBooking(date);
+        }}
+      ></input>
 
-<input type="date" name="date" value={booking.date} onChange={handleChange} placeholder="Date"/>
-<input type="text" name="guests" value={booking.guests} onChange={handleChange} placeholder="Guests"/>
-<input type="number" name="time" value={booking.time} onChange={handleChange} placeholder="Time"/>
-<button>Skapa ny film</button>
-</form> */}
+      {displayBookings}
+
+      {/* 
+<p>Booking View</p>
+    <div>
+        <p>Date</p>
+        <input type="date" defaultValue={date} onChange={changeDate}></input>
+        <p>Time</p>
+        <select name="time" onChange={changeTime}>
+            <option disabled>Select a time</option>
+            <option value="18">18:00 to 20:59</option>
+            <option value="21">21:00 to 23:59</option>
+        </select>
+        <p>Guests</p>
+        <input type="number" value={guests} onChange={changeGuests}></input>
+    </div>
+    <div>
+        <p>Name</p>
+        <input type="text" placeholder="Full Name" onChange={changeName}></input>
+        <p>Email</p>
+        <input type="email" placeholder="example@domain.com" onChange={changeEmail}></input>
+        <p>Phone</p>
+        <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
+    </div>
+    <br></br>
+    <button onClick={placeBooking}>Place Booking</button>  
+    <h2>{`${time} O' Clock - ${date} - ${guests} Guests`}</h2>
+    <h2>{`${name} - ${email} - ${phone} `}</h2> */}
     </>
   );
 }
+
+// const changeTime = (e: ChangeEvent<HTMLSelectElement>) => {
+//     console.log("Time:", e.target.value)
+//     setTime(parseInt(e.target.value))
+// }
+// const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
+//     console.log("Date:", e.target.value)
+//     setDate(e.target.value)
+// }
+// const changeGuests = (e:ChangeEvent<HTMLInputElement>) => {
+//     let guests = parseInt(e.target.value)
+//     if (guests < 1) guests = 1
+//     if (guests > 6) guests = 6
+//     setGuests(guests)
+//     console.log(guests)
+// }
+// const changeName = (e:ChangeEvent<HTMLInputElement>) => setName(e.target.value)
+// const changeEmail = (e:ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
+// const changePhone = (e:ChangeEvent<HTMLInputElement>) => setPhone(parseInt(e.target.value))
+
+// const placeBooking = async () => {
+//     let body = {time, date, guests, name, email, phone, gamer: "wowzers"}
+//     console.log(body)
+//     let res = await axios.post("http://localhost:8000/book", body)
+//     console.log(res)
+// }
+
+// useEffect(() => {
+//     setDate(new Date().toLocaleDateString())
+// }, [])
