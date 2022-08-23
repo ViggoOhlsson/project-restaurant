@@ -52,6 +52,7 @@ export function Admin() {
       <div key={booking._id} className="booking-container">
         <p>{booking.guests}</p>
         <p>{booking.time}</p>
+        {/* <p>{booking.customer.}</p> */}
         <Link to={"/edit-booking/" + booking._id}>Redigera</Link>
       </div>
     );
