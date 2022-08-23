@@ -143,18 +143,6 @@ export function AdminEdit() {
               placeholder="Date"
             />
           </div>
-          <div className="form__guests">
-            <label htmlFor="guests">Guests</label>
-            <input
-              type="number"
-              name="guests"
-              min="1"
-              max="90"
-              value={editing.guests}
-              onChange={handleChange}
-              placeholder="Guests"
-            />
-          </div>
           <div className="form__time">
             <label htmlFor="time">Time</label>
             <input
@@ -166,6 +154,18 @@ export function AdminEdit() {
               value={editing.time}
               onChange={handleChange}
               placeholder="Time"
+            />
+          </div>
+          <div className="form__guests">
+            <label htmlFor="guests">Guests</label>
+            <input
+              type="number"
+              name="guests"
+              min="1"
+              max="90"
+              value={editing.guests}
+              onChange={handleChange}
+              placeholder="Guests"
             />
           </div>
         </div>
@@ -184,8 +184,8 @@ export function AdminEdit() {
           </div>
         </div>
         <div className="form__buttons">
-          <Link to={"/admin"}>Cancel</Link>
-          <button>Update reservation</button>
+          <Link className="form__cancel" to={"/admin"}>Cancel</Link>
+          <button className="form__update">Update reservation</button>
         </div>
       </form>
       <button

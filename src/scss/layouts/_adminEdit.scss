@@ -13,25 +13,72 @@
   @include typography.inter();
   @include mixins.flex(column, center, center, 2rem);
   background-color: #fff;
+  font-size: 10pt;
 
   &__section {
+    @include mixins.flex(column, center, flex-start, 0.5rem);
+
     &--heading {
       color: $primary-purple;
     }
     &--form {
       background-color: #fff;
+      input {
+        background-color: #f2f2f2;
+        border: none;
+        padding: 10px 12px 10px 12px;
+        border-radius: 10px;
+      }
       .form__info {
-        @include mixins.flex(row, center, center, 0.5rem);
+        @include mixins.flex(row, center, center, 1rem);
       }
+
+      .form__user {
+        width: 100%;
+        @include mixins.flex(column, center, flex-start, 1rem);
+      }
+
       .form__date,
+      .form__time,
       .form__guests,
-      .form__time {
-        @include mixins.flex(column, center, center);
-      }
       .form__userName,
       .form__email,
       .form__phone {
-        @include mixins.flex(column, center, flex-start);
+        @include mixins.flex(column, center, flex-start, 0.5rem);
+      }
+
+      .form__userName, .form__email{
+        width: 100%;
+        input{
+            width: 100%;
+        }
+      }
+
+      .form__buttons {
+        @include mixins.flex(row, center, center, 0.8rem);
+        width: 100%;
+      }
+
+      .form__cancel {
+        padding: 5px 12px 5px 12px;
+        background-color: #f6eeee;
+        border: solid 1px #b16161;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #b16161;
+
+        a:visited {
+          color: #b16161;
+        }
+      }
+
+      .form__update {
+        padding: 5px 12px 5px 12px;
+        background-color: #73b09e;
+        border: solid 1px #2f4b43;
+        color: #2f4b43;
+        border-radius: 20px;
+        font-size: 10pt;
       }
     }
   }
