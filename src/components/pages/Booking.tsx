@@ -1,7 +1,10 @@
 import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
+import { BookingPhase } from "../BookingPhase"
 
 export function Booking() {
+
+    const [phase, setPhase] = useState(1)
 
     const [time, setTime] = useState(18)
     const [date, setDate] = useState("")
@@ -47,8 +50,8 @@ export function Booking() {
     
 
     return <main className="booking-page">
-        <p>Booking View</p>
-        <div>
+        <BookingPhase phase={phase}></BookingPhase>
+        <div >
             <p>Date</p>
             <input type="date" defaultValue={date} onChange={changeDate}></input>
             <p>Time</p>
