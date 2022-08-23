@@ -188,12 +188,12 @@ export function AdminEdit() {
           <button className="form__update">Update reservation</button>
         </div>
       </form>
-      <button
+      <button className="admin-edit__section admin-edit__section--delete"
         onClick={() => {
           deleteBooking(editing._id);
         }}
       >
-        Remove reservation
+        Remove reservation x
       </button>
     </main>
   );

@@ -79,7 +79,18 @@
         color: #2f4b43;
         border-radius: 20px;
         font-size: 10pt;
+        cursor: pointer;
       }
+    }
+
+    &--delete{
+        background: none;
+        border: none;
+        font-size: 10pt;
+        padding: 5px 12px 5px 12px;
+        margin-bottom: 20px;
+        color: #928D8D;
+        cursor: pointer;
     }
   }
 }
