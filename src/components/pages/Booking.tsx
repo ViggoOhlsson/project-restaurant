@@ -46,7 +46,7 @@ export function Booking() {
     }, [])
     
 
-    return <>
+    return <main className="booking-page">
         <p>Booking View</p>
         <div>
             <p>Date</p>
@@ -70,5 +70,5 @@ export function Booking() {
         </div>
         <br></br>
         <button onClick={placeBooking}>Place Booking</button>
-    </>
+    </main>
 }
