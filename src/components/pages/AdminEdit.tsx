@@ -124,31 +124,49 @@ export function AdminEdit() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSave}>
-        <input
-          type="date"
-          name="date"
-          defaultValue={new Date(editing.date).toLocaleDateString()}
-          onChange={handleChange}
-          placeholder="Date"
-        />
-        <input
-          type="text"
-          name="guests"
-          value={editing.guests}
-          onChange={handleChange}
-          placeholder="Guests"
-        />
-        <input
-          type="number"
-          name="time"
-          value={editing.time}
-          onChange={handleChange}
-          placeholder="Time"
-        />
+    <main className="admin-edit">
+      <form
+        className="error-page__section error-page__section--form"
+        onSubmit={handleSave}
+      >
+        <div className="form__date">
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            name="date"
+            defaultValue={new Date(editing.date).toLocaleDateString()}
+            onChange={handleChange}
+            placeholder="Date"
+          />
+        </div>
+        <div className="form__guests">
+          <label htmlFor="guests">Guests</label>
+          <input
+            type="number"
+            name="guests"
+            min="1" max="90"
+            value={editing.guests}
+            onChange={handleChange}
+            placeholder="Guests"
+          />
+        </div>
+        <div className="form__time">
+          <label htmlFor="time">Time</label>
+          <input
+            type="number"
+            name="time"
+            step="3"
+            min="18"
+            max="21"
+            value={editing.time}
+            onChange={handleChange}
+            placeholder="Time"
+          />
+        </div>
+        <div className="form__buttons">
         <Link to={"/admin"}>Cancel</Link>
         <button>Update reservation</button>
+        </div>
       </form>
       <button
         onClick={() => {
@@ -157,6 +175,6 @@ export function AdminEdit() {
       >
         Remove reservation
       </button>
-    </>
+    </main>
   );
 }
