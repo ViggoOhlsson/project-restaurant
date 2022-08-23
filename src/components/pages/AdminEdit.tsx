@@ -125,47 +125,67 @@ export function AdminEdit() {
 
   return (
     <main className="admin-edit">
+      <h3 className="admin-edit__section admin-edit__section--heading">
+        Edit reservation
+      </h3>
       <form
-        className="error-page__section error-page__section--form"
+        className="admin-edit__section admin-edit__section--form"
         onSubmit={handleSave}
       >
-        <div className="form__date">
-          <label htmlFor="date">Date</label>
-          <input
-            type="date"
-            name="date"
-            defaultValue={new Date(editing.date).toLocaleDateString()}
-            onChange={handleChange}
-            placeholder="Date"
-          />
+        <div className="form__info">
+          <div className="form__date">
+            <label htmlFor="date">Date</label>
+            <input
+              type="date"
+              name="date"
+              defaultValue={new Date(editing.date).toLocaleDateString()}
+              onChange={handleChange}
+              placeholder="Date"
+            />
+          </div>
+          <div className="form__guests">
+            <label htmlFor="guests">Guests</label>
+            <input
+              type="number"
+              name="guests"
+              min="1"
+              max="90"
+              value={editing.guests}
+              onChange={handleChange}
+              placeholder="Guests"
+            />
+          </div>
+          <div className="form__time">
+            <label htmlFor="time">Time</label>
+            <input
+              type="number"
+              name="time"
+              step="3"
+              min="18"
+              max="21"
+              value={editing.time}
+              onChange={handleChange}
+              placeholder="Time"
+            />
+          </div>
         </div>
-        <div className="form__guests">
-          <label htmlFor="guests">Guests</label>
-          <input
-            type="number"
-            name="guests"
-            min="1" max="90"
-            value={editing.guests}
-            onChange={handleChange}
-            placeholder="Guests"
-          />
-        </div>
-        <div className="form__time">
-          <label htmlFor="time">Time</label>
-          <input
-            type="number"
-            name="time"
-            step="3"
-            min="18"
-            max="21"
-            value={editing.time}
-            onChange={handleChange}
-            placeholder="Time"
-          />
+        <div className="form__user">
+          <div className="form__userName">
+            <label htmlFor="userName">Name</label>
+            <input type="text" name="userName" />
+          </div>
+          <div className="form__email">
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" />
+          </div>
+          <div className="form__phone">
+            <label htmlFor="phone">Phone</label>
+            <input type="tel" name="phone" />
+          </div>
         </div>
         <div className="form__buttons">
-        <Link to={"/admin"}>Cancel</Link>
-        <button>Update reservation</button>
+          <Link to={"/admin"}>Cancel</Link>
+          <button>Update reservation</button>
         </div>
       </form>
       <button
