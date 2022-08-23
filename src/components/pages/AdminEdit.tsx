@@ -92,12 +92,16 @@ export function AdminEdit() {
     setDeleteBookingId("");
   }, [deleteBookingId]);
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleInfoChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.type === "number") {
       setEditing({ ...editing, [e.target.name]: +e.target.value });
-    } else {
+    } else{
       setEditing({ ...editing, [e.target.name]: e.target.value });
     }
+  }
+
+  function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
+    //Här måste man gå in i bokningen och sen in i customer och ändra på nått sätt
   }
 
   function handleSave(e: FormEvent) {
@@ -139,7 +143,7 @@ export function AdminEdit() {
               type="date"
               name="date"
               defaultValue={new Date(editing.date).toLocaleDateString()}
-              onChange={handleChange}
+              onChange={handleInfoChange}
               placeholder="Date"
             />
           </div>
@@ -152,7 +156,7 @@ export function AdminEdit() {
               min="18"
               max="21"
               value={editing.time}
-              onChange={handleChange}
+              onChange={handleInfoChange}
               placeholder="Time"
             />
           </div>
@@ -164,7 +168,7 @@ export function AdminEdit() {
               min="1"
               max="90"
               value={editing.guests}
-              onChange={handleChange}
+              onChange={handleInfoChange}
               placeholder="Guests"
             />
           </div>
@@ -172,23 +176,26 @@ export function AdminEdit() {
         <div className="form__user">
           <div className="form__userName">
             <label htmlFor="userName">Name</label>
-            <input type="text" name="userName" />
+            <input type="text" name="userName" value={editing.customer.name} onChange={handleUserChange}/>
           </div>
           <div className="form__email">
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" />
+            <input type="email" name="email" value={editing.customer.email} onChange={handleUserChange}/>
           </div>
           <div className="form__phone">
             <label htmlFor="phone">Phone</label>
-            <input type="tel" name="phone" />
+            <input type="tel" name="phone" value={editing.customer.phone} onChange={handleUserChange}/>
           </div>
         </div>
         <div className="form__buttons">
-          <Link className="form__cancel" to={"/admin"}>Cancel</Link>
+          <Link className="form__cancel" to={"/admin"}>
+            Cancel
+          </Link>
           <button className="form__update">Update reservation</button>
         </div>
       </form>
-      <button className="admin-edit__section admin-edit__section--delete"
+      <button
+        className="admin-edit__section admin-edit__section--delete"
         onClick={() => {
           deleteBooking(editing._id);
         }}
