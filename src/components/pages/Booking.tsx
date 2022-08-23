@@ -69,9 +69,6 @@ export function Booking() {
             <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
         </div>
         <br></br>
-        <button onClick={placeBooking}>Place Booking</button>  
-        <h2>{`${time} O' Clock - ${date} - ${guests} Guests`}</h2>
-        <h2>{`${name} - ${email} - ${phone} `}</h2>
-
+        <button onClick={placeBooking}>Place Booking</button>
     </>
 }

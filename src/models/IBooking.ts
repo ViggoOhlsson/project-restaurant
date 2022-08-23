@@ -5,3 +5,10 @@ export interface IBooking {
   customer: string;
   _id: string;
 }
+
+export interface ICustomer {
+  _id: string
+  name: string
+  email: string
+  phone: number
+}
