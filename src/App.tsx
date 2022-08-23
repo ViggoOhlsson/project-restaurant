@@ -5,6 +5,7 @@ import { Admin } from "./components/pages/Admin";
 import { AdminEdit } from "./components/pages/AdminEdit";
 import { Booking } from "./components/pages/Booking";
 import { Home } from "./components/pages/Home";
+import "./scss/main.scss";
 
 function App() {
   return (
