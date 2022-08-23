@@ -29,7 +29,7 @@ app.get("/", async (req,res) => {
 app.get("/getbooking", async (req,res) => {
     let { id } = req.query
     try {
-        const booking = await BookingModel.findOne({_id: id}).lean()
+        const booking = await BookingModel.findOne({_id: id}).populate("customer").lean()
         res.send(booking)
         return
     } catch (err) {
@@ -42,7 +42,7 @@ app.get("/getbooking", async (req,res) => {
 app.get("/getallbookings", async (req,res) => {
     let { id } = req.query
     try {
-        const booking = await BookingModel.find({}).limit(500).lean()
+        const booking = await BookingModel.find({}).populate("customer").limit(500).lean()
         res.send(booking)
         return
     } catch (err) {
@@ -55,7 +55,7 @@ app.get("/getallbookings", async (req,res) => {
 app.get("/getbookingsbycustomer", async (req,res) => {
     let {id} = req.body
     try {
-        const bookings = await BookingModel.find({ customer: id }).lean()
+        const bookings = await BookingModel.find({ customer: id }).populate("customer").lean()
         res.send(bookings)
         return
     } catch (err) {
