@@ -18,7 +18,12 @@ export function AdminEdit() {
     date: new Date(),
     time: 0,
     guests: 0,
-    customer: "",
+    customer: {
+      _id: "",
+      name: "",
+      email: "",
+      phone: 0,
+    },
     _id: "",
   });
 
@@ -27,7 +32,12 @@ export function AdminEdit() {
     time: 0,
     guests: 0,
     _id: "",
-    customer: "",
+    customer: {
+      _id: "",
+      name: "",
+      email: "",
+      phone: 0,
+    },
   });
 
   const [deleteBookingId, setDeleteBookingId] = useState("");
@@ -61,7 +71,12 @@ export function AdminEdit() {
       date: new Date(),
       time: 0,
       guests: 0,
-      customer: "",
+      customer: {
+        _id: "",
+        name: "",
+        email: "",
+        phone: 0,
+      },
       _id: "",
     });
   }, [booking]);
@@ -95,7 +110,12 @@ export function AdminEdit() {
       time: 0,
       guests: 0,
       _id: "",
-      customer: "",
+      customer: {
+        _id: "",
+        name: "",
+        email: "",
+        phone: 0,
+      },
     });
   }
 
