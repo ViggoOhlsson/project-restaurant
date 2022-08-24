@@ -8,9 +8,9 @@ import { IBooking } from "../../models/IBooking";
 export function AdminEdit() {
   //   const [editBookingObject, setEditBookingObject] = useState({});
 
-  const [params, setParams] = useState(useParams());
-
-  const [id, setId] = useState(params.id);
+  //Hämtar kundens id från params och sätter det i ett eget state
+  // const [params, setParams] = useState(useParams());
+  const [id, setId] = useState(useParams().id);
 
   const [bookings, setBookings] = useState<IBooking[]>([]);
 
@@ -95,12 +95,14 @@ export function AdminEdit() {
   function handleInfoChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.type === "number") {
       setEditing({ ...editing, [e.target.name]: +e.target.value });
-    } else{
+    } else {
       setEditing({ ...editing, [e.target.name]: e.target.value });
     }
   }
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
+      setEditing({ ...editing, [e.target.name]: e.target.value });
+
     //Här måste man gå in i bokningen och sen in i customer och ändra på nått sätt
   }
 
@@ -109,18 +111,19 @@ export function AdminEdit() {
 
     setBooking(editing);
 
-    setEditing({
-      date: new Date(),
-      time: 0,
-      guests: 0,
-      _id: "",
-      customer: {
-        _id: "",
-        name: "",
-        email: "",
-        phone: 0,
-      },
-    });
+    //Tog bort så att den nya infon ligger kvar när man klickat på spara
+    // setEditing({
+    //   date: new Date(),
+    //   time: 0,
+    //   guests: 0,
+    //   _id: "",
+    //   customer: {
+    //     _id: "",
+    //     name: "",
+    //     email: "",
+    //     phone: 0,
+    //   },
+    // });
   }
 
   function deleteBooking(id: string) {
@@ -141,8 +144,11 @@ export function AdminEdit() {
             <label htmlFor="date">Date</label>
             <input
               type="date"
+              min={new Date().toISOString().split("T")[0]} //Tar bort passerade datum
               name="date"
-              defaultValue={new Date(editing.date).toLocaleDateString()}
+              //När defaultvalue användes så syntes dagens datum istället för bokningens datum
+              // defaultValue={new Date(editing.date).toLocaleDateString()}
+              value={new Date(editing.date).toLocaleDateString()}
               onChange={handleInfoChange}
               placeholder="Date"
             />
@@ -176,15 +182,30 @@ export function AdminEdit() {
         <div className="form__user">
           <div className="form__userName">
             <label htmlFor="userName">Name</label>
-            <input type="text" name="userName" value={editing.customer.name} onChange={handleUserChange}/>
+            <input
+              type="text"
+              name="userName"
+              value={editing.customer.name}
+              onChange={handleUserChange}
+            />
           </div>
           <div className="form__email">
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" value={editing.customer.email} onChange={handleUserChange}/>
+            <input
+              type="email"
+              name="email"
+              value={editing.customer.email}
+              onChange={handleUserChange}
+            />
           </div>
           <div className="form__phone">
             <label htmlFor="phone">Phone</label>
-            <input type="tel" name="phone" value={editing.customer.phone} onChange={handleUserChange}/>
+            <input
+              type="tel"
+              name="phone"
+              value={editing.customer.phone}
+              onChange={handleUserChange}
+            />
           </div>
         </div>
         <div className="form__buttons">
