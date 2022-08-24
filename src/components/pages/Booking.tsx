@@ -16,9 +16,9 @@ export function Booking() {
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState(0)
 
-    const changeTime = (e: ChangeEvent<HTMLSelectElement>) => {
-        console.log("Time:", e.target.value)
-        setTime(parseInt(e.target.value))
+    const changeTime = (t: number) => {
+        console.log("Time:", t)
+        setTime(t)
     }
     const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
         console.log("Date:", e.target.value)
@@ -61,17 +61,18 @@ export function Booking() {
     return <main className="booking-page">
         <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
         { phase === 1 &&
-        <div className="phase-container">
-            <p>Date</p>
-            <input type="date" defaultValue={date} onChange={changeDate}></input>
-            <p>Time</p>
-            <select name="time" onChange={changeTime}>
-                <option disabled>Select a time</option> 
-                <option value="18">18:00 to 20:59</option>
-                <option value="21">21:00 to 23:59</option>
-            </select>
-            <p>Guests</p>
-            <input type="number" value={guests} onChange={changeGuests}></input>
+        <div className="phase-container date-phase">
+            <div className="date-container">
+                <input type="date" defaultValue={date} onChange={changeDate}></input>
+            </div>
+            <div className="time-container">
+                <span className="title">Time</span>
+
+                <div className="choice-wrapper">
+                    <span className={`${time === 18 && 'selected'}`} onClick={() => changeTime(18)}>18 - 20</span>
+                    <span className={`${time === 21 && 'selected'}`} onClick={() => changeTime(21)}>21 - 23</span>
+                </div>
+            </div>
         </div>}
         { phase === 2 && 
         <div className="phase-container">
@@ -83,7 +84,9 @@ export function Booking() {
             <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
         </div>
         }
-        <br></br>
-        <button onClick={placeBooking}>Place Booking</button>
+        <div className="next-phase-wrapper">
+            <span>Continue </span>
+            <span><i className="fa-solid fa-angle-right"></i></span>
+        </div>
     </main>
 }

@@ -7,8 +7,10 @@ interface IBookingPhaseProps {
 
 export const BookingPhase = (props: IBookingPhaseProps) => {
     return <>
-        <button onClick={() => {props.changePhase(props.phase - 1)}}>- 1</button>
-        <button onClick={() => {props.changePhase(props.phase + 1)}}>+ 1</button>
+        <div>
+            <button onClick={() => {props.changePhase(props.phase - 1)}}>- 1</button>
+            <button onClick={() => {props.changePhase(props.phase + 1)}}>+ 1</button>
+        </div>
         <div className="booking-phase-display">
             <div className={`booking-phase phase-date ${props.phase === 1 && 'current'}`}>
                 <span className="phase-number">
