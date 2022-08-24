@@ -131,7 +131,8 @@ export function AdminEdit() {
   }
 
   return (
-    <main className="admin-edit">
+    <>
+    <div className="admin-edit">
       <h3 className="admin-edit__section admin-edit__section--heading">
         Edit reservation
       </h3>
@@ -223,6 +224,7 @@ export function AdminEdit() {
       >
         Remove reservation x
       </button>
-    </main>
+    </div>
+    </>
   );
 }
