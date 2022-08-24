@@ -76,19 +76,32 @@ export function Booking() {
                 </div>
             </div>}
             { phase === 2 && 
-            <div className="phase-container">
-                <p>Name</p>
-                <input type="text" placeholder="Full Name" onChange={changeName}></input>
-                <p>Email</p>
-                <input type="email" placeholder="example@domain.com" onChange={changeEmail}></input>
-                <p>Phone</p>
-                <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
+            <div className="phase-container info-phase">
+                <div className="info-container">
+                    <div>
+                        <p>What name do you want to book in?</p>
+                        <input type="text" placeholder="Name" onChange={changeName}></input>
+                    </div>
+                    <div>
+                        <p>Where do you want to get the confirmation?</p>
+                        <input type="email" placeholder="Email" onChange={changeEmail}></input>
+                    </div>
+                    <div>
+                        <p>How can we contact you?</p>
+                        <input type="tel" placeholder="Phone number" onChange={changePhone}></input>
+                    </div>
+                    <div>
+                        <p>How big is your party?</p>
+                        <input type="number" className="guests-input" onChange={changeGuests} value={guests}></input>
+                    </div>
+                </div>
             </div>
             }
         </div>
-        <div className="next-phase-wrapper">
-            <span onClick={() => changePhase(phase + 1)}>Continue</span>
-            <span><i className="fa-solid fa-angle-right"></i></span>
-        </div>
+        { phase < 3 && 
+            <div className="next-phase-wrapper">
+                <span onClick={() => changePhase(phase + 1)}>Continue</span>
+                <span><i className="fa-solid fa-angle-right"></i></span>
+            </div> }
     </main>
 }

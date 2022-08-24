@@ -121,6 +121,30 @@
             }
         }
     }
+    .info-phase {
+        background-color: white;
+        border-radius: 15px;
+        .info-container {
+            @include mixins.flex(column, initial, initial, 20px);
+            padding: 60px 40px;
+            div {
+                @include mixins.flex(column, initial, initial, 10px);
+                p {
+                    font-size: 0.75em;
+                }
+                input {
+                    background-color: rgba(0, 0, 0, 0.1);
+                    padding: 10px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 0.75em;
+                }
+                .guests-input {
+                    justify-self: left;
+                }
+            }
+        }
+    }
     .next-phase-wrapper {
         color: white;
         display: flex;
