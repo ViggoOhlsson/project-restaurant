@@ -9,11 +9,19 @@
 ///////////////////////
 //ADMIN EDIT STYLING//
 /////////////////////
+main{
+  @include mixins.flex(column, center, center, 2rem);
+}
 .admin-edit {
   @include typography.inter();
   @include mixins.flex(column, center, center, 2rem);
   background-color: #fff;
+  border-radius: 20px;
   font-size: 10pt;
+  padding: 40px;
+  width: 80%;
+
+  //Lägga in Mediaquery mixin för width
 
   &__section {
     @include mixins.flex(column, center, flex-start, 0.5rem);
