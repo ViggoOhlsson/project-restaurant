@@ -6,31 +6,44 @@
 
 
 .admin{
+
     width: 80%;
     margin: 0 auto;
     @include typography.inter();
     
     &__search{
-        
+        width: 50%;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.215);
         position: relative;
         margin-top:100px;    
+        border-radius: 10px;
         @include mixins.flex(row, center, center, 2rem);
         
         &__date-input {
+            color: #d8d8d8;
+            background-color: transparent;
             padding: 1.1rem;
             font-size: 1.1rem;
             font-weight: 100;
             border:none;
             cursor: pointer;
+            color-scheme: dark;
             @include typography.inter();
+
+            ::-webkit-calendar-picker-indicator{
+                color: #d8d8d8;
+                display: none;
+            }
 
             &:focus{
                 outline: none;
             }
+
         }
             
             &__input-button{
-
+                color: #d8d8d8;
                 border: none;
                 background: none;
                 cursor: pointer;
@@ -38,7 +51,7 @@
     }
 
     &__bookings{
-
+background-color: white;
         width: 100%;
         @include mixins.flex(column, center, center, 2rem);
         text-align: center;
@@ -46,6 +59,7 @@
         border-radius: 10px;
         padding: 40px;
         margin-top: 40px;
+        margin-bottom: 40px;
 
         @include mixins.desktop{
             width: 80%;  
@@ -80,7 +94,7 @@
         }
 
         &__icon{
-            color: rgb(91, 91, 91);
+            color: rgb(193, 193, 193);
             font-size: 0.7rem;
             position: absolute;
             right: -20px;
