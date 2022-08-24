@@ -14,8 +14,9 @@
 
     .booking-phase-container {
         display: grid;
-        grid-template-columns: repeat(9, minmax(0, 1fr));
+        grid-template-columns: repeat(7, minmax(0, 1fr));
         gap: 20px;
+        user-select: none;
         button {
             border: none;
             background-color: rgba(255, 255, 255, 0.15);
