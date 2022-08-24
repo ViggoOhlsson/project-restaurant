@@ -1,0 +1,16 @@
+////////////////////
+// IMPORTS & USE //
+//////////////////
+@use "../mixins";
+@use "../base/typography";
+
+.nav{
+
+    &__logo--container{
+        width: 180px;
+        
+        img{
+            width: 100%;
+        }
+    }
+}
