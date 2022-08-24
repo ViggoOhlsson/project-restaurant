@@ -12,7 +12,7 @@
     @include typography.inter();
     @include mixins.flex(column, center, center, 2rem);
 
-    .booking-phase-container {
+    .booking-phase-display {
         display: grid;
         grid-template-columns: repeat(7, minmax(0, 1fr));
         gap: 20px;
@@ -69,6 +69,19 @@
             .phase-name {
                 color: rgba(255,255,255,1);
             }
+        }
+    }
+    .phase-container {
+        animation: fade-in 0.15s linear;
+    }
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+            transform: scale(0.85);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
         }
     }
 }

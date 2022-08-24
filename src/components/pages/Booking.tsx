@@ -4,6 +4,8 @@ import { BookingPhase } from "../BookingPhase"
 
 export function Booking() {
 
+    document.title = "Booking"
+
     const [phase, setPhase] = useState(1)
 
     const [time, setTime] = useState(18)
@@ -44,14 +46,22 @@ export function Booking() {
         }
     }
 
+    const changePhase = (to: number) => {
+        if (to < 1 ) to = 1 
+        if (to > 4 ) to = 4
+        console.log("changed phase to:", to)
+        setPhase(to)
+    }
+
     useEffect(() => {
         setDate(new Date().toLocaleDateString())
     }, [])
     
 
     return <main className="booking-page">
-        <BookingPhase phase={phase}></BookingPhase>
-        <div >
+        <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
+        { phase === 1 &&
+        <div className="phase-container">
             <p>Date</p>
             <input type="date" defaultValue={date} onChange={changeDate}></input>
             <p>Time</p>
@@ -62,8 +72,9 @@ export function Booking() {
             </select>
             <p>Guests</p>
             <input type="number" value={guests} onChange={changeGuests}></input>
-        </div>
-        <div>
+        </div>}
+        { phase === 2 && 
+        <div className="phase-container">
             <p>Name</p>
             <input type="text" placeholder="Full Name" onChange={changeName}></input>
             <p>Email</p>
@@ -71,6 +82,7 @@ export function Booking() {
             <p>Phone</p>
             <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
         </div>
+        }
         <br></br>
         <button onClick={placeBooking}>Place Booking</button>
     </main>

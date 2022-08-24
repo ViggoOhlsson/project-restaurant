@@ -1,21 +1,16 @@
-import { useState } from "react"
 import "../scss/main.scss"
 
 interface IBookingPhaseProps {
     phase: number
+    changePhase(to: number): void
 }
 
 export const BookingPhase = (props: IBookingPhaseProps) => {
-
-    const [phase, setPhase] = useState(props.phase)
-
-    console.log(phase)
-
     return <>
-        <button onClick={() => {setPhase(phase - 1)}}>- 1</button>
-        <button onClick={() => {setPhase(phase + 1)}}>+ 1</button>
-        <div className="booking-phase-container">
-            <div className={`booking-phase phase-date ${phase == 1 && 'current'}`}>
+        <button onClick={() => {props.changePhase(props.phase - 1)}}>- 1</button>
+        <button onClick={() => {props.changePhase(props.phase + 1)}}>+ 1</button>
+        <div className="booking-phase-display">
+            <div className={`booking-phase phase-date ${props.phase === 1 && 'current'}`}>
                 <span className="phase-number">
                     1
                 </span>
@@ -24,7 +19,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${phase == 2 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 2 && 'current'}`}>
                 <span className="phase-number">
                     2
                 </span>
@@ -33,7 +28,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${phase == 3 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 3 && 'current'}`}>
                 <span className="phase-number">
                     3
                 </span>
@@ -42,7 +37,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${phase == 4 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 4 && 'current'}`}>
                 <span className="phase-number">
                     4
                 </span>
