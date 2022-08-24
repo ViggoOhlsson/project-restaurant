@@ -8,6 +8,10 @@ export function Admin() {
 
   const [sortedBookings, setSortedBookings] = useState<IBooking[]>([]);
 
+  const [earlyBooking, setEarlyBooking] = useState<IBooking[]>([]);
+
+  const [lateBooking, setLateBooking] = useState<IBooking[]>([]);
+
   const [date, setDate] = useState("");
 
   //Anropar api och hämtar alla bokningar
@@ -46,87 +50,108 @@ export function Admin() {
     }
   }
 
-  const displayBookings = sortedBookings.map((booking) => {
-    console.log(sortedBookings);
+  useEffect(() => {
+    for (let i = 0; i < sortedBookings.length; i++) {
+      const booking = sortedBookings[i];
+      if (booking.time === 18) {
+        setEarlyBooking((earlyBooking) => [...earlyBooking, booking]);
+      }
+      if (booking.time === 21) {
+        setLateBooking((lateBooking) => [...lateBooking, booking]);
+      }
+    }
+  }, [sortedBookings]);
+
+  const earlyBookings = earlyBooking.map((booking) => {
     return (
-      <div key={booking._id} className="booking-container">
-        <p>{booking.guests}</p>
-        <p>{booking.time}</p>
-        {/* <p>{booking.customer.}</p> */}
-        <Link to={"/edit-booking/" + booking._id}>Redigera</Link>
-      </div>
+      <>
+        <div key={booking._id} className="admin__bookings__early">
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Name </b>{" "}
+            {booking.customer.name}
+          </p>
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Party </b>
+            {booking.guests}
+          </p>
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Phone </b>
+            {booking.customer.phone}
+          </p>
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Email </b>
+            {booking.customer.email}
+          </p>
+          <Link to={"/edit-booking/" + booking._id}>
+            {" "}
+            <i className="admin__bookings__icon fa-solid fa-pen"></i>
+          </Link>
+        </div>
+      </>
+    );
+  });
+
+  const lateBookings = lateBooking.map((booking) => {
+    return (
+      <>
+        <div key={booking._id} className="admin__bookings__late">
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Name </b>{" "}
+            {booking.customer.name}
+          </p>
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Party </b>
+            {booking.guests}
+          </p>
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Phone </b>
+            {booking.customer.phone}
+          </p>
+          <p className="admin__bookings--info">
+            <b className="admin__bookings--info--heading">Email </b>
+            {booking.customer.email}
+          </p>
+          <Link to={"/edit-booking/" + booking._id}>
+            <i className="admin__bookings__icon fa-solid fa-pen"></i>
+          </Link>
+        </div>
+      </>
     );
   });
 
   return (
     <>
-      <input type="date" defaultValue={date} onChange={changeDate}></input>
-      <button
-        onClick={() => {
-          findBooking(date);
-        }}
-      >
-        Sök bokningar
-      </button>
+      <div className="admin">
+        <div className="admin__search">
+          <input
+            className="admin__search__date-input"
+            type="date"
+            defaultValue={date}
+            onChange={changeDate}
+          ></input>
+          <button
+            onClick={() => {
+              setSortedBookings([]);
+              findBooking(date);
+            }}
+            className="admin__search__input-button"
+          >
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
 
-      {displayBookings}
+        <div className="admin__bookings">
+          <p className="admin__bookings--date">
+            {new Date(date).toDateString()}
+          </p>
+          <h2 className="admin__bookings--heading">Early sitting</h2>
 
-      {/* 
-<p>Booking View</p>
-    <div>
-        <p>Date</p>
-        <input type="date" defaultValue={date} onChange={changeDate}></input>
-        <p>Time</p>
-        <select name="time" onChange={changeTime}>
-            <option disabled>Select a time</option>
-            <option value="18">18:00 to 20:59</option>
-            <option value="21">21:00 to 23:59</option>
-        </select>
-        <p>Guests</p>
-        <input type="number" value={guests} onChange={changeGuests}></input>
-    </div>
-    <div>
-        <p>Name</p>
-        <input type="text" placeholder="Full Name" onChange={changeName}></input>
-        <p>Email</p>
-        <input type="email" placeholder="example@domain.com" onChange={changeEmail}></input>
-        <p>Phone</p>
-        <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
-    </div>
-    <br></br>
-    <button onClick={placeBooking}>Place Booking</button>  
-    <h2>{`${time} O' Clock - ${date} - ${guests} Guests`}</h2>
-    <h2>{`${name} - ${email} - ${phone} `}</h2> */}
+          {earlyBookings}
+          <h2 className="admin__bookings--heading">Late sitting</h2>
+
+          {lateBookings}
+        </div>
+      </div>
     </>
   );
 }
-
-// const changeTime = (e: ChangeEvent<HTMLSelectElement>) => {
-//     console.log("Time:", e.target.value)
-//     setTime(parseInt(e.target.value))
-// }
-// const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
-//     console.log("Date:", e.target.value)
-//     setDate(e.target.value)
-// }
-// const changeGuests = (e:ChangeEvent<HTMLInputElement>) => {
-//     let guests = parseInt(e.target.value)
-//     if (guests < 1) guests = 1
-//     if (guests > 6) guests = 6
-//     setGuests(guests)
-//     console.log(guests)
-// }
-// const changeName = (e:ChangeEvent<HTMLInputElement>) => setName(e.target.value)
-// const changeEmail = (e:ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
-// const changePhone = (e:ChangeEvent<HTMLInputElement>) => setPhone(parseInt(e.target.value))
-
-// const placeBooking = async () => {
-//     let body = {time, date, guests, name, email, phone, gamer: "wowzers"}
-//     console.log(body)
-//     let res = await axios.post("http://localhost:8000/book", body)
-//     console.log(res)
-// }
-
-// useEffect(() => {
-//     setDate(new Date().toLocaleDateString())
-// }, [])

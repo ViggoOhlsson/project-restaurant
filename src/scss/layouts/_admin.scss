@@ -3,3 +3,111 @@
 //////////////////
 @use "../mixins";
 @use "../base/typography";
+
+
+.admin{
+    width: 80%;
+    margin: 0 auto;
+    @include typography.inter();
+    
+    &__search{
+        
+        position: relative;
+        margin-top:100px;    
+        @include mixins.flex(row, center, center, 2rem);
+        
+        &__date-input {
+            padding: 1.1rem;
+            font-size: 1.1rem;
+            font-weight: 100;
+            border:none;
+            cursor: pointer;
+            @include typography.inter();
+
+            &:focus{
+                outline: none;
+            }
+        }
+            
+            &__input-button{
+
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
+    }
+
+    &__bookings{
+
+        width: 100%;
+        @include mixins.flex(column, center, center, 2rem);
+        text-align: center;
+        border: 0.2px solid rgb(174, 174, 174);
+        border-radius: 10px;
+        padding: 40px;
+        margin-top: 40px;
+
+        @include mixins.desktop{
+            width: 80%;  
+            margin: 40px auto;            
+        }
+
+        &--date{
+            padding: 10px;
+            text-align: center;
+            font-weight: 100;
+            color: #928D8D;
+        }
+
+        &--heading{
+            font-weight: 400;
+            font-size: 1rem
+        }
+
+        &__early, &__late{
+            @include mixins.flex(column, left, top, 2rem);
+            text-align: left;
+            position: relative;
+            
+            @include mixins.tablet{
+                @include mixins.flex(row, center, top, 2rem);
+                text-align: center;                
+            }
+            
+            @include mixins.desktop{
+                justify-content: space-between;                           
+            }
+        }
+
+        &__icon{
+            color: rgb(91, 91, 91);
+            font-size: 0.7rem;
+            position: absolute;
+            right: -20px;
+            top: 15px;
+
+            &:hover{
+                color: #928D8D;
+                transform: scale(1.3);
+            }
+        }
+
+        &--info{
+            font-size: 0.9rem;
+            color: #928D8D;
+            padding: 10px;
+
+            @include mixins.tablet{
+
+                @include mixins.flex(column, left, top, 2rem);
+            }
+            
+            &--heading{
+                
+                margin: 5px;
+                color: black;
+                font-weight: 600;
+            }
+        }
+    }
+}
