@@ -64,7 +64,7 @@ export function Booking() {
             { phase === 1 &&
             <div className="phase-container date-phase">
                 <div className="date-container">
-                    <input type="date" defaultValue={date} onChange={changeDate}></input>
+                    <input type="date" min={new Date().toISOString().split("T")[0]} defaultValue={date} onChange={changeDate}></input>
                 </div>
                 <div className="time-container">
                     <span className="title">Time</span>

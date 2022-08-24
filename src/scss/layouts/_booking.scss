@@ -88,6 +88,11 @@
             background-color: white;
             @include mixins.flex(row, center, center);
             border-radius: 17px;
+            input {
+                border: none;
+                outline: none;
+                font-size: 1.3em
+            }
         }
         .time-container {
             @include mixins.flex(column, initial, initial, 10px);
