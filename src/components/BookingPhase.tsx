@@ -12,7 +12,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
             <button onClick={() => {props.changePhase(props.phase + 1)}}>+ 1</button>
         </div>
         <div className="booking-phase-display">
-            <div className={`booking-phase phase-date ${props.phase === 1 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 1 && 'current'}`} onClick={() => props.changePhase(1)}>
                 <span className="phase-number">
                     1
                 </span>
@@ -21,7 +21,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${props.phase === 2 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 2 && 'current'}`} onClick={() => props.changePhase(2)}>
                 <span className="phase-number">
                     2
                 </span>
@@ -30,7 +30,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${props.phase === 3 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 3 && 'current'}`} onClick={() => props.changePhase(3)}>
                 <span className="phase-number">
                     3
                 </span>
@@ -39,7 +39,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${props.phase === 4 && 'current'}`}>
+            <div className={`booking-phase phase-date ${props.phase === 4 && 'current'}`} onClick={() => props.changePhase(4)}>
                 <span className="phase-number">
                     4
                 </span>

@@ -60,32 +60,34 @@ export function Booking() {
 
     return <main className="booking-page">
         <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
-        { phase === 1 &&
-        <div className="phase-container date-phase">
-            <div className="date-container">
-                <input type="date" defaultValue={date} onChange={changeDate}></input>
-            </div>
-            <div className="time-container">
-                <span className="title">Time</span>
-
-                <div className="choice-wrapper">
-                    <span className={`${time === 18 && 'selected'}`} onClick={() => changeTime(18)}>18 - 20</span>
-                    <span className={`${time === 21 && 'selected'}`} onClick={() => changeTime(21)}>21 - 23</span>
+        <div className="form-container">
+            { phase === 1 &&
+            <div className="phase-container date-phase">
+                <div className="date-container">
+                    <input type="date" defaultValue={date} onChange={changeDate}></input>
                 </div>
+                <div className="time-container">
+                    <span className="title">Time</span>
+
+                    <div className="choice-wrapper">
+                        <span className={`${time === 18 && 'selected'}`} onClick={() => changeTime(18)}>18 - 20</span>
+                        <span className={`${time === 21 && 'selected'}`} onClick={() => changeTime(21)}>21 - 23</span>
+                    </div>
+                </div>
+            </div>}
+            { phase === 2 && 
+            <div className="phase-container">
+                <p>Name</p>
+                <input type="text" placeholder="Full Name" onChange={changeName}></input>
+                <p>Email</p>
+                <input type="email" placeholder="example@domain.com" onChange={changeEmail}></input>
+                <p>Phone</p>
+                <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
             </div>
-        </div>}
-        { phase === 2 && 
-        <div className="phase-container">
-            <p>Name</p>
-            <input type="text" placeholder="Full Name" onChange={changeName}></input>
-            <p>Email</p>
-            <input type="email" placeholder="example@domain.com" onChange={changeEmail}></input>
-            <p>Phone</p>
-            <input type="tel" placeholder="111-222 33 44" onChange={changePhone}></input>
+            }
         </div>
-        }
         <div className="next-phase-wrapper">
-            <span>Continue </span>
+            <span onClick={() => changePhase(phase + 1)}>Continue</span>
             <span><i className="fa-solid fa-angle-right"></i></span>
         </div>
     </main>
