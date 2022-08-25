@@ -1,6 +1,7 @@
 require("dotenv").config();
 require("./mongoose");
 const express = require("express");
+const nodemailer = require("nodemailer");
 const { Types } = require("mongoose");
 const BookingModel = require("./models/BookingModel");
 const CustomerModel = require("./models/CustomerModel");
@@ -34,7 +35,9 @@ app.get("/", async (req, res) => {
 app.get("/getbooking", async (req, res) => {
   let { id } = req.query;
   try {
-    const booking = await BookingModel.findOne({ _id: id }).populate("customer").lean();
+    const booking = await BookingModel.findOne({ _id: id })
+      .populate("customer")
+      .lean();
     res.send(booking);
     return;
   } catch (err) {
@@ -63,7 +66,9 @@ app.get("/getallbookings", async (req, res) => {
 app.get("/getbookingsbycustomer", async (req, res) => {
   let { id } = req.body;
   try {
-    const bookings = await BookingModel.find({ customer: id }).populate("customer").lean();
+    const bookings = await BookingModel.find({ customer: id })
+      .populate("customer")
+      .lean();
     res.send(bookings);
     return;
   } catch (err) {
@@ -173,6 +178,42 @@ app.post("/admineditbooking/:booking", async (req, res) => {
       res.send(result);
     }
   );
+});
+
+app.post("/send-email", async (req, res) => {
+  let { date, time, guests, name, email, phone } = req.body;
+
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "cenamatgatan@gmail.com",
+      pass: "Grupp5medie",
+    },
+  });
+
+  var mailOptions = {
+    from: "cenamatgatan@gmail.com",
+    to: email,
+    subject: "Booking Confirmation",
+    text:
+      "Hello " +
+      name +
+      "! We welcome you to Cena at " +
+      time +
+      "o'clock on the" +
+      date +
+      ". Where a table of " +
+      guests +
+      " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:8000/cancel/",
+  };
+
+  // transporter.sendMail(mailOptions, function (error, info) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("Email sent: " + info.response);
+  //   }
+  // });
 });
 
 app.listen(port, () => {
