@@ -1,0 +1,32 @@
+.home{
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-image: url("../../assets/logo.png");
+
+    &__logo{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        left: 44%;
+        top: 30%;
+        
+        img{
+            width: 100%;
+        }
+
+    }
+    &__arrow{
+        width: 50px;
+        position: absolute;
+        bottom: 0;
+        left: 47%;
+        cursor: pointer;
+
+        img{
+            width: 100%;
+        }
+    }
+}
