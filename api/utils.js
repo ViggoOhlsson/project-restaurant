@@ -14,6 +14,7 @@ const utils = {
             return err
         }
     },
+    //Kollar om dage och tiden har tillräckligt många lediga bord
     isFullyBooked: async (date, time, tables) => {
         let bookings = await BookingModel.find({date:date, time:time}, {_id: -1, tables: 1}).lean()
         let bookedTables = bookings.reduce((amt, booking) => {
