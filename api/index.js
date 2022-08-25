@@ -175,6 +175,21 @@ app.post("/admineditbooking/:booking", async (req, res) => {
   );
 });
 
+//Redigerar en customer via admin sidan
+app.post("/admineditcustomer/:customer", async (req, res) => {
+  const customer = JSON.parse(req.params.customer);
+
+  CustomerModel.updateOne(
+    { _id: customer._id },
+    {
+      $set: { name: customer.name, email:customer.email, phone: customer.phone },
+    },
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });

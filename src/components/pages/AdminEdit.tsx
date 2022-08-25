@@ -41,6 +41,13 @@ export function AdminEdit() {
     phone: 0,
   });
 
+  const [editCustomer, setEditCustomer] = useState<ICustomer>({
+    _id: "",
+    name: "",
+    email: "",
+    phone: 0,
+  });
+
   const [deleteBookingId, setDeleteBookingId] = useState("");
 
   useEffect(() => {
@@ -50,7 +57,7 @@ export function AdminEdit() {
       for (let i = 0; i < bookings.length; i++) {
         if (bookings[i]._id === id) {
           setEditing(bookings[i]);
-          setCustomer(bookings[i].customer);
+          setEditCustomer(bookings[i].customer);
         }
       }
     });
@@ -60,7 +67,7 @@ export function AdminEdit() {
     for (let i = 0; i < bookings.length; i++) {
       if (bookings[i]._id === id) {
         setEditing(bookings[i]);
-        setCustomer(bookings[i].customer);
+        setEditCustomer(bookings[i].customer);
       }
     }
   }, [bookings]);
@@ -88,6 +95,23 @@ export function AdminEdit() {
     });
   }, [booking]);
 
+  //Anropar api och skickar ett objekt till en post som redigerar customer
+  useEffect(() => {
+    if (customer.name === "") return;
+    let customerObject = JSON.stringify(customer);
+    axios
+      .post("http://localhost:8000/admineditcustomer/" + customerObject)
+      .then((res) => {
+        console.log(res);
+      });
+    setCustomer({
+        _id: "",
+        name: "",
+        email: "",
+        phone: 0,
+    });
+  }, [customer]);
+
   //Anropar api och skickar ett id till en post som raderar bokning
   useEffect(() => {
     if (deleteBookingId === "") return;
@@ -108,14 +132,11 @@ export function AdminEdit() {
   }
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
-    // setCustomer({...customer, [e.target.name]: e.target.value})
-    setEditing({
-      ...editing,
-      customer: { ...editing.customer, name: e.target.value },
-    });
-
-    //Lägg user i ett eget state
-    //Här måste man gå in i bokningen och sen in i customer och ändra på nått sätt
+    setEditCustomer({...editCustomer, [e.target.name]: e.target.value})
+    // setEditing({
+    //   ...editing,
+    //   customer: { ...editing.customer, name: e.target.value },
+    // });
   }
 
   function handleSave(e: FormEvent) {
@@ -124,6 +145,7 @@ export function AdminEdit() {
 
     //Måste ha i en annan funktion först
     // setEditing({ ...editing, customer: customer });
+    setCustomer(editCustomer);
     setBooking(editing);
     console.log(booking);
 
@@ -202,7 +224,7 @@ export function AdminEdit() {
               <input
                 type="text"
                 name="name"
-                value={editing.customer.name}
+                value={editCustomer.name}
                 onChange={handleUserChange}
               />
             </div>
@@ -211,7 +233,7 @@ export function AdminEdit() {
               <input
                 type="email"
                 name="email"
-                value={editing.customer.email}
+                value={editCustomer.email}
                 onChange={handleUserChange}
               />
             </div>
@@ -220,7 +242,7 @@ export function AdminEdit() {
               <input
                 type="tel"
                 name="phone"
-                value={editing.customer.phone}
+                value={editCustomer.phone}
                 onChange={handleUserChange}
               />
             </div>
