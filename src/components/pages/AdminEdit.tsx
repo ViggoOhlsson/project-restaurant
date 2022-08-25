@@ -133,35 +133,13 @@ export function AdminEdit() {
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
     setEditCustomer({...editCustomer, [e.target.name]: e.target.value})
-    // setEditing({
-    //   ...editing,
-    //   customer: { ...editing.customer, name: e.target.value },
-    // });
   }
 
   function handleSave(e: FormEvent) {
     e.preventDefault();
-    console.log("hello" + editing.customer.name);
 
-    //Måste ha i en annan funktion först
-    // setEditing({ ...editing, customer: customer });
     setCustomer(editCustomer);
     setBooking(editing);
-    console.log(booking);
-
-    //Tog bort så att den nya infon ligger kvar när man klickat på spara
-    // setEditing({
-    //   date: new Date(),
-    //   time: 0,
-    //   guests: 0,
-    //   _id: "",
-    //   customer: {
-    //     _id: "",
-    //     name: "",
-    //     email: "",
-    //     phone: 0,
-    //   },
-    // });
   }
 
   function deleteBooking(id: string) {
@@ -185,8 +163,6 @@ export function AdminEdit() {
                 type="date"
                 min={new Date().toISOString().split("T")[0]} //Tar bort passerade datum
                 name="date"
-                //När defaultvalue användes så syntes dagens datum istället för bokningens datum
-                // defaultValue={new Date(editing.date).toLocaleDateString()}
                 value={new Date(editing.date).toLocaleDateString()}
                 onChange={handleInfoChange}
                 placeholder="Date"

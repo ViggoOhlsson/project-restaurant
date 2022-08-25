@@ -164,15 +164,22 @@ app.post("/admineditbooking/:booking", async (req, res) => {
   console.log(JSON.parse(req.params.booking));
   const booking = JSON.parse(req.params.booking);
 
-  BookingModel.updateOne(
-    { _id: booking._id },
-    {
-      $set: { date: booking.date, time: booking.time, guests: booking.guests },
-    },
-    (err, result) => {
-      res.send(result);
-    }
-  );
+  if (await isFullyBooked(date, time, booking.tables)) {
+    console.log("Day & time is fully booked");
+    res.send({ msg: "Not enought tables available" });
+    return;
+  }else{
+    BookingModel.updateOne(
+      { _id: booking._id },
+      {
+        $set: { date: booking.date, time: booking.time, guests: booking.guests },
+      },
+      (err, result) => {
+        res.send(result);
+      }
+    );
+  }
+
 });
 
 //Redigerar en customer via admin sidan
