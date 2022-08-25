@@ -1,15 +1,9 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { IBooking } from "../../models/IBooking";
-
-// return <p>{params.get("userId")}</p>;
+import { IBooking, ICustomer } from "../../models/IBooking";
 
 export function AdminEdit() {
-  //   const [editBookingObject, setEditBookingObject] = useState({});
-
-  //Hämtar kundens id från params och sätter det i ett eget state
-  // const [params, setParams] = useState(useParams());
   const [id, setId] = useState(useParams().id);
 
   const [bookings, setBookings] = useState<IBooking[]>([]);
@@ -18,13 +12,13 @@ export function AdminEdit() {
     date: new Date(),
     time: 0,
     guests: 0,
+    _id: "",
     customer: {
       _id: "",
       name: "",
       email: "",
       phone: 0,
     },
-    _id: "",
   });
 
   const [editing, setEditing] = useState<IBooking>({
@@ -40,6 +34,13 @@ export function AdminEdit() {
     },
   });
 
+  const [customer, setCustomer] = useState<ICustomer>({
+    _id: "",
+    name: "",
+    email: "",
+    phone: 0,
+  });
+
   const [deleteBookingId, setDeleteBookingId] = useState("");
 
   useEffect(() => {
@@ -47,14 +48,20 @@ export function AdminEdit() {
       console.log(res);
       setBookings(res.data);
       for (let i = 0; i < bookings.length; i++) {
-        if (bookings[i]._id === id) setEditing(bookings[i]);
+        if (bookings[i]._id === id) {
+          setEditing(bookings[i]);
+          setCustomer(bookings[i].customer);
+        }
       }
     });
   }, []);
 
   useEffect(() => {
     for (let i = 0; i < bookings.length; i++) {
-      if (bookings[i]._id === id) setEditing(bookings[i]);
+      if (bookings[i]._id === id) {
+        setEditing(bookings[i]);
+        setCustomer(bookings[i].customer);
+      }
     }
   }, [bookings]);
 
@@ -101,15 +108,24 @@ export function AdminEdit() {
   }
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
-      setEditing({ ...editing, [e.target.name]: e.target.value });
+    // setCustomer({...customer, [e.target.name]: e.target.value})
+    setEditing({
+      ...editing,
+      customer: { ...editing.customer, name: e.target.value },
+    });
 
+    //Lägg user i ett eget state
     //Här måste man gå in i bokningen och sen in i customer och ändra på nått sätt
   }
 
   function handleSave(e: FormEvent) {
     e.preventDefault();
+    console.log("hello" + editing.customer.name);
 
+    //Måste ha i en annan funktion först
+    // setEditing({ ...editing, customer: customer });
     setBooking(editing);
+    console.log(booking);
 
     //Tog bort så att den nya infon ligger kvar när man klickat på spara
     // setEditing({
@@ -132,99 +148,99 @@ export function AdminEdit() {
 
   return (
     <main>
-    <div className="admin-edit">
-      <h3 className="admin-edit__section admin-edit__section--heading">
-        Edit reservation
-      </h3>
-      <form
-        className="admin-edit__section admin-edit__section--form"
-        onSubmit={handleSave}
-      >
-        <div className="form__info">
-          <div className="form__date">
-            <label htmlFor="date">Date</label>
-            <input
-              type="date"
-              min={new Date().toISOString().split("T")[0]} //Tar bort passerade datum
-              name="date"
-              //När defaultvalue användes så syntes dagens datum istället för bokningens datum
-              // defaultValue={new Date(editing.date).toLocaleDateString()}
-              value={new Date(editing.date).toLocaleDateString()}
-              onChange={handleInfoChange}
-              placeholder="Date"
-            />
+      <div className="admin-edit">
+        <h3 className="admin-edit__section admin-edit__section--heading">
+          Edit reservation
+        </h3>
+        <form
+          className="admin-edit__section admin-edit__section--form"
+          onSubmit={handleSave}
+        >
+          <div className="form__info">
+            <div className="form__date">
+              <label htmlFor="date">Date</label>
+              <input
+                type="date"
+                min={new Date().toISOString().split("T")[0]} //Tar bort passerade datum
+                name="date"
+                //När defaultvalue användes så syntes dagens datum istället för bokningens datum
+                // defaultValue={new Date(editing.date).toLocaleDateString()}
+                value={new Date(editing.date).toLocaleDateString()}
+                onChange={handleInfoChange}
+                placeholder="Date"
+              />
+            </div>
+            <div className="form__time">
+              <label htmlFor="time">Time</label>
+              <input
+                type="number"
+                name="time"
+                step="3"
+                min="18"
+                max="21"
+                value={editing.time}
+                onChange={handleInfoChange}
+                placeholder="Time"
+              />
+            </div>
+            <div className="form__guests">
+              <label htmlFor="guests">Guests</label>
+              <input
+                type="number"
+                name="guests"
+                min="1"
+                max="90"
+                value={editing.guests}
+                onChange={handleInfoChange}
+                placeholder="Guests"
+              />
+            </div>
           </div>
-          <div className="form__time">
-            <label htmlFor="time">Time</label>
-            <input
-              type="number"
-              name="time"
-              step="3"
-              min="18"
-              max="21"
-              value={editing.time}
-              onChange={handleInfoChange}
-              placeholder="Time"
-            />
+          <div className="form__user">
+            <div className="form__userName">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={editing.customer.name}
+                onChange={handleUserChange}
+              />
+            </div>
+            <div className="form__email">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={editing.customer.email}
+                onChange={handleUserChange}
+              />
+            </div>
+            <div className="form__phone">
+              <label htmlFor="phone">Phone</label>
+              <input
+                type="tel"
+                name="phone"
+                value={editing.customer.phone}
+                onChange={handleUserChange}
+              />
+            </div>
           </div>
-          <div className="form__guests">
-            <label htmlFor="guests">Guests</label>
-            <input
-              type="number"
-              name="guests"
-              min="1"
-              max="90"
-              value={editing.guests}
-              onChange={handleInfoChange}
-              placeholder="Guests"
-            />
+          <div className="form__buttons">
+            <Link className="form__cancel" to={"/admin"}>
+              Cancel
+            </Link>
+            <button className="form__update">Update reservation</button>
           </div>
-        </div>
-        <div className="form__user">
-          <div className="form__userName">
-            <label htmlFor="userName">Name</label>
-            <input
-              type="text"
-              name="userName"
-              value={editing.customer.name}
-              onChange={handleUserChange}
-            />
-          </div>
-          <div className="form__email">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={editing.customer.email}
-              onChange={handleUserChange}
-            />
-          </div>
-          <div className="form__phone">
-            <label htmlFor="phone">Phone</label>
-            <input
-              type="tel"
-              name="phone"
-              value={editing.customer.phone}
-              onChange={handleUserChange}
-            />
-          </div>
-        </div>
-        <div className="form__buttons">
-          <Link className="form__cancel" to={"/admin"}>
-            Cancel
-          </Link>
-          <button className="form__update">Update reservation</button>
-        </div>
-      </form>
-      <button
-        className="admin-edit__section admin-edit__section--delete"
-        onClick={() => {
-          deleteBooking(editing._id);
-        }}
-      >
-        Remove reservation x
-      </button>
-    </div>
+        </form>
+        <button
+          className="admin-edit__section admin-edit__section--delete"
+          onClick={() => {
+            deleteBooking(editing._id);
+          }}
+        >
+          Remove reservation x
+        </button>
+      </div>
     </main>
   );
 }
