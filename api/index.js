@@ -175,7 +175,8 @@ app.post("/admineditbooking/:booking", async (req, res) => {
     )
   ) {
     console.log("Day & time is fully booked");
-    res.send({ msg: "Not enought tables available" });
+    // res.send({ msg: "Not enought tables available" });
+    res.send(true);
     return;
   } else {
     await BookingModel.updateOne(
@@ -202,7 +203,7 @@ app.post("/admineditbooking/:booking", async (req, res) => {
     );
   }
 
-  res.send("Great job");
+  res.send(false);
 });
 
 app.listen(port, () => {

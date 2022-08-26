@@ -6,6 +6,8 @@ import { IBooking, ICustomer } from "../../models/IBooking";
 export function AdminEdit() {
   const [id, setId] = useState(useParams().id);
 
+  const [fullyBooked, setFullyBooked] = useState(false);
+
   const [bookings, setBookings] = useState<IBooking[]>([]);
 
   const [booking, setBooking] = useState<IBooking>({
@@ -76,10 +78,11 @@ export function AdminEdit() {
   useEffect(() => {
     if (booking.time === 0) return;
     let bookingObject = JSON.stringify(booking);
+
     axios
       .post("http://localhost:8000/admineditbooking/" + bookingObject)
       .then((res) => {
-        console.log(res);
+        setFullyBooked(res.data);
       });
     setBooking({
       date: new Date(),
@@ -93,6 +96,8 @@ export function AdminEdit() {
       },
       _id: "",
     });
+
+    // setFullyBooked(true);
   }, [booking]);
 
   //Anropar api och skickar ett objekt till en post som redigerar customer
@@ -132,7 +137,10 @@ export function AdminEdit() {
   }
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
-    setEditing({...editing, customer: {...editing.customer, [e.target.name]: e.target.value}})
+    setEditing({
+      ...editing,
+      customer: { ...editing.customer, [e.target.name]: e.target.value },
+    });
   }
 
   function handleSave(e: FormEvent) {
@@ -151,11 +159,12 @@ export function AdminEdit() {
         <h3 className="admin-edit__section admin-edit__section--heading">
           Edit reservation
         </h3>
-        
         <form
           className="admin-edit__section admin-edit__section--form"
           onSubmit={handleSave}
         >
+          {fullyBooked && <span className="form__error">Not enough available tables</span>}
+
           <div className="form__info">
             <div className="form__date">
               <label htmlFor="date">Date</label>
