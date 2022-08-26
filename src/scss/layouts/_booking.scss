@@ -11,6 +11,7 @@
 
     @include typography.inter();
     @include mixins.flex(column, center, center, 60px);
+    margin: 0 0 400px;
 
     .booking-phase-display {
         display: grid;
