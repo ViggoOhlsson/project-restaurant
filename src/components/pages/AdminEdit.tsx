@@ -132,13 +132,14 @@ export function AdminEdit() {
   }
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
-    setEditCustomer({...editCustomer, [e.target.name]: e.target.value})
+    setEditing({...editing, customer: {...editing.customer, [e.target.name]: e.target.value}})
+    // setEditCustomer({...editCustomer, [e.target.name]: e.target.value})
   }
 
   function handleSave(e: FormEvent) {
     e.preventDefault();
 
-    setCustomer(editCustomer);
+    // setCustomer(editCustomer);
     setBooking(editing);
   }
 
@@ -152,6 +153,7 @@ export function AdminEdit() {
         <h3 className="admin-edit__section admin-edit__section--heading">
           Edit reservation
         </h3>
+        
         <form
           className="admin-edit__section admin-edit__section--form"
           onSubmit={handleSave}
@@ -200,7 +202,7 @@ export function AdminEdit() {
               <input
                 type="text"
                 name="name"
-                value={editCustomer.name}
+                value={editing.customer.name}
                 onChange={handleUserChange}
               />
             </div>
@@ -209,7 +211,7 @@ export function AdminEdit() {
               <input
                 type="email"
                 name="email"
-                value={editCustomer.email}
+                value={editing.customer.email}
                 onChange={handleUserChange}
               />
             </div>
@@ -218,7 +220,7 @@ export function AdminEdit() {
               <input
                 type="tel"
                 name="phone"
-                value={editCustomer.phone}
+                value={editing.customer.phone}
                 onChange={handleUserChange}
               />
             </div>

@@ -34,7 +34,9 @@ app.get("/", async (req, res) => {
 app.get("/getbooking", async (req, res) => {
   let { id } = req.query;
   try {
-    const booking = await BookingModel.findOne({ _id: id }).populate("customer").lean();
+    const booking = await BookingModel.findOne({ _id: id })
+      .populate("customer")
+      .lean();
     res.send(booking);
     return;
   } catch (err) {
@@ -63,7 +65,9 @@ app.get("/getallbookings", async (req, res) => {
 app.get("/getbookingsbycustomer", async (req, res) => {
   let { id } = req.body;
   try {
-    const bookings = await BookingModel.find({ customer: id }).populate("customer").lean();
+    const bookings = await BookingModel.find({ customer: id })
+      .populate("customer")
+      .lean();
     res.send(bookings);
     return;
   } catch (err) {
@@ -158,44 +162,71 @@ app.post("/admindeletebooking/:id", async (req, res) => {
   });
 });
 
-//Redigerar en bokning via admin sidan
+//Redigerar en bokning, inklusive customer via admin sidan
 app.post("/admineditbooking/:booking", async (req, res) => {
-  console.log(req.params.booking);
-  console.log(JSON.parse(req.params.booking));
   const booking = JSON.parse(req.params.booking);
-
+  const customer = booking.customer;
   if (await isFullyBooked(date, time, booking.tables)) {
     console.log("Day & time is fully booked");
     res.send({ msg: "Not enought tables available" });
     return;
-  }else{
-    BookingModel.updateOne(
+  } else {
+    await BookingModel.updateOne(
       { _id: booking._id },
       {
-        $set: { date: booking.date, time: booking.time, guests: booking.guests },
-      },
-      (err, result) => {
-        res.send(result);
+        $set: {
+          date: booking.date,
+          time: booking.time,
+          guests: booking.guests,
+        },
+      }
+    );
+
+    await CustomerModel.updateOne(
+      { _id: customer._id },
+      {
+        $set: {
+          name: customer.name,
+          email: customer.email,
+          phone: customer.phone,
+        },
       }
     );
   }
 
+  res.send("Great job");
+  // if (await isFullyBooked(date, time, booking.tables)) {
+  //   console.log("Day & time is fully booked");
+  //   res.send({ msg: "Not enought tables available" });
+  //   return;
+  // }else{
+
+  //   BookingModel.updateOne(
+  //     { _id: booking._id },
+  //     {
+  //       $set: { date: booking.date, time: booking.time, guests: booking.guests },
+  //     },
+  //     (err, result) => {
+  //       res.send(result);
+  //     }
+  //   );
+  // }
 });
 
 //Redigerar en customer via admin sidan
-app.post("/admineditcustomer/:customer", async (req, res) => {
-  const customer = JSON.parse(req.params.customer);
+// app.post("/admineditcustomer/:customer", async (req, res) => {
+//   const customer = JSON.parse(req.params.customer);
 
-  CustomerModel.updateOne(
-    { _id: customer._id },
-    {
-      $set: { name: customer.name, email:customer.email, phone: customer.phone },
-    },
-    (err, result) => {
-      res.send(result);
-    }
-  );
-});
+//   CustomerModel.updateOne(
+//     { _id: customer._id },
+//     {
+//       $set: { name: customer.name, email:customer.email, phone: customer.phone },
+//     },
+//     (err, result) => {
+//       res.send(result);
+//     }
+//   );
+// });
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
