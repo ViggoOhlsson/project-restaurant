@@ -37,6 +37,13 @@ main{
         padding: 10px 12px 10px 12px;
         border-radius: 10px;
       }
+
+      .form__error {
+        color: #af4d4d;
+        padding: 8px 0px 8px 0px;
+        border-radius: 10px;
+      }
+
       .form__info {
         @include mixins.flex(row, center, center, 1rem);
       }

@@ -163,7 +163,7 @@ export function AdminEdit() {
           className="admin-edit__section admin-edit__section--form"
           onSubmit={handleSave}
         >
-          {fullyBooked && <span className="form__error">Not enough available tables</span>}
+          {fullyBooked && <span className="form__error">Not enough available tables!</span>}
 
           <div className="form__info">
             <div className="form__date">
