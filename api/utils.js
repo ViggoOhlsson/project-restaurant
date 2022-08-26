@@ -20,7 +20,6 @@ const utils = {
             return amt + booking.tables
         }, 0)
         return bookedTables + tables > 15
-
     },
     guestsToTables: (guests) => {
         let tables = Math.ceil(guests / 6)

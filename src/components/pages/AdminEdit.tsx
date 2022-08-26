@@ -34,19 +34,19 @@ export function AdminEdit() {
     },
   });
 
-  const [customer, setCustomer] = useState<ICustomer>({
-    _id: "",
-    name: "",
-    email: "",
-    phone: 0,
-  });
+  // const [customer, setCustomer] = useState<ICustomer>({
+  //   _id: "",
+  //   name: "",
+  //   email: "",
+  //   phone: 0,
+  // });
 
-  const [editCustomer, setEditCustomer] = useState<ICustomer>({
-    _id: "",
-    name: "",
-    email: "",
-    phone: 0,
-  });
+  // const [editCustomer, setEditCustomer] = useState<ICustomer>({
+  //   _id: "",
+  //   name: "",
+  //   email: "",
+  //   phone: 0,
+  // });
 
   const [deleteBookingId, setDeleteBookingId] = useState("");
 
@@ -57,7 +57,7 @@ export function AdminEdit() {
       for (let i = 0; i < bookings.length; i++) {
         if (bookings[i]._id === id) {
           setEditing(bookings[i]);
-          setEditCustomer(bookings[i].customer);
+          // setEditCustomer(bookings[i].customer);
         }
       }
     });
@@ -67,7 +67,7 @@ export function AdminEdit() {
     for (let i = 0; i < bookings.length; i++) {
       if (bookings[i]._id === id) {
         setEditing(bookings[i]);
-        setEditCustomer(bookings[i].customer);
+        // setEditCustomer(bookings[i].customer);
       }
     }
   }, [bookings]);
@@ -96,21 +96,21 @@ export function AdminEdit() {
   }, [booking]);
 
   //Anropar api och skickar ett objekt till en post som redigerar customer
-  useEffect(() => {
-    if (customer.name === "") return;
-    let customerObject = JSON.stringify(customer);
-    axios
-      .post("http://localhost:8000/admineditcustomer/" + customerObject)
-      .then((res) => {
-        console.log(res);
-      });
-    setCustomer({
-        _id: "",
-        name: "",
-        email: "",
-        phone: 0,
-    });
-  }, [customer]);
+  // useEffect(() => {
+  //   if (customer.name === "") return;
+  //   let customerObject = JSON.stringify(customer);
+  //   axios
+  //     .post("http://localhost:8000/admineditcustomer/" + customerObject)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //   setCustomer({
+  //       _id: "",
+  //       name: "",
+  //       email: "",
+  //       phone: 0,
+  //   });
+  // }, [customer]);
 
   //Anropar api och skickar ett id till en post som raderar bokning
   useEffect(() => {
@@ -133,13 +133,11 @@ export function AdminEdit() {
 
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
     setEditing({...editing, customer: {...editing.customer, [e.target.name]: e.target.value}})
-    // setEditCustomer({...editCustomer, [e.target.name]: e.target.value})
   }
 
   function handleSave(e: FormEvent) {
     e.preventDefault();
 
-    // setCustomer(editCustomer);
     setBooking(editing);
   }
 
