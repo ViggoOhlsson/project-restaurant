@@ -163,21 +163,48 @@ app.post("/admindeletebooking/:id", async (req, res) => {
   });
 });
 
-//Redigerar en bokning via admin sidan
+//Redigerar en bokning, inklusive customer via admin sidan
 app.post("/admineditbooking/:booking", async (req, res) => {
-  console.log(req.params.booking);
-  console.log(JSON.parse(req.params.booking));
   const booking = JSON.parse(req.params.booking);
+  const customer = booking.customer;
+//If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
+  if (
+    await isFullyBooked(
+      booking.date,
+      booking.time,
+      guestsToTables(booking.guests)
+    )
+  ) {
+    console.log("Day & time is fully booked");
+    // res.send({ msg: "Not enought tables available" });
+    res.send(true);
+    return;
+  } else {
+    await BookingModel.updateOne(
+      { _id: booking._id },
+      {
+        $set: {
+          date: booking.date,
+          time: booking.time,
+          guests: booking.guests,
+          tables: guestsToTables(booking.guests),
+        },
+      }
+    );
 
-  BookingModel.updateOne(
-    { _id: booking._id },
-    {
-      $set: { date: booking.date, time: booking.time, guests: booking.guests },
-    },
-    (err, result) => {
-      res.send(result);
-    }
-  );
+    await CustomerModel.updateOne(
+      { _id: customer._id },
+      {
+        $set: {
+          name: customer.name,
+          email: customer.email,
+          phone: customer.phone,
+        },
+      }
+    );
+  }
+
+  res.send(false);
 });
 
 app.post("/send-email", async (req, res) => {
