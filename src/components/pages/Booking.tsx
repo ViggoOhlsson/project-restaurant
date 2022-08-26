@@ -41,8 +41,11 @@ export function Booking() {
         try {
             let res = await axios.post("http://localhost:8000/book", body)
             console.log(res)
+
         } catch (err) {
             console.log(err)
+        } finally {
+            changePhase(4)
         }
     }
 
@@ -95,6 +98,37 @@ export function Booking() {
                         <input type="number" className="guests-input" onChange={changeGuests} value={guests}></input>
                     </div>
                 </div>
+            </div>
+            }
+            { phase === 3 && 
+            <div className="phase-container review-phase">
+                <div className="booking-info-container">
+                    <div className="date">
+                        <span>Date</span>
+                        <p>{date.split("-").splice(1,2).join("-")}</p>
+                    </div>
+                    <div className="guests">
+                        <span>Guests</span>
+                        <p>{guests}</p>
+                    </div>
+                    <div className="time">
+                        <span>Time</span>
+                        <p>{time} - {time + 2}</p>
+                    </div>
+                </div>
+                <div className="customer-info-container">
+                    <p>Contact Information</p>
+                    <div>
+
+                        <p>{name}</p>
+                        <p>{email}</p>
+                        <p>{phone}</p>
+                    </div>
+                </div>
+                <button onClick={placeBooking} className="submit-button">
+                    <i className="fa-solid fa-check"></i>
+                    <span>Place Booking</span>
+                </button>
             </div>
             }
         </div>
