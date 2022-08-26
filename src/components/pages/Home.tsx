@@ -7,12 +7,12 @@ export function Home() {
         <div className="home__logo">
           <img src={require("../../assets/hero-img.png")} alt="Logo" />
         </div>
-        <div className="home__arrow">
+        <div className="home__container">
           <Link to="/book">
-            <img
-              src={require("../../assets/arrow-down-3101 (2).png")}
-              alt="Arrow"
-            />
+            <button className="home__container__button" role="button">
+              Reserve a table
+            </button>
+            {/* <button class="button-55" role="button">Button 55</button> */}
           </Link>
         </div>
       </div>
