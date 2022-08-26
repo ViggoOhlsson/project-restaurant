@@ -187,7 +187,7 @@ app.post("/send-email", async (req, res) => {
     service: "gmail",
     auth: {
       user: "cenamatgatan@gmail.com",
-      pass: "Grupp5medie",
+      pass: "deefoqwvuimsluss",
     },
   });
 
@@ -200,20 +200,20 @@ app.post("/send-email", async (req, res) => {
       name +
       "! We welcome you to Cena at " +
       time +
-      "o'clock on the" +
+      "o'clock on the " +
       date +
       ". Where a table of " +
       guests +
       " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:8000/cancel/",
   };
 
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("Email sent: " + info.response);
-  //   }
-  // });
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 });
 
 app.listen(port, () => {
