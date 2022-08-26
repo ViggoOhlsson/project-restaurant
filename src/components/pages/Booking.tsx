@@ -42,7 +42,10 @@ export function Booking() {
     console.log(body);
     try {
       let res = await axios.post("http://localhost:8000/book", body);
-      let emailRes = await axios.post("http://localhost:8000/send-email", body);
+      let emailRes = await axios.post(
+        "http://localhost:8000/send-email",
+        res.data
+      );
       console.log(res);
       console.log(emailRes);
     } catch (err) {

@@ -181,7 +181,9 @@ app.post("/admineditbooking/:booking", async (req, res) => {
 });
 
 app.post("/send-email", async (req, res) => {
-  let { date, time, guests, name, email, phone } = req.body;
+  // let { booking.date, time, guests, name, email, phone } = req.body;
+
+  console.log("hej" + req.body.customer.email);
 
   var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -193,18 +195,19 @@ app.post("/send-email", async (req, res) => {
 
   var mailOptions = {
     from: "cenamatgatan@gmail.com",
-    to: email,
+    to: req.body.customer.email,
     subject: "Booking Confirmation",
     text:
       "Hello " +
-      name +
+      req.body.customer.name +
       "! We welcome you to Cena at " +
-      time +
+      req.body.booking.time +
       "o'clock on the " +
-      date +
+      req.body.booking.date +
       ". Where a table of " +
-      guests +
-      " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:8000/cancel/",
+      req.body.booking.guests +
+      " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:8000/cancel/" +
+      req.body.booking._id,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -213,6 +216,14 @@ app.post("/send-email", async (req, res) => {
     } else {
       console.log("Email sent: " + info.response);
     }
+  });
+});
+
+app.get("/cancel/:id", async (req, res) => {
+  let id = req.params.id;
+  BookingModel.deleteOne({ _id: id }, (err, result) => {
+    console.log(result);
+    res.send(result);
   });
 });
 
