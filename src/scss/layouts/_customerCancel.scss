@@ -1,0 +1,110 @@
+////////////////////
+// IMPORTS & USE //
+//////////////////
+@use "../base/typography";
+@use "../variables";
+@use "../mixins";
+
+.cancel__container{
+    @include mixins.flex(column, center, center, 2);
+    margin-bottom: 70px;
+    
+    &--text{
+        padding: 10px;
+        @include mixins.flex(column, center, center, 1rem);
+        
+        i{
+            color: #E9A8A8;
+            font-size: 4rem;
+            text-align: center;
+        }
+        p{
+            margin-bottom: 40px;
+            text-align: center;
+            color: #DCD4E2;
+            font-size: 1.3rem;
+            font-weight: 100;
+            @include typography.inter;
+        }
+
+    }
+
+    &--box{
+        @include typography.inter;
+        width: 90%;
+        @include mixins.tablet{
+            width: 80%;
+        }
+        @include mixins.desktop{
+            width: 50%;
+        }
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        @include mixins.flex(column, center, center, 2rem);
+
+        &__bookings{
+
+            @include mixins.flex(column, center, center, 2rem);
+            text-align: center;
+            
+            @include mixins.tablet{
+                width: 100%;
+                @include mixins.flex(row, space-evenly, center, 0);
+
+            }
+
+            &-booking-info{
+                
+                @include mixins.tablet{
+                    width: 30%;
+                }
+                &__heading{
+                    padding: 10px;
+                }
+                
+                &__values{
+                    font-weight: 700;
+                    
+                }
+            }
+        }
+        
+        &-customer-info{
+            text-align: center;
+            @include mixins.flex(column, center, center, 2rem);
+            
+            &__heading{
+                
+            }
+            
+            &__values{
+                
+                font-weight: 600;
+            }
+        }
+
+        &-buttons{
+            @include mixins.flex(row, space-evenly, center, 2rem);
+
+            &__delete{
+                padding: 10px;
+                border-radius: 20px;
+                border: 0.4px solid #5F2D2D;
+                background-color: #b161613c;
+                color: #5F2D2D;
+                @include typography.inter;
+                cursor: pointer;
+            }
+            &__regret{
+                cursor: pointer;
+                padding: 10px;
+                border-radius: 20px;
+                border: 0.4px solid #928D8D;
+                background-color: #FFFFFF;
+                @include typography.inter;
+            }
+
+        }
+    }
+}
