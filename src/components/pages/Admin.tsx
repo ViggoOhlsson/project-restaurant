@@ -26,10 +26,12 @@ export function Admin() {
     setDate(new Date().toLocaleDateString());
   }, []);
 
+  //Låter admin välja ett date
   function changeDate(e: ChangeEvent<HTMLInputElement>) {
     setDate(e.target.value);
   }
 
+  //Tar emot date som admin valt och går igenom alla bokningar för att sortera ut de med rätt datum
   function findBooking(findDate: string) {
     let newDate = new Date(findDate);
     for (let i = 0; i < bookings.length; i++) {
@@ -50,6 +52,7 @@ export function Admin() {
     }
   }
 
+  //Delar upp bokningarna efter tid
   useEffect(() => {
     for (let i = 0; i < sortedBookings.length; i++) {
       const booking = sortedBookings[i];
@@ -62,6 +65,7 @@ export function Admin() {
     }
   }, [sortedBookings]);
 
+  //Går igenom bokningarna med tiden 18 och skapar html
   const earlyBookings = earlyBooking.map((booking) => {
     return (
       <>
@@ -91,6 +95,7 @@ export function Admin() {
     );
   });
 
+  //Går igenom bokningarna med tiden 21 och skapar html
   const lateBookings = lateBooking.map((booking) => {
     return (
       <>

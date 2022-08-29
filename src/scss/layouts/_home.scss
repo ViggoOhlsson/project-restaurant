@@ -1,3 +1,7 @@
+@use "../mixins";
+@use "../base/typography";
+
+
 .home{
     height: 100vh;
     background-position: center;
@@ -5,28 +9,42 @@
     background-size: cover;
     position: relative;
     background-image: url("../../assets/logo.png");
+    @include mixins.flex(column, space-evenly, center, 2rem);
 
     &__logo{
-        position: absolute;
+        // position: absolute;
         width: 100px;
         height: 100px;
-        left: 44%;
-        top: 30%;
+        // left: 44%;
+        // top: 30%;
         
         img{
             width: 100%;
-            border-radius: 5px;        }
+            border-radius: 5px;        
+        }
 
     }
-    &__arrow{
-        width: 50px;
-        position: absolute;
-        bottom: 0;
-        left: 47%;
-        cursor: pointer;
+    &__container{
 
-        img{
-            width: 100%;
+        &__button{
+        cursor: pointer;
+        transition: all 235ms ease-in-out;
+        padding: 13px;
+        border: none;
+        border-radius: 30px;
+        background-color: #f3954b;
+        color: #f0f0f0;
+        @include typography.inter;
+        
+        &:hover {
+            box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+            transform: translate3d(0, 2px, 0);
         }
+        
+        &:focus {
+            box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+        } 
     }
 }
+}
+
