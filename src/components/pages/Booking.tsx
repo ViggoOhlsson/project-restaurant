@@ -1,10 +1,12 @@
 import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
+import { Navigate, useNavigate } from "react-router-dom"
 import { BookingPhase } from "../BookingPhase"
 
 export function Booking() {
 
     document.title = "Booking"
+    const navigate = useNavigate()
 
     const [phase, setPhase] = useState(1)
 
@@ -46,6 +48,11 @@ export function Booking() {
             console.log(err)
         } finally {
             changePhase(4)
+            console.log("redirecting...")
+            setTimeout(() => {
+                console.log("redirected")
+                navigate("/")
+            }, 3000);
         }
     }
 
