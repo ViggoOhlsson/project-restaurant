@@ -104,7 +104,7 @@ export const EditForm = (props: IEditFormProps) => {
           props.deleteBooking(props.editingBooking._id);
         }}
       >
-        Remove reservation x
+        Remove reservation <i className="fa-solid fa-trash-can"></i>
       </button>
     </div>
   );
