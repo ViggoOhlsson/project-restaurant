@@ -188,6 +188,25 @@
             }
         }
     }
+    .redirect-phase {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        i {
+            height:120px;
+            border-radius: 50%;
+            background-color: #73B09E;
+            font-size: 5em;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: variables.$primary-purple;
+        }
+        span {
+            color: white
+        }
+    }
     .next-phase-wrapper {
         color: white;
         display: flex;

@@ -131,6 +131,12 @@ export function Booking() {
                 </button>
             </div>
             }
+            { phase === 4 && 
+            <div className="phase-container redirect-phase">
+                <i className="fa-solid fa-check"></i>
+                <p>Reservation Complete</p>
+            </div>
+            }
         </div>
         { phase < 3 && 
             <div className="next-phase-wrapper">
