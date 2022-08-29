@@ -4,6 +4,8 @@
 @use "./base/root";
 @use "./base/typography";
 
+@use "./layouts/layout";
+@use "./layouts/home";
 @use "./layouts/admin";
 @use "./layouts/booking";
 @use "./layouts/error";

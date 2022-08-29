@@ -11,6 +11,7 @@
 
     @include typography.inter();
     @include mixins.flex(column, center, center, 60px);
+    margin: 0 0 400px;
 
     .booking-phase-display {
         display: grid;
@@ -139,6 +140,51 @@
                 .guests-input {
                     justify-self: left;
                 }
+            }
+        }
+    }
+    .review-phase {
+        background-color: white;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        // align-items: center;
+        .booking-info-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            div {
+                gap: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                p {
+                    font-weight: bold;
+                }
+            }
+        }
+        .customer-info-container {
+            @include mixins.flex(column, initial, center, 20px);
+            div {
+                font-weight: bold;
+                align-self: flex-start;
+                @include mixins.flex(column, flex-start, flex-start, 5px);
+            }
+        }
+        .submit-button {
+            @include mixins.flex(row, flex-start, center, 15px);
+            padding: 15px 15px;
+            align-self: center;
+            border: none;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            @include typography.inter();
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.1s;
+            &:hover, &:focus {
+                background-color: variables.$primary-purple;
+                color: white;
             }
         }
     }

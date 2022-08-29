@@ -1,0 +1,132 @@
+////////////////////
+// IMPORTS & USE //
+//////////////////
+@use "../mixins";
+@use "../base/typography";
+
+.nav{
+
+    &__logo--container{
+        margin-top: 50px;
+        margin-left: 50px;
+        width: 180px;
+        
+        img{
+            width: 100%;
+        }
+    }
+}
+
+.footer{
+    padding: 50px;
+    width: 100%;
+    @include mixins.flex(column, center, center, 2rem);
+    background-color: #DCD4E2;
+    
+    &__main{
+        
+        @include mixins.flex(column, center, center, 2rem);
+
+
+        &--logo{
+            width: 150px;
+            
+            img{
+                border-radius: 20px;
+                width: 100%;
+            }
+
+        }
+
+        &--heading{
+            
+            @include typography.nova;
+                color: #2c2531ea;
+                text-transform: uppercase;
+                text-decoration: none;
+                letter-spacing: .25em;
+                display: inline-block;
+                padding: 15px;
+                position: relative;
+                cursor:crosshair;
+                &:hover{
+
+                    transform: scale(1.1);
+                    transition: 0.3s;
+                }
+              
+              &:hover::after {
+                width: 100%;
+                right: 0;
+              }
+              
+              &::after {
+                background: none repeat scroll 0 0 transparent;
+                bottom: 0;
+                content: "";
+                display: block;
+                height: 4px;
+                right: 0;
+                position: absolute;
+                background: linear-gradient(to left, #73b09e, #aad4c9, #8c53b8 100%);
+                // background: linear-gradient(to left, #f69ec4, #f9dd94 100%);
+                transition: width .5s ease 0s, right .5s ease 0s;
+                width: 0;
+              }
+        }
+
+        &--form{
+
+            @include mixins.flex(column, center, center, 1rem);
+            
+            &--input, &--text{
+                padding: 7px;
+                width: 250px;
+                outline: none;
+                border: none;
+                border-radius: 5px;
+                @include typography.inter;
+                font-size: 1.05;
+                @include mixins.tablet{
+                    width: 450px;
+                }
+            }
+            
+            &--button{
+                border: none;
+                border-radius: 5px;
+                @include typography.inter;
+                padding: 10px;
+                background-color: #2c2531ea;
+                color: #DCD4E2;
+                font-size: 1rem;
+                // color: #fff;
+                
+                &:hover{
+                    color:#2c2531ea;
+                    background-color:#c4bdca;
+                    cursor: pointer;
+                    transform: scale(1.1);
+                    transition: 0.3s;
+                }
+            }
+        }
+    }
+
+    &__bottom{
+        padding: 20px;
+        @include mixins.flex(column, center, space-between, 1rem);
+        text-align: center;
+        color: #73b09ead;
+        
+        @include mixins.tablet{
+            width: 100%;
+            @include mixins.flex(row, space-between, center, 1rem);
+
+        }
+
+        &--text{
+            @include typography.nova;
+        }
+    }
+}
