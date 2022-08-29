@@ -1,9 +1,11 @@
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BookingPhase } from "../BookingPhase";
 
 export function Booking() {
   document.title = "Booking";
+  const navigate = useNavigate()
 
   const [phase, setPhase] = useState(1);
 
@@ -30,7 +32,7 @@ export function Booking() {
     setGuests(guests);
     console.log(guests);
   };
-  
+
   const changeName = (e: ChangeEvent<HTMLInputElement>) =>
     setName(e.target.value);
 
@@ -55,6 +57,9 @@ export function Booking() {
       console.log(err);
     } finally {
       changePhase(4);
+      setTimeout(() => {
+        navigate("/")
+      }, 3000);
     }
   };
 
@@ -172,6 +177,10 @@ export function Booking() {
               <i className="fa-solid fa-check"></i>
               <span>Place Booking</span>
             </button>
+          </div>
+        )}
+        {phase === 3 && (
+          <div className="phase-container review-phase">
           </div>
         )}
       </div>
