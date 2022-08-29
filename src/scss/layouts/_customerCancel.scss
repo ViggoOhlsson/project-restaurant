@@ -95,6 +95,11 @@
                 color: #5F2D2D;
                 @include typography.inter;
                 cursor: pointer;
+                transition: 0.3s;
+                &:hover{
+            
+                    transform: scale(1.2);
+                }
             }
             &__regret{
                 cursor: pointer;
@@ -103,8 +108,44 @@
                 border: 0.4px solid #928D8D;
                 background-color: #FFFFFF;
                 @include typography.inter;
+                transition: 0.3s;
+                &:hover{
+            
+                    transform: scale(1.2);
+                }
             }
-
+            
         }
     }
+}
+
+.cancelled{
+    @include mixins.flex(column, space-evenly, center, 2rem);
+
+    margin: 70px;
+
+    &__text{
+        text-align: center;
+        @include typography.inter;
+        font-size: 2rem;
+        font-weight: 100;
+        color: #DCD4E2;
+    }
+
+    &__button{
+        padding: 10px;
+        border-radius: 20px;
+        border: 0.4px solid #dcd9d9;
+        background-color: #73B09E;
+        color: #5F2D2D;
+        @include typography.inter;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover{
+    
+            transform: scale(1.2);
+        }
+    }
+
 }
