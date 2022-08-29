@@ -8,6 +8,11 @@ const linkStyle = {
   textDecoration: "none",
 };
 
+const linkStyle2 = {
+  color: "#DCD4E2",
+  textDecoration: "none",
+};
+
 export function CustomerCancel() {
   const [params, setParams] = useState(useParams());
 
@@ -112,7 +117,16 @@ export function CustomerCancel() {
           </div>
         </div>
       ) : (
-        <p>hej</p>
+        <div className="cancelled">
+          <p className="cancelled__text">
+            Your reservation has been cancelled!
+          </p>
+          <button className="cancelled__button">
+            <Link to={"/book"} style={linkStyle2}>
+              Make a new reservation
+            </Link>
+          </button>
+        </div>
       )}
     </>
   );
