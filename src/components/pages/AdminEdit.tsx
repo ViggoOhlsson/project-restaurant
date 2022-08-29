@@ -68,13 +68,12 @@ export function AdminEdit() {
     axios
       .post("http://localhost:8000/admineditbooking/" + bookingObject)
       .then((res) => {
+        //res.data är en boolean som är true om det redan är fullbokat
         setFullyBooked(res.data);
-        if (!res.data) {
-          setBookingDone(true);
-        }
+        setBookingDone(!res.data);
       });
-    //Varför ska nedanstående finnas? Ifall url ändras?
-    
+    //Vad gör nedanstående kod? Ifall url ändras?
+
     // setBooking({
     //   date: new Date(),
     //   time: 0,
@@ -119,7 +118,6 @@ export function AdminEdit() {
 
   function handleSave(e: FormEvent) {
     e.preventDefault();
-
     setBooking(editing);
   }
 
@@ -130,7 +128,7 @@ export function AdminEdit() {
   return (
     <main>
       {bookingDone ? (
-        <EditConfirmed></EditConfirmed>
+        <EditConfirmed booking={booking}></EditConfirmed>
       ) : (
         <EditForm
           deleteBooking={deleteBooking}
