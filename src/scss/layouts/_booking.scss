@@ -192,6 +192,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        color: white;
         i {
             height:120px;
             border-radius: 50%;
@@ -202,9 +203,6 @@
             align-items: center;
             justify-content: center;
             color: variables.$primary-purple;
-        }
-        p {
-            color: white
         }
     }
     .next-phase-wrapper {

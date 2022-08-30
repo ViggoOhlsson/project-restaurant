@@ -47,11 +47,8 @@ export function Booking() {
     console.log(body);
     try {
       let res = await axios.post("http://localhost:8000/book", body);
-      let emailRes = await axios.post(
-        "http://localhost:8000/send-email",
-        res.data
-      );
-      console.log(res);
+      let emailRes = await axios.post("http://localhost:8000/send-email",res.data);
+      console.log("booking sent:", res);
       console.log(emailRes);
     } catch (err) {
       console.log(err);
@@ -179,8 +176,10 @@ export function Booking() {
             </button>
           </div>
         )}
-        {phase === 3 && (
-          <div className="phase-container review-phase">
+        {phase === 4 && (
+          <div className="phase-container redirect-phase">
+            <i className="fa-solid fa-check"></i>
+            <h2>Reservation Complete!</h2>
           </div>
         )}
       </div>
