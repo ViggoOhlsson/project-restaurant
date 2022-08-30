@@ -158,6 +158,7 @@ app.post("/book", async (req, res) => {
   });
 });
 
+//Bör vara delete
 //Tar bort en bokning via admin sidan
 app.post("/admindeletebooking/:booking", async (req, res) => {
   let booking = JSON.parse(req.params.booking);

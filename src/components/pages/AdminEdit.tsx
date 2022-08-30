@@ -3,13 +3,14 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IBooking, ICustomer } from "../../models/IBooking";
 import { EditConfirmed } from "../EditConfirmed";
+import { EditDeleteConfirm } from "../EditDeleteConfirm";
 import { EditForm } from "../EditForm";
 
 export function AdminEdit() {
   const [id, setId] = useState(useParams().id);
 
-  const [bookingDone, setBookingDone] = useState(false);
   const [fullyBooked, setFullyBooked] = useState(false);
+  const [adminView, setAdminView] = useState("");
 
   const [bookings, setBookings] = useState<IBooking[]>([]);
   const [booking, setBooking] = useState<IBooking>({
@@ -37,8 +38,6 @@ export function AdminEdit() {
       phone: 0,
     },
   });
-
-  const [deleteBookingId, setDeleteBookingId] = useState("");
 
   //Söker igenom alla bokningar i databasen efter bokningen med rätt id
   useEffect(() => {
@@ -70,7 +69,7 @@ export function AdminEdit() {
       .then((res) => {
         //res.data är en boolean som är true om det redan är fullbokat
         setFullyBooked(res.data);
-        setBookingDone(!res.data);
+        setAdminView("done");
       });
     //Vad gör nedanstående kod? Ifall url ändras?
 
@@ -87,19 +86,6 @@ export function AdminEdit() {
     //   _id: "",
     // });
   }, [booking]);
-
-  //Anropar api och skickar ett id till en post som raderar bokning --- ändrat till objekt istället för id
-  useEffect(() => {
-    if (deleteBookingId === "") return;
-    let bookingObject = JSON.stringify(editing);
-
-    axios
-      .post("http://localhost:8000/admindeletebooking/" + bookingObject)
-      .then((res) => {
-        console.log(res);
-      });
-    setDeleteBookingId("");
-  }, [deleteBookingId]);
 
   //Uppdaterar setEditing med bokningsinformation
   function handleInfoChange(e: ChangeEvent<HTMLInputElement>) {
@@ -123,15 +109,25 @@ export function AdminEdit() {
     setBooking(editing);
   }
 
-  function deleteBooking(id: string) {
-    setDeleteBookingId(id);
+  function deleteBooking() {
+    let bookingObject = JSON.stringify(editing);
+
+    //Bör vara delete
+    axios
+      .post("http://localhost:8000/admindeletebooking/" + bookingObject)
+      .then((res) => {
+        console.log(res);
+        setAdminView("deleted");
+      });
   }
 
-  return (
-    <main>
-      {bookingDone ? (
-        <EditConfirmed booking={booking}></EditConfirmed>
-      ) : (
+  function displayView() {
+    if (adminView === "deleted") {
+      return <EditDeleteConfirm></EditDeleteConfirm>;
+    } else if (adminView === "done") {
+      return <EditConfirmed booking={booking}></EditConfirmed>;
+    } else{
+      return (
         <EditForm
           deleteBooking={deleteBooking}
           handleSave={handleSave}
@@ -140,7 +136,13 @@ export function AdminEdit() {
           editingBooking={editing}
           fullyBooked={fullyBooked}
         ></EditForm>
-      )}
+      );
+    }
+  }
+
+  return (
+    <main>
+      {displayView()}
     </main>
   );
 }
