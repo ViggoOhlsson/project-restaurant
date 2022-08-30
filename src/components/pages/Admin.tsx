@@ -82,24 +82,27 @@ export function Admin() {
           {new Date(date).toDateString()}
         </p>
         <h2 className="admin__bookings--heading">Early sitting</h2>
-        <table className="admin__bookings--table">
-          <tr className="admin__bookings--table--head">
-            <th>Name</th>
-            <th>Party</th>
-            <th>Phone</th>
-            <th>Email</th>
-          </tr>
-          {earlyBookings.map(booking => {
-            return (
-              <tr className="admin__bookings--table--row">
-                <td>{booking.customer.name}</td>
-                <td>{booking.guests}</td>
-                <td>{booking.customer.phone}</td>
-                <td>{booking.customer.email}</td>
-              </tr>
-            )
-          })}
-        </table>
+        <div className="admin__bookings--table--container">
+          <table className="admin__bookings--table">
+            <tr className="admin__bookings--table--head">
+              <th>Name</th>
+              <th>Party</th>
+              <th>Phone</th>
+              <th>Email</th>
+            </tr>
+            {earlyBookings.map(booking => {
+              return (
+                <tr className="admin__bookings--table--row">
+                  <td>{booking.customer.name}</td>
+                  <td>{booking.guests}</td>
+                  <td>{booking.customer.phone}</td>
+                  <td>{booking.customer.email}</td>
+                  <Link to={"/edit-booking/" + booking._id} className="edit-icon"><i className="fa-solid fa-pencil"></i></Link>
+                </tr>
+              )
+            })}
+          </table>
+        </div>
         <h2 className="admin__bookings--heading">Late sitting</h2>
         <table className="admin__bookings--table">
           <tr>

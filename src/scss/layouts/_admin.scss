@@ -65,12 +65,38 @@
             width: 80%;  
             margin: 40px auto;            
         }
+        &--table--container {
+            overflow-x: auto;
+            width: 100%;
+        }
         &--table {
             width: 100%;
             overflow-x: auto;
+            border-spacing: 0 5px;
+            @include mixins.desktop {
+                table-layout: fixed;    
+
+            }
             &--row {
                 position: relative;
-                
+                padding: 10px;
+                cursor: pointer;
+                padding: 0;
+                overflow: hidden;
+                border-radius: 50px;
+                th,td {
+                    padding: 10px;
+
+                }
+                .edit-icon {
+                    opacity: 0;
+                }
+                &:hover {
+                    background-color: rgba(0,0,0,0.1);
+                    .edit-icon {
+                        opacity: 1;
+                    }
+                }
             }
         }
 
