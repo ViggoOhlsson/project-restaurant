@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const { Types } = require("mongoose");
 const BookingModel = require("./models/BookingModel");
 const CustomerModel = require("./models/CustomerModel");
-const { customerExists, isFullyBooked, guestsToTables } = require("./utils");
+const { customerExists, isFullyBooked, guestsToTables, multipleBookings } = require("./utils");
 const port = 8000;
 const app = express();
 
@@ -154,11 +154,12 @@ app.post("/book", async (req, res) => {
 });
 
 //Tar bort en bokning via admin sidan
-app.post("/admindeletebooking/:id", async (req, res) => {
-  let id = req.params.id;
-  console.log(req.params.id);
-  BookingModel.deleteOne({ _id: id }, (err, result) => {
-    console.log(result);
+app.post("/admindeletebooking/:booking", async (req, res) => {
+  let booking = JSON.parse(req.params.booking);
+  
+  await multipleBookings(booking);
+
+  BookingModel.deleteOne({ _id: booking._id }, (err, result) => {
     res.send(result);
   });
 });

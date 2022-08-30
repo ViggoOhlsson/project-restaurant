@@ -88,11 +88,13 @@ export function AdminEdit() {
     // });
   }, [booking]);
 
-  //Anropar api och skickar ett id till en post som raderar bokning
+  //Anropar api och skickar ett id till en post som raderar bokning --- ändrat till objekt istället för id
   useEffect(() => {
     if (deleteBookingId === "") return;
+    let bookingObject = JSON.stringify(editing);
+
     axios
-      .post("http://localhost:8000/admindeletebooking/" + deleteBookingId)
+      .post("http://localhost:8000/admindeletebooking/" + bookingObject)
       .then((res) => {
         console.log(res);
       });
