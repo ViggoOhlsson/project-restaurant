@@ -64,9 +64,24 @@ app.get("/getallbookings", async (req, res) => {
 
 //Hämtar alla bokningar som ställts av kunden vars id du skickar med queryn
 app.get("/getbookingsbycustomer", async (req, res) => {
-  let { id } = req.body;
+  let { id } = req.query;
   try {
     const bookings = await BookingModel.find({ customer: id })
+      .populate("customer")
+      .lean();
+    res.send(bookings);
+    return;
+  } catch (err) {
+    res.send(err);
+    return;
+  }
+});
+
+//Hämtar alla bokningar från givet datum
+app.get("/getbookingsbydate", async (req, res) => {
+  let { date } = req.query;
+  try {
+    const bookings = await BookingModel.find({ date: date })
       .populate("customer")
       .lean();
     res.send(bookings);
