@@ -234,7 +234,7 @@ app.post("/send-email", async (req, res) => {
       req.body.booking.date +
       ". Where a table of " +
       req.body.booking.guests +
-      " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:8000/cancel/" +
+      " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:3000/cancel/" +
       req.body.booking._id,
   };
 
@@ -247,7 +247,7 @@ app.post("/send-email", async (req, res) => {
   });
 });
 
-app.get("/cancel/:id", async (req, res) => {
+app.post("/cancel/:id", async (req, res) => {
   let id = req.params.id;
   BookingModel.deleteOne({ _id: id }, (err, result) => {
     console.log(result);
