@@ -51,7 +51,7 @@
     }
 
     &__bookings{
-background-color: white;
+        background-color: white;
         width: 100%;
         @include mixins.flex(column, center, center, 2rem);
         text-align: center;
@@ -64,6 +64,14 @@ background-color: white;
         @include mixins.desktop{
             width: 80%;  
             margin: 40px auto;            
+        }
+        &--table {
+            width: 100%;
+            overflow-x: auto;
+            &--row {
+                position: relative;
+                
+            }
         }
 
         &--date{
