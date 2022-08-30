@@ -42,9 +42,6 @@
             position: relative;
             transition: all 0.2s;
             cursor: pointer;
-            &:hover {
-                transform: scale(1.1);
-            }
             .phase-number {
                 transition: all 0.1s;
                 background-color: rgba(255, 255, 255, 0.15);
@@ -189,6 +186,23 @@
                 background-color: variables.$primary-purple;
                 color: white;
             }
+        }
+    }
+    .redirect-phase {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        i {
+            height:120px;
+            border-radius: 50%;
+            background-color: #73B09E;
+            font-size: 5em;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: variables.$primary-purple;
         }
     }
     .next-phase-wrapper {
