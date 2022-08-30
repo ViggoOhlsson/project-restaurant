@@ -5,7 +5,12 @@ const nodemailer = require("nodemailer");
 const { Types } = require("mongoose");
 const BookingModel = require("./models/BookingModel");
 const CustomerModel = require("./models/CustomerModel");
-const { customerExists, isFullyBooked, guestsToTables, multipleBookings } = require("./utils");
+const {
+  customerExists,
+  isFullyBooked,
+  guestsToTables,
+  multipleBookings,
+} = require("./utils");
 const port = 8000;
 const app = express();
 
@@ -156,19 +161,21 @@ app.post("/book", async (req, res) => {
 //Tar bort en bokning via admin sidan
 app.post("/admindeletebooking/:booking", async (req, res) => {
   let booking = JSON.parse(req.params.booking);
-  
-  await multipleBookings(booking);
+  let moreReservations = await multipleBookings(booking);
 
-  BookingModel.deleteOne({ _id: booking._id }, (err, result) => {
-    res.send(result);
-  });
+  if (!moreReservations) {
+    CustomerModel.deleteOne({ _id: booking.customer }, (err, result) => {});
+  }
+  BookingModel.deleteOne({ _id: booking._id }, (err, result) => {});
+  console.log("hello");
+  res.send(true);
 });
 
 //Redigerar en bokning, inklusive customer via admin sidan
 app.post("/admineditbooking/:booking", async (req, res) => {
   const booking = JSON.parse(req.params.booking);
   const customer = booking.customer;
-//If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
+  //If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
   if (
     await isFullyBooked(
       booking.date,
