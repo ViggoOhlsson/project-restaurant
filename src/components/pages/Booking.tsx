@@ -141,6 +141,10 @@ export function Booking() {
                   value={guests}
                 ></input>
               </div>
+              <div className="gdpr-wrapper">
+                <input type="checkbox" name="gdpr-check"/>
+                <label>I hereby confirm that CENA Restaurant Group may handle my information in line with <a href="https://gdpr-info.eu/">GDPR</a> guidelines</label>
+              </div>
             </div>
           </div>
         )}
