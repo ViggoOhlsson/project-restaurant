@@ -131,7 +131,12 @@ app.post("/book", async (req, res) => {
     customer: customer._id,
   });
 
-  if (await isFullyBooked(date, time, booking.tables)) {
+  // if (await isFullyBooked(date, time, booking.tables)) {
+  //   console.log("Day & time is fully booked");
+  //   res.send({ msg: "That day and time is fully booked." });
+  //   return;
+  // }
+  if (await isFullyBooked(date, time, booking.tables, booking)) {
     console.log("Day & time is fully booked");
     res.send({ msg: "That day and time is fully booked." });
     return;
@@ -181,11 +186,10 @@ app.post("/admineditbooking/:booking", async (req, res) => {
     await isFullyBooked(
       booking.date,
       booking.time,
-      guestsToTables(booking.guests)
+      guestsToTables(booking.guests),
+      booking
     )
   ) {
-    console.log("Day & time is fully booked");
-    // res.send({ msg: "Not enought tables available" });
     res.send(true);
     return;
   } else {

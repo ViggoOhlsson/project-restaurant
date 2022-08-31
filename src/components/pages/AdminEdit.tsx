@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { IBooking, ICustomer } from "../../models/IBooking";
+import { useParams } from "react-router-dom";
+import { IBooking } from "../../models/IBooking";
 import { EditConfirmed } from "../EditConfirmed";
 import { EditDeleteConfirm } from "../EditDeleteConfirm";
 import { EditForm } from "../EditForm";
@@ -69,22 +69,10 @@ export function AdminEdit() {
       .then((res) => {
         //res.data är en boolean som är true om det redan är fullbokat
         setFullyBooked(res.data);
-        setAdminView("done");
+        if (!res.data) {
+          setAdminView("done");
+        }
       });
-    //Vad gör nedanstående kod? Ifall url ändras?
-
-    // setBooking({
-    //   date: new Date(),
-    //   time: 0,
-    //   guests: 0,
-    //   customer: {
-    //     _id: "",
-    //     name: "",
-    //     email: "",
-    //     phone: 0,
-    //   },
-    //   _id: "",
-    // });
   }, [booking]);
 
   //Uppdaterar setEditing med bokningsinformation
@@ -126,7 +114,7 @@ export function AdminEdit() {
       return <EditDeleteConfirm></EditDeleteConfirm>;
     } else if (adminView === "done") {
       return <EditConfirmed booking={booking}></EditConfirmed>;
-    } else{
+    } else {
       return (
         <EditForm
           deleteBooking={deleteBooking}
@@ -140,9 +128,5 @@ export function AdminEdit() {
     }
   }
 
-  return (
-    <main>
-      {displayView()}
-    </main>
-  );
+  return <main>{displayView()}</main>;
 }
