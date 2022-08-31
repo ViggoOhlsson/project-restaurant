@@ -221,9 +221,8 @@ app.post("/admineditbooking/:booking", async (req, res) => {
 });
 
 app.post("/send-email", async (req, res) => {
-  // let { booking.date, time, guests, name, email, phone } = req.body;
-
-  console.log("hej" + req.body.customer.email);
+  const newdate = req.body.booking.date;
+  const date = new Date(newdate).toLocaleDateString();
 
   var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -243,7 +242,7 @@ app.post("/send-email", async (req, res) => {
       "! We welcome you to Cena at " +
       req.body.booking.time +
       "o'clock on the " +
-      req.body.booking.date +
+      date +
       ". Where a table of " +
       req.body.booking.guests +
       " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:3000/cancel/" +
