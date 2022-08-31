@@ -133,24 +133,28 @@ export function Admin() {
     <>
       <div className="admin">
         <div className="admin__search">
-          <input
-            className="admin__search__date-input"
-            type="date"
-            defaultValue={date}
-            onChange={changeDate}
-          ></input>
-          <button
-            onClick={() => {
-              setSortedBookings([]);
-              findBooking(date);
-            }}
-            className="admin__search__input-button"
-          >
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
-          <Link to={"/admin/add-new"} style={linkStyle}>
-            <i className="fa-solid fa-calendar-plus"></i>
-          </Link>
+          <div className="admin__search--field">
+            <input
+              className="admin__search--field__date-input"
+              type="date"
+              defaultValue={date}
+              onChange={changeDate}
+            ></input>
+          </div>
+          <div className="buttons">
+            <button
+              onClick={() => {
+                setSortedBookings([]);
+                findBooking(date);
+              }}
+              className="admin__search__input-button"
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <Link to={"/admin/add-new"} style={linkStyle}>
+              <i className="fa-solid fa-calendar-plus"></i>
+            </Link>
+          </div>
         </div>
 
         <div className="admin__bookings">
