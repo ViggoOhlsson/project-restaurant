@@ -178,6 +178,7 @@ main {
 
 .admin-add{
   margin: 0 auto;
+  margin-bottom: 50px;
 
   @include mixins.tablet{
     width: 60%;
