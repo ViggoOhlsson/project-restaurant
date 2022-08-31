@@ -170,3 +170,20 @@ main {
     }
   }
 }
+
+///////////////////////
+//ADMIN ADD STYLING//
+/////////////////////
+
+
+.admin-add{
+  margin: 0 auto;
+
+  @include mixins.tablet{
+    width: 60%;
+  }
+
+  @include mixins.desktop{
+    width: 50%;
+  }
+}

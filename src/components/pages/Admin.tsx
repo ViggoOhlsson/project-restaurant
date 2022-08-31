@@ -3,6 +3,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 
+const linkStyle = {
+  color: "#d8d8d8",
+  textDecoration: "none",
+};
+
 export function Admin() {
   const [bookings, setBookings] = useState<IBooking[]>([]);
 
@@ -143,6 +148,9 @@ export function Admin() {
           >
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
+          <Link to={"/admin/add-new"} style={linkStyle}>
+            <i className="fa-solid fa-calendar-plus"></i>
+          </Link>
         </div>
 
         <div className="admin__bookings">
