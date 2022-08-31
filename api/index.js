@@ -5,7 +5,12 @@ const nodemailer = require("nodemailer");
 const { Types } = require("mongoose");
 const BookingModel = require("./models/BookingModel");
 const CustomerModel = require("./models/CustomerModel");
-const { customerExists, isFullyBooked, guestsToTables, multipleBookings } = require("./utils");
+const {
+  customerExists,
+  isFullyBooked,
+  guestsToTables,
+  multipleBookings,
+} = require("./utils");
 const port = 8000;
 const app = express();
 
@@ -156,7 +161,7 @@ app.post("/book", async (req, res) => {
 //Tar bort en bokning via admin sidan
 app.post("/admindeletebooking/:booking", async (req, res) => {
   let booking = JSON.parse(req.params.booking);
-  
+
   await multipleBookings(booking);
 
   BookingModel.deleteOne({ _id: booking._id }, (err, result) => {
@@ -168,7 +173,7 @@ app.post("/admindeletebooking/:booking", async (req, res) => {
 app.post("/admineditbooking/:booking", async (req, res) => {
   const booking = JSON.parse(req.params.booking);
   const customer = booking.customer;
-//If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
+  //If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
   if (
     await isFullyBooked(
       booking.date,
@@ -209,9 +214,8 @@ app.post("/admineditbooking/:booking", async (req, res) => {
 });
 
 app.post("/send-email", async (req, res) => {
-  // let { booking.date, time, guests, name, email, phone } = req.body;
-
-  console.log("hej" + req.body.customer.email);
+  const newdate = req.body.booking.date;
+  const date = new Date(newdate).toLocaleDateString();
 
   var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -231,7 +235,7 @@ app.post("/send-email", async (req, res) => {
       "! We welcome you to Cena at " +
       req.body.booking.time +
       "o'clock on the " +
-      req.body.booking.date +
+      date +
       ". Where a table of " +
       req.body.booking.guests +
       " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:3000/cancel/" +
