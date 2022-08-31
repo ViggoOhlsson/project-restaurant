@@ -5,7 +5,7 @@ import { IBooking } from "../models/IBooking";
 interface IEditFormProps {
   editingBooking: IBooking;
   fullyBooked: boolean;
-  deleteBooking(id: string): void;
+  deleteBooking(): void;
   handleSave(e: FormEvent): void;
   changeInfo(e: ChangeEvent<HTMLInputElement>): void;
   changeUser(e: ChangeEvent<HTMLInputElement>): void;
@@ -101,7 +101,7 @@ export const EditForm = (props: IEditFormProps) => {
       <button
         className="admin-edit__section admin-edit__section--delete"
         onClick={() => {
-          props.deleteBooking(props.editingBooking._id);
+          props.deleteBooking();
         }}
       >
         Remove reservation <i className="fa-solid fa-trash-can"></i>
