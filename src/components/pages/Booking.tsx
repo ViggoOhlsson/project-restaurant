@@ -161,6 +161,19 @@ export function Booking() {
                   ></input>
                 </div>
               </div>
+              <div className="gdpr__info">
+                <p className="gdpr__info-text">
+                  We process your personal information in compliance with the
+                  GDPR.{" "}
+                </p>
+                <a
+                  target="_blank"
+                  href="https://gdprinfo.eu/sv"
+                  className="gdpr__info-link"
+                >
+                  Learn more about GDPR.
+                </a>
+              </div>
             </div>
           )}
           {phase === 3 && (
