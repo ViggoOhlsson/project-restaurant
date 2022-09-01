@@ -102,19 +102,28 @@ export function AdminEdit() {
     if (adminView === "deleted") {
       return <EditDeleteConfirm></EditDeleteConfirm>;
     } else if (adminView === "done") {
-      return <EditConfirmed booking={booking}></EditConfirmed>;
+      return <EditConfirmed parentView="edit" booking={booking}></EditConfirmed>;
     } else if (adminView === "notfound") {
       return <Navigate to={"/*"}></Navigate>;
     } else {
       return (
-        <EditForm
-          deleteBooking={deleteBooking}
-          handleSave={handleSave}
-          changeUser={handleUserChange}
-          changeInfo={handleInfoChange}
-          editingBooking={editing}
-          fullyBooked={fullyBooked}
-        ></EditForm>
+        <div className="admin-edit">
+          <EditForm
+            handleSave={handleSave}
+            changeUser={handleUserChange}
+            changeInfo={handleInfoChange}
+            editingBooking={editing}
+            fullyBooked={fullyBooked}
+          ></EditForm>
+          <button
+            className="admin-edit__section admin-edit__section--delete"
+            onClick={() => {
+              deleteBooking();
+            }}
+          >
+            Remove reservation <i className="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
       );
     }
   }

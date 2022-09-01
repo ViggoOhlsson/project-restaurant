@@ -5,14 +5,13 @@ import { IBooking } from "../../models/IBooking";
 interface IEditFormProps {
   editingBooking: IBooking;
   fullyBooked: boolean;
-  deleteBooking(): void;
   handleSave(e: FormEvent): void;
   changeInfo(e: ChangeEvent<HTMLInputElement>): void;
   changeUser(e: ChangeEvent<HTMLInputElement>): void;
 }
 export const EditForm = (props: IEditFormProps) => {
   return (
-    <div className="admin-edit">
+    <>
       <h3 className="admin-edit__section admin-edit__section--heading">
         Edit reservation
       </h3>
@@ -95,17 +94,9 @@ export const EditForm = (props: IEditFormProps) => {
           <Link className="form__cancel" to={"/admin"}>
             Cancel
           </Link>
-          <button className="form__update">Update reservation</button>
+          <button className="form__update">Save reservation</button>
         </div>
       </form>
-      <button
-        className="admin-edit__section admin-edit__section--delete"
-        onClick={() => {
-          props.deleteBooking();
-        }}
-      >
-        Remove reservation <i className="fa-solid fa-trash-can"></i>
-      </button>
-    </div>
+    </>
   );
 };
