@@ -258,8 +258,41 @@ app.post("/send-email", async (req, res) => {
   });
 });
 
-app.post("/cancel/:id", async (req, res) => {
+app.delete("/cancel/:id", async (req, res) => {
   let id = req.params.id;
+  let booking = await BookingModel.findOne({ _id: id });
+  let customer = await CustomerModel.findOne({ _id: booking.customer });
+  const newdate = booking.date;
+  const date = new Date(newdate).toLocaleDateString();
+
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "cenamatgatan@gmail.com",
+      pass: "deefoqwvuimsluss",
+    },
+  });
+  var mailOptions = {
+    from: "cenamatgatan@gmail.com",
+    to: customer.email,
+    subject: "Booking Confirmation",
+    text:
+      "Hello " +
+      customer.name +
+      "! We have cancelled your reservation at " +
+      booking.time +
+      " o'clock on the " +
+      date +
+      ". We hope to see you again soon!",
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+
   BookingModel.deleteOne({ _id: id }, (err, result) => {
     console.log(result);
     res.send(result);
