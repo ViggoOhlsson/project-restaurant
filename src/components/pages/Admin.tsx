@@ -75,22 +75,10 @@ export function Admin() {
     return (
       <>
         <div key={booking._id} className="admin__bookings__early">
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Name </b>{" "}
-            {booking.customer.name}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Party </b>
-            {booking.guests}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Phone </b>
-            {booking.customer.phone}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Email </b>
-            {booking.customer.email}
-          </p>
+          <p className="admin__bookings--info">{booking.customer.name}</p>
+          <p className="admin__bookings--info">{booking.guests}</p>
+          <p className="admin__bookings--info">{booking.customer.phone}</p>
+          <p className="admin__bookings--info">{booking.customer.email}</p>
           <Link to={"/admin/edit-booking/" + booking._id}>
             {" "}
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
@@ -105,22 +93,10 @@ export function Admin() {
     return (
       <>
         <div key={booking._id} className="admin__bookings__late">
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Name </b>{" "}
-            {booking.customer.name}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Party </b>
-            {booking.guests}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Phone </b>
-            {booking.customer.phone}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Email </b>
-            {booking.customer.email}
-          </p>
+          <p className="admin__bookings--info">{booking.customer.name}</p>
+          <p className="admin__bookings--info">{booking.guests}</p>
+          <p className="admin__bookings--info">{booking.customer.phone}</p>
+          <p className="admin__bookings--info">{booking.customer.email}</p>
           <Link to={"/admin/edit-booking/" + booking._id}>
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
           </Link>
