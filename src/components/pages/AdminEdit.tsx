@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 import { EditConfirmed } from "../EditConfirmed";
 import { EditDeleteConfirm } from "../EditDeleteConfirm";
@@ -12,7 +12,6 @@ export function AdminEdit() {
   const [fullyBooked, setFullyBooked] = useState(false);
   const [adminView, setAdminView] = useState("");
 
-  const [bookings, setBookings] = useState<IBooking[]>([]);
   const [booking, setBooking] = useState<IBooking>({
     date: new Date(),
     time: 0,
@@ -41,23 +40,14 @@ export function AdminEdit() {
 
   //Söker igenom alla bokningar i databasen efter bokningen med rätt id
   useEffect(() => {
-    axios.get("http://localhost:8000/getallbookings").then((res) => {
-      setBookings(res.data);
-      for (let i = 0; i < bookings.length; i++) {
-        if (bookings[i]._id === id) {
-          setEditing(bookings[i]);
-        }
+    axios.get("http://localhost:8000/getbooking?id=" + id).then((res) => {
+      if (res.data === "error") {
+        setAdminView("notfound");
+      } else {
+        setEditing(res.data);
       }
     });
   }, []);
-
-  useEffect(() => {
-    for (let i = 0; i < bookings.length; i++) {
-      if (bookings[i]._id === id) {
-        setEditing(bookings[i]);
-      }
-    }
-  }, [bookings]);
 
   //Anropar api och skickar ett objekt till en post som redigerar bokning
   useEffect(() => {
@@ -104,7 +94,6 @@ export function AdminEdit() {
     axios
       .post("http://localhost:8000/admindeletebooking/" + bookingObject)
       .then((res) => {
-        console.log(res);
         setAdminView("deleted");
       });
   }
@@ -114,6 +103,8 @@ export function AdminEdit() {
       return <EditDeleteConfirm></EditDeleteConfirm>;
     } else if (adminView === "done") {
       return <EditConfirmed booking={booking}></EditConfirmed>;
+    } else if (adminView === "notfound") {
+      return <Navigate to={"/*"}></Navigate>;
     } else {
       return (
         <EditForm
