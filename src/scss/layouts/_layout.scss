@@ -97,13 +97,13 @@
                 border-radius: 5px;
                 @include typography.inter;
                 padding: 10px;
-                background-color: #2c2531ea;
+                background-color: $primary-purple;
                 color: $purple-light;
                 font-size: 1rem;
                 // color: #fff;
                 
                 &:hover{
-                    color:#2c2531ea;
+                    color:$primary-purple;
                     background-color:#c4bdca;
                     cursor: pointer;
                     transform: scale(1.1);
