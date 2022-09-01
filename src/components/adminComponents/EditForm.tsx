@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { IBooking } from "../models/IBooking";
+import { IBooking } from "../../models/IBooking";
 
 interface IEditFormProps {
   editingBooking: IBooking;

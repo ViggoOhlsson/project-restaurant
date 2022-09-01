@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookingPhase } from "../BookingPhase";
+import { BookingPhase } from "../bookingComponents/BookingPhase";
 // import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
 

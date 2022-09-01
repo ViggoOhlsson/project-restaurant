@@ -91,7 +91,7 @@ export function Admin() {
             <b className="admin__bookings--info--heading">Email </b>
             {booking.customer.email}
           </p>
-          <Link to={"/edit-booking/" + booking._id}>
+          <Link to={"/admin/edit-booking/" + booking._id}>
             {" "}
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
           </Link>
@@ -121,7 +121,7 @@ export function Admin() {
             <b className="admin__bookings--info--heading">Email </b>
             {booking.customer.email}
           </p>
-          <Link to={"/edit-booking/" + booking._id}>
+          <Link to={"/admin/edit-booking/" + booking._id}>
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
           </Link>
         </div>

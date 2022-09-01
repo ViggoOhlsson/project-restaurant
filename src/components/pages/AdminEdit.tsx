@@ -2,9 +2,9 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
-import { EditConfirmed } from "../EditConfirmed";
-import { EditDeleteConfirm } from "../EditDeleteConfirm";
-import { EditForm } from "../EditForm";
+import { EditConfirmed } from "../adminComponents/EditConfirmed";
+import { EditDeleteConfirm } from "../adminComponents/EditDeleteConfirm";
+import { EditForm } from "../adminComponents/EditForm";
 
 export function AdminEdit() {
   const [id, setId] = useState(useParams().id);
