@@ -76,7 +76,7 @@ export function Admin() {
       <>
         <div key={booking._id} className="admin__bookings__early">
           <p className="admin__bookings--info">{booking.customer.name}</p>
-          <p className="admin__bookings--info">{booking.guests}</p>
+          <p className="admin__bookings--info">Party of {booking.guests}</p>
           <p className="admin__bookings--info">{booking.customer.phone}</p>
           <p className="admin__bookings--info">{booking.customer.email}</p>
           <Link to={"/admin/edit-booking/" + booking._id}>
@@ -94,7 +94,7 @@ export function Admin() {
       <>
         <div key={booking._id} className="admin__bookings__late">
           <p className="admin__bookings--info">{booking.customer.name}</p>
-          <p className="admin__bookings--info">{booking.guests}</p>
+          <p className="admin__bookings--info">Party of {booking.guests}</p>
           <p className="admin__bookings--info">{booking.customer.phone}</p>
           <p className="admin__bookings--info">{booking.customer.email}</p>
           <Link to={"/admin/edit-booking/" + booking._id}>
