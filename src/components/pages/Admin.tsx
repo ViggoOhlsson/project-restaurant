@@ -79,7 +79,10 @@ export function Admin() {
           <p className="admin__bookings--info">Party of {booking.guests}</p>
           <p className="admin__bookings--info">{booking.customer.phone}</p>
           <p className="admin__bookings--info">{booking.customer.email}</p>
-          <Link to={"/admin/edit-booking/" + booking._id}>
+          <Link
+            className="admin__bookings--a"
+            to={"/admin/edit-booking/" + booking._id}
+          >
             {" "}
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
           </Link>
