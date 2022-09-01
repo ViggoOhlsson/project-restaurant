@@ -92,7 +92,7 @@ export function AdminEdit() {
 
     //Bör vara delete
     axios
-      .post("http://localhost:8000/admindeletebooking/" + bookingObject)
+      .delete("http://localhost:8000/admindeletebooking/" + bookingObject)
       .then((res) => {
         setAdminView("deleted");
       });
