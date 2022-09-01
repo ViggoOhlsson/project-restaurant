@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "./components/Layout";
+import { AdminLayout } from "./components/layouts/AdminLayout";
+import { HomeLayout } from "./components/layouts/HomeLayout";
+import { Layout } from "./components/layouts/Layout";
 import { NotFound } from "./components/NotFound";
 import { Admin } from "./components/pages/Admin";
 import { AdminAdd } from "./components/pages/AdminAdd";
@@ -14,14 +16,24 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<HomeLayout />}>
+            <Route path="/" element={<Home />}></Route>
+          </Route>
+
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Admin />}></Route>
+            <Route path="/admin/add-new" element={<AdminAdd />}></Route>
+            <Route
+              path="/admin/edit-booking/:id"
+              element={<AdminEdit />}
+            ></Route>
+          </Route>
+
           <Route path="/" element={<Layout />}>
             <Route path="/book" element={<Booking />}></Route>
-            <Route path="/admin" element={<Admin />}></Route>
-            <Route path="/admin/add-new" element={<AdminAdd />}></Route>
-            <Route path="/edit-booking/:id" element={<AdminEdit />}></Route>
             <Route path="/cancel/:id" element={<CustomerCancel />}></Route>
           </Route>
+
           <Route path="/*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>

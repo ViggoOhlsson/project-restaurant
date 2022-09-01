@@ -43,7 +43,7 @@ export function CustomerCancel() {
 
   useEffect(() => {
     if (!deleteBooking) return;
-    axios.post("http://localhost:8000/cancel/" + id).then((res) => {
+    axios.delete("http://localhost:8000/cancel/" + id).then((res) => {
       console.log(res);
     });
   });

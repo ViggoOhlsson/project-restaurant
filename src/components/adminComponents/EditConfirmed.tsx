@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { IBooking } from "../models/IBooking";
+import { IBooking } from "../../models/IBooking";
 
 interface IEditConfirmedProps {
   booking: IBooking;
@@ -48,7 +48,7 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
         Reservation updated
       </h3>
       <div className="admin-edit__section admin-edit__section--image">
-        <img src={require("../assets/success.png")} alt="Success" />
+        <img src={require("../../assets/success.png")} alt="Success" />
       </div>
       <div className="admin-edit__section admin-edit__section--overview">
         <div className="overview__info">
