@@ -8,9 +8,9 @@ export function Admin() {
 
   const [sortedBookings, setSortedBookings] = useState<IBooking[]>([]);
 
-  const [earlyBooking, setEarlyBooking] = useState<IBooking[]>([]);
+  const [earlyBookings, setEarlyBookings] = useState<IBooking[]>([]);
 
-  const [lateBooking, setLateBooking] = useState<IBooking[]>([]);
+  const [lateBookings, setLateBookings] = useState<IBooking[]>([]);
 
   const [date, setDate] = useState("");
 
@@ -19,8 +19,14 @@ export function Admin() {
     axios.get("http://localhost:8000/getallbookings").then((res) => {
       console.log(res);
       setBookings(res.data);
+
     });
   }, []);
+
+  useEffect(() => {
+    setEarlyBookings(bookings.filter(b => b.time === 18))
+    setLateBookings(bookings.filter(b => b.time === 21))
+  }, [bookings])
 
   useEffect(() => {
     setDate(new Date().toLocaleDateString());
@@ -52,111 +58,72 @@ export function Admin() {
     }
   }
 
-  //Delar upp bokningarna efter tid
-  useEffect(() => {
-    for (let i = 0; i < sortedBookings.length; i++) {
-      const booking = sortedBookings[i];
-      if (booking.time === 18) {
-        setEarlyBooking((earlyBooking) => [...earlyBooking, booking]);
-      }
-      if (booking.time === 21) {
-        setLateBooking((lateBooking) => [...lateBooking, booking]);
-      }
-    }
-  }, [sortedBookings]);
-
-  //Går igenom bokningarna med tiden 18 och skapar html
-  const earlyBookings = earlyBooking.map((booking) => {
-    return (
-      <>
-        <div key={booking._id} className="admin__bookings__early">
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Name </b>{" "}
-            {booking.customer.name}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Party </b>
-            {booking.guests}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Phone </b>
-            {booking.customer.phone}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Email </b>
-            {booking.customer.email}
-          </p>
-          <Link to={"/edit-booking/" + booking._id}>
-            {" "}
-            <i className="admin__bookings__icon fa-solid fa-pen"></i>
-          </Link>
-        </div>
-      </>
-    );
-  });
-
-  //Går igenom bokningarna med tiden 21 och skapar html
-  const lateBookings = lateBooking.map((booking) => {
-    return (
-      <>
-        <div key={booking._id} className="admin__bookings__late">
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Name </b>{" "}
-            {booking.customer.name}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Party </b>
-            {booking.guests}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Phone </b>
-            {booking.customer.phone}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Email </b>
-            {booking.customer.email}
-          </p>
-          <Link to={"/edit-booking/" + booking._id}>
-            <i className="admin__bookings__icon fa-solid fa-pen"></i>
-          </Link>
-        </div>
-      </>
-    );
-  });
-
   return (
-    <>
-      <div className="admin">
-        <div className="admin__search">
-          <input
-            className="admin__search__date-input"
-            type="date"
-            defaultValue={date}
-            onChange={changeDate}
-          ></input>
-          <button
-            onClick={() => {
-              setSortedBookings([]);
-              findBooking(date);
-            }}
-            className="admin__search__input-button"
-          >
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
-
-        <div className="admin__bookings">
-          <p className="admin__bookings--date">
-            {new Date(date).toDateString()}
-          </p>
-          <h2 className="admin__bookings--heading">Early sitting</h2>
-
-          {earlyBookings}
-          <h2 className="admin__bookings--heading">Late sitting</h2>
-
-          {lateBookings}
-        </div>
+    <div className="admin">
+      <div className="admin__search">
+        <input
+          className="admin__search__date-input"
+          type="date"
+          defaultValue={date}
+          onChange={changeDate}
+        ></input>
+        <button
+          onClick={() => {
+            setSortedBookings([]);
+            findBooking(date);
+          }}
+          className="admin__search__input-button"
+        >
+          <i className="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
-    </>
+      <div className="admin__bookings">
+        <p className="admin__bookings--date">
+          {new Date(date).toDateString()}
+        </p>
+        <h2 className="admin__bookings--heading">Early sitting</h2>
+        <div className="admin__bookings--table--container">
+          <table className="admin__bookings--table">
+            <tr className="admin__bookings--table--head">
+              <th>Name</th>
+              <th>Party</th>
+              <th>Phone</th>
+              <th>Email</th>
+            </tr>
+            {earlyBookings.map(booking => {
+              return (
+                <tr className="admin__bookings--table--row">
+                  <td>{booking.customer.name}</td>
+                  <td>{booking.guests}</td>
+                  <td>{booking.customer.phone}</td>
+                  <td>{booking.customer.email}</td>
+                  <Link to={"/edit-booking/" + booking._id} className="edit-icon"><i className="fa-solid fa-pencil"></i></Link>
+                </tr>
+              )
+            })}
+          </table>
+        </div>
+        <h2 className="admin__bookings--heading">Late sitting</h2>
+        <table className="admin__bookings--table">
+          <tr>
+            <th>Name</th>
+            <th>Party</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+          {lateBookings.map(booking => {
+            return (
+              <tr>
+                <td>{booking.customer.name}</td>
+                <td>{booking.guests}</td>
+                <td>{booking.customer.phone}</td>
+                <td>{booking.customer.email}</td>
+              </tr>
+            )
+          })}
+        </table>
+
+      </div>
+    </div>
   );
 }

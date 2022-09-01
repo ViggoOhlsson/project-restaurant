@@ -68,6 +68,7 @@ app.get("/getbookingsbycustomer", async (req, res) => {
   try {
     const bookings = await BookingModel.find({ customer: id })
       .populate("customer")
+      .sort({date: -1})
       .lean();
     res.send(bookings);
     return;
