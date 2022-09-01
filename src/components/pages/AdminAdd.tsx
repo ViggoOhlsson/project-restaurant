@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IBooking } from "../../models/IBooking";
-import { EditConfirmed } from "../EditConfirmed";
-import { EditForm } from "../EditForm";
+import { EditConfirmed } from "../adminComponents/EditConfirmed";
+import { EditForm } from "../adminComponents/EditForm";
 
 export function AdminAdd() {
   const [fullyBooked, setFullyBooked] = useState(false);
