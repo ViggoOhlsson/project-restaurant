@@ -46,7 +46,8 @@ app.get("/getbooking", async (req, res) => {
     res.send(booking);
     return;
   } catch (err) {
-    res.send(err);
+    console.log(err);
+    res.send("error");
     return;
   }
 });
