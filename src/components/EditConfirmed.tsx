@@ -4,6 +4,7 @@ import { IBooking } from "../models/IBooking";
 
 interface IEditConfirmedProps {
   booking: IBooking;
+  parentView: string;
 }
 
 export const EditConfirmed = (props: IEditConfirmedProps) => {
@@ -29,6 +30,16 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
 
   function refreshPage() {
     window.location.reload();
+  }
+
+  function buttonText() {
+    if (props.parentView === "edit") {
+      return "Edit changes";
+    } else if (props.parentView === "add") {
+      return "Add new reservation";
+    } else {
+      return "Refresh page";
+    }
   }
 
   return (
@@ -66,8 +77,12 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
         </div>
       </div>
       <div className="admin-edit__section admin-edit__section--redirect">
-        <button onClick={refreshPage} className="redirect__editButton"><i className="fa-solid fa-arrow-left"></i> Edit changes</button>
-        <Link to={"/admin"} className="redirect__adminButton">Proceed to bookings <i className="fa-solid fa-arrow-right"></i></Link>
+        <button onClick={refreshPage} className="redirect__editButton">
+          <i className="fa-solid fa-arrow-left"></i> {buttonText()}
+        </button>
+        <Link to={"/admin"} className="redirect__adminButton">
+          Proceed to bookings <i className="fa-solid fa-arrow-right"></i>
+        </Link>
       </div>
     </div>
   );
