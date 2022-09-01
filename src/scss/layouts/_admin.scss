@@ -84,6 +84,7 @@
 
         @include mixins.desktop{
             width: 80%;  
+            padding: 10px;
             margin: 40px auto;            
         }
 
@@ -111,14 +112,14 @@
             width: 80%;
             
             @include mixins.tablet{
-                @include mixins.flex(row, center, top, 2rem);
+                @include mixins.flex(row, center, top, 0.2rem);
                 text-align: center;      
-                width: 100%;          
+                width: 90%;          
             }
             
             @include mixins.desktop{
                 justify-content: space-between;   
-                width: 96%;                        
+                // width: 9%;                        
             }
         }
 
@@ -150,9 +151,9 @@
             padding: 10px;
             
             @include mixins.tablet{
-                padding: 15px;
+                padding: 15px 0px 15px 0px;
                 @include mixins.flex(column, left, top, 2rem);
-                width:26%;
+                width:20%;
                 overflow: auto;
                 &::-webkit-scrollbar{
                     cursor: pointer;
@@ -169,6 +170,12 @@
                 }
             }
             
+        }
+        &--info-email{
+            @include mixins.tablet{
+
+                width:28%;
+            }
         }
     }
 }
