@@ -42,10 +42,18 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
     }
   }
 
+  function HeadingText() {
+    if (props.parentView === "edit") {
+      return "Reservation updated";
+    } else if (props.parentView === "add") {
+      return "Reservation added";
+    }
+  }
+
   return (
     <div className="admin-edit">
       <h3 className="admin-edit__section admin-edit__section--heading">
-        Reservation updated
+        {HeadingText()}
       </h3>
       <div className="admin-edit__section admin-edit__section--image">
         <img src={require("../../assets/success.png")} alt="Success" />
