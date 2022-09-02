@@ -102,12 +102,17 @@ export function AdminEdit() {
     if (adminView === "deleted") {
       return <EditDeleteConfirm></EditDeleteConfirm>;
     } else if (adminView === "done") {
-      return <EditConfirmed parentView="edit" booking={booking}></EditConfirmed>;
+      return (
+        <EditConfirmed parentView="edit" booking={booking}></EditConfirmed>
+      );
     } else if (adminView === "notfound") {
       return <Navigate to={"/*"}></Navigate>;
     } else {
       return (
         <div className="admin-edit">
+          <h3 className="admin-edit__section admin-edit__section--heading">
+            Edit reservation
+          </h3>
           <EditForm
             handleSave={handleSave}
             changeUser={handleUserChange}
