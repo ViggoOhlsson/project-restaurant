@@ -61,11 +61,14 @@ export function AdminAdd() {
   }
 
   function displayView() {
-     if (adminView === "done") {
+    if (adminView === "done") {
       return <EditConfirmed parentView="add" booking={editing}></EditConfirmed>;
     } else {
       return (
         <div className="admin-edit">
+          <h3 className="admin-edit__section admin-edit__section--heading">
+            Create reservation
+          </h3>
           <EditForm
             handleSave={handleSave}
             changeUser={handleUserChange}
@@ -78,7 +81,5 @@ export function AdminAdd() {
     }
   }
 
-  return (
-    <main>{displayView()}</main>
-  );
+  return <main>{displayView()}</main>;
 }

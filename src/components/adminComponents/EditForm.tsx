@@ -12,9 +12,6 @@ interface IEditFormProps {
 export const EditForm = (props: IEditFormProps) => {
   return (
     <>
-      <h3 className="admin-edit__section admin-edit__section--heading">
-        Edit reservation
-      </h3>
       <form
         className="admin-edit__section admin-edit__section--form"
         onSubmit={props.handleSave}
