@@ -1,5 +1,6 @@
 @use "../mixins";
 @use "../base/typography";
+@import "../variables";
 
 
 .home{
@@ -32,7 +33,7 @@
         padding: 13px;
         border: none;
         border-radius: 30px;
-        background-color: #f3954b;
+        background-color: $primary-orange;
         color: #f0f0f0;
         @include typography.inter;
         

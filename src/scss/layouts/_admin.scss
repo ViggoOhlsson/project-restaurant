@@ -3,22 +3,34 @@
 //////////////////
 @use "../mixins";
 @use "../base/typography";
+@import "../variables";
 
 
 .admin{
-
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     @include typography.inter();
+    @include mixins.tablet{
+        width: 90%;
+    }
+    
+    @include mixins.desktop{
+        width: 80%;
+    }
     
     &__search{
-        width: 50%;
-        margin: 0 auto;
-        background-color: rgba(255, 255, 255, 0.215);
-        position: relative;
+        
         margin-top:100px;    
+        position: relative;
+        @include mixins.flex(row, center, center, 1rem);
+    
+    &--field{
+        width: 50%;
+        background-color: $transparent-bg;
+        position: relative;
         border-radius: 10px;
-        @include mixins.flex(row, center, center, 2rem);
+        @include mixins.flex(row, center, center, 0);
+
         
         &__date-input {
             color: #d8d8d8;
@@ -31,38 +43,48 @@
             color-scheme: dark;
             @include typography.inter();
 
-            ::-webkit-calendar-picker-indicator{
-                color: #d8d8d8;
-                display: none;
-            }
+            // ::-webkit-calendar-picker-indicator{
+            //     color: #d8d8d8;
+            //     display: none;
+            // }
 
             &:focus{
                 outline: none;
             }
 
         }
-            
-            &__input-button{
-                color: #d8d8d8;
-                border: none;
-                background: none;
-                cursor: pointer;
-            }
     }
+    .buttons{
+        @include mixins.flex(row, center, end, 1rem);
+
+        .admin__search__input-button{
+            color: $icons;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        .fa-calendar-plus{
+            text-align: center;
+            
+        }
+    }
+            
+}
 
     &__bookings{
         background-color: white;
         width: 100%;
         @include mixins.flex(column, center, center, 2rem);
         text-align: center;
-        border: 0.2px solid rgb(174, 174, 174);
         border-radius: 10px;
         padding: 40px;
         margin-top: 40px;
         margin-bottom: 40px;
 
+
         @include mixins.desktop{
             width: 80%;  
+            padding: 10px;
             margin: 40px auto;            
         }
         &--table--container {
@@ -104,57 +126,89 @@
             padding: 10px;
             text-align: center;
             font-weight: 100;
-            color: #928D8D;
+            color: $faded-heading;
         }
 
         &--heading{
             font-weight: 400;
-            font-size: 1rem
+            font-size: 1rem;
+
         }
 
         &__early, &__late{
             @include mixins.flex(column, left, top, 2rem);
-            text-align: left;
+            text-align: center;
             position: relative;
+            padding: 10px;
+            border-radius: 10px;
+            // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            box-shadow:$bookings-boxShadow;            
+            width: 80%;
             
             @include mixins.tablet{
-                @include mixins.flex(row, center, top, 2rem);
-                text-align: center;                
+                @include mixins.flex(row, center, top, 0.2rem);
+                text-align: center;      
+                width: 90%;          
             }
             
             @include mixins.desktop{
-                justify-content: space-between;                           
+                justify-content: space-between;   
+                // width: 9%;                        
             }
         }
 
-        &__icon{
-            color: rgb(193, 193, 193);
-            font-size: 0.7rem;
-            position: absolute;
-            right: -20px;
-            top: 15px;
-
-            &:hover{
-                color: #928D8D;
-                transform: scale(1.3);
+        &--a{
+            align-self: center;
+        }
+            &__icon{
+                color: #c1c1c1;
+                font-size: 0.7rem;
+                position: absolute;
+                right: -20px;
+                top: 15px;
+                
+                &:hover{
+                    color: #928D8D;
+                    transform: scale(1.3);
+                }
+                @include mixins.tablet{
+                    position: relative;
+                right: auto;
+                top: auto;
+                align-self: center;
             }
         }
 
         &--info{
             font-size: 0.9rem;
-            color: #928D8D;
+            color: #2c2c2c;
             padding: 10px;
-
+            
             @include mixins.tablet{
-
+                padding: 15px 0px 15px 0px;
                 @include mixins.flex(column, left, top, 2rem);
+                width:20%;
+                overflow: auto;
+                &::-webkit-scrollbar{
+                    cursor: pointer;
+                    width: 5px;
+                    height: 2px;
+                    &-track{
+                        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+                        border-radius: 10px;
+                    }
+                    &-thumb{
+                        border-radius: 10px;
+                        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+                    }
+                }
             }
             
-            &--heading{
-                
-                margin: 5px;
-                color: black;
-                font-weight: 600;
+        }
+        &--info-email{
+            @include mixins.tablet{
+
+                width:28%;
             }
         }
     }

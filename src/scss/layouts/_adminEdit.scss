@@ -9,28 +9,93 @@
 ///////////////////////
 //ADMIN EDIT STYLING//
 /////////////////////
-main{
+main {
   @include mixins.flex(column, center, center, 2rem);
 }
 .admin-edit {
   @include typography.inter();
   @include mixins.flex(column, center, center, 2rem);
-  background-color: #fff;
+  background-color: white;
   border-radius: 20px;
   font-size: 10pt;
   padding: 40px;
-  width: 80%;
+  width: 95%;
 
-  //Lägga in Mediaquery mixin för width
+  @include mixins.tablet{
+    width: 70%;
+  }
+
+  @include mixins.desktop{
+    width: 600px;
+  }
 
   &__section {
     @include mixins.flex(column, center, flex-start, 0.5rem);
+
+    &--image {
+      width: 70px;
+      img {
+        width: 100%;
+      }
+    }
+
+    &--overview {
+      @include mixins.flex(column, center, center, 1.5rem);
+      .overview__info {
+        @include mixins.flex(row, center, center, 1.5rem);
+        span {
+          //Måste kanske lägga till detta i fontlänken
+          font-weight: bold;
+        }
+      }
+      .overview__info > * {
+        @include mixins.flex(column, center, center, 0.5rem);
+      }
+
+      .overview__contact {
+        width: 80%;
+        @include mixins.flex(column, center, center, 0.5rem);
+        .overview__user {
+          @include mixins.flex(row, center, space-around, 0.5rem);
+          flex-wrap: wrap;
+        }
+      }
+    }
+
+    &--redirect {
+      @include mixins.flex(row, center, center, 0.8rem);
+
+      .redirect__adminButton {
+        text-decoration: none;
+        padding: 10px 12px 10px 12px;
+        // background-color: #73b09e;
+        // border: solid 1px #2f4b43;
+        border: none;
+        color: $primary-green;
+        border-radius: 10px;
+        font-size: 10pt;
+        cursor: pointer;
+      }
+
+      .redirect__editButton {
+        padding: 10px 12px 10px 12px;
+        background-color: white;
+        // border: 1px solid gray;
+        border: none;
+        color: gray;
+        border-radius: 10px;
+        font-size: 10pt;
+        cursor: pointer;
+      }
+    }
 
     &--heading {
       color: $primary-purple;
     }
     &--form {
       background-color: #fff;
+      @include mixins.flex(column, center, center, 1.2rem);
+
       input {
         background-color: #f2f2f2;
         border: none;
@@ -39,7 +104,8 @@ main{
       }
 
       .form__error {
-        color: #af4d4d;
+        width: 100%;
+        color: $delete-dark;
         padding: 8px 0px 8px 0px;
         border-radius: 10px;
       }
@@ -62,10 +128,11 @@ main{
         @include mixins.flex(column, center, flex-start, 0.5rem);
       }
 
-      .form__userName, .form__email{
+      .form__userName,
+      .form__email {
         width: 100%;
-        input{
-            width: 100%;
+        input {
+          width: 100%;
         }
       }
 
@@ -76,11 +143,11 @@ main{
 
       .form__cancel {
         padding: 5px 12px 5px 12px;
-        background-color: #f6eeee;
-        border: solid 1px #b16161;
+        background-color: $icon-red;
+        border: solid 1px $delete-dark;
         border-radius: 20px;
         text-decoration: none;
-        color: #b16161;
+        color: $delete-dark;
 
         a:visited {
           color: #b16161;
@@ -89,23 +156,41 @@ main{
 
       .form__update {
         padding: 5px 12px 5px 12px;
-        background-color: #73b09e;
-        border: solid 1px #2f4b43;
-        color: #2f4b43;
+        background-color: $green-light;
+        border: solid 1px $green-dark;
+        color: $green-dark;
         border-radius: 20px;
         font-size: 10pt;
         cursor: pointer;
       }
     }
 
-    &--delete{
-        background: none;
-        border: none;
-        font-size: 10pt;
-        padding: 5px 12px 5px 12px;
-        margin-bottom: 20px;
-        color: #928D8D;
-        cursor: pointer;
+    &--delete {
+      background: none;
+      border: none;
+      font-size: 10pt;
+      padding: 5px 12px 5px 12px;
+      color: $purple-medium;
+      cursor: pointer;
+      @include mixins.flex(row, center, center, 0.4rem);
     }
+  }
+}
+
+///////////////////////
+//ADMIN ADD STYLING//
+/////////////////////
+
+
+.admin-add{
+  margin: 0 auto;
+  margin-bottom: 50px;
+
+  @include mixins.tablet{
+    width: 60%;
+  }
+
+  @include mixins.desktop{
+    width: 50%;
   }
 }
