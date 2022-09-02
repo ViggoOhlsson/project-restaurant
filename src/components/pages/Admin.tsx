@@ -3,6 +3,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 
+const linkStyle = {
+  color: "#d8d8d8",
+  textDecoration: "none",
+};
+
 export function Admin() {
   const [bookings, setBookings] = useState<IBooking[]>([]);
 
@@ -70,23 +75,16 @@ export function Admin() {
     return (
       <>
         <div key={booking._id} className="admin__bookings__early">
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Name </b>{" "}
-            {booking.customer.name}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Party </b>
-            {booking.guests}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Phone </b>
-            {booking.customer.phone}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Email </b>
+          <p className="admin__bookings--info">{booking.customer.name}</p>
+          <p className="admin__bookings--info">Party of {booking.guests}</p>
+          <p className="admin__bookings--info">{booking.customer.phone}</p>
+          <p className="admin__bookings--info admin__bookings--info-email">
             {booking.customer.email}
           </p>
-          <Link to={"/edit-booking/" + booking._id}>
+          <Link
+            className="admin__bookings--a"
+            to={"/admin/edit-booking/" + booking._id}
+          >
             {" "}
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
           </Link>
@@ -100,23 +98,13 @@ export function Admin() {
     return (
       <>
         <div key={booking._id} className="admin__bookings__late">
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Name </b>{" "}
-            {booking.customer.name}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Party </b>
-            {booking.guests}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Phone </b>
-            {booking.customer.phone}
-          </p>
-          <p className="admin__bookings--info">
-            <b className="admin__bookings--info--heading">Email </b>
+          <p className="admin__bookings--info">{booking.customer.name}</p>
+          <p className="admin__bookings--info">Party of {booking.guests}</p>
+          <p className="admin__bookings--info">{booking.customer.phone}</p>
+          <p className="admin__bookings--info admin__bookings--info-email">
             {booking.customer.email}
           </p>
-          <Link to={"/edit-booking/" + booking._id}>
+          <Link to={"/admin/edit-booking/" + booking._id}>
             <i className="admin__bookings__icon fa-solid fa-pen"></i>
           </Link>
         </div>
@@ -128,21 +116,28 @@ export function Admin() {
     <>
       <div className="admin">
         <div className="admin__search">
-          <input
-            className="admin__search__date-input"
-            type="date"
-            defaultValue={date}
-            onChange={changeDate}
-          ></input>
-          <button
-            onClick={() => {
-              setSortedBookings([]);
-              findBooking(date);
-            }}
-            className="admin__search__input-button"
-          >
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
+          <div className="admin__search--field">
+            <input
+              className="admin__search--field__date-input"
+              type="date"
+              defaultValue={date}
+              onChange={changeDate}
+            ></input>
+          </div>
+          <div className="buttons">
+            <button
+              onClick={() => {
+                setSortedBookings([]);
+                findBooking(date);
+              }}
+              className="admin__search__input-button"
+            >
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <Link to={"/admin/add-new"} style={linkStyle}>
+              <i className="fa-solid fa-calendar-plus"></i>
+            </Link>
+          </div>
         </div>
 
         <div className="admin__bookings">

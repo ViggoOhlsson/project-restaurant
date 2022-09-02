@@ -4,6 +4,7 @@
 @use "../base/typography";
 @use "../variables";
 @use "../mixins";
+@import "../variables";
 
 .cancel__container{
     @include mixins.flex(column, center, center, 2);
@@ -14,7 +15,7 @@
         @include mixins.flex(column, center, center, 1rem);
         
         i{
-            color: #E9A8A8;
+            color: $icon-red;
             font-size: 4rem;
             text-align: center;
         }
@@ -90,9 +91,9 @@
             &__delete{
                 padding: 10px;
                 border-radius: 20px;
-                border: 0.4px solid #5F2D2D;
-                background-color: #b161613c;
-                color: #5F2D2D;
+                border: 0.4px solid $delete-dark;
+                background-color: $delete-transparent;
+                color: $delete-dark;
                 @include typography.inter;
                 cursor: pointer;
                 transition: 0.3s;
