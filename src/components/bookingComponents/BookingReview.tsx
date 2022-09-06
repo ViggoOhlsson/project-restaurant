@@ -21,7 +21,7 @@ export const BookingReview = (props: IBookingReviewProps) => {
             <div className="booking-info-container">
               <div className="date">
                 <span>Date</span>
-                <p>{props.booking.date.split("-").splice(1, 2).join("-")}</p>
+                <p>{props.booking.date.toLocaleDateString().split("-").splice(1, 2).join("-")}</p>
               </div>
               <div className="guests">
                 <span>Guests</span>

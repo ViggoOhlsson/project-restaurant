@@ -1,5 +1,5 @@
 export interface IBookingDetails {
-    date: string
+    date: Date
     time: number
     guests: number
 }

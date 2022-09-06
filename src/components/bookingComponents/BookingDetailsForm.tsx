@@ -1,6 +1,8 @@
 import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
 import { IBookingDetails } from "../../models/IBookingDetails"
+import { BookingDatePicker } from "./BookingDatePicker"
+import Calendar from "react-calendar"
 
 interface IBookingDetailsFormProps {
     changeBookingDetails(bookingDetails: IBookingDetails): void
@@ -8,15 +10,15 @@ interface IBookingDetailsFormProps {
 
 export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
 
-    const [date, setDate] = useState("")
+    const [date, setDate] = useState<Date>(new Date())
     const [time, setTime] = useState(18)
     const [guests, setGuests] = useState(1)
     const [fullyBooked, setFullyBooked] = useState(false)
 
-    const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log("Date:", e.target.value);
-        setDate(e.target.value);
-    };
+    // const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
+    //     console.log("Date:", e.target.value);
+    //     setDate(e.target.value);
+    // };
     const changeGuests = (e: ChangeEvent<HTMLInputElement>) => {
         console.log("Changed Booking Info")
         let val = parseInt(e.target.value)
@@ -43,7 +45,8 @@ export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
 
     return <div className="phase-container date-phase">
         <div className="date-container">
-            <input type="date" min={new Date().toISOString().split("T")[0]} defaultValue={new Date().toLocaleDateString()} onChange={changeDate}></input>
+            <Calendar onChange={setDate} value={date} />
+            {/* <input type="date" min={new Date().toISOString().split("T")[0]} defaultValue={new Date().toLocaleDateString()} onChange={changeDate}></input> */}
         </div>
         <div className="time-container">
             <span className="title">Time</span>

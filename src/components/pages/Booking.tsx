@@ -21,11 +21,11 @@ export function Booking() {
     phone: 0,
     time: 18,
     guests: 0,
-    date: ""
+    date: new Date()
   })
 
   const [bookingDetails, setBookingDetails] = useState<IBookingDetails>({
-    date: new Date().toLocaleDateString(),
+    date: new Date(),
     time: 18,
     guests: 1
   })

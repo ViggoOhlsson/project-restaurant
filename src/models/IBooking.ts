@@ -7,7 +7,7 @@ export interface IBooking {
 }
 
 export interface IBookingPrimitive {
-  date: string
+  date: Date
   time: number
   guests: number
   email: string
