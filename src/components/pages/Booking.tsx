@@ -25,7 +25,7 @@ export function Booking() {
   })
 
   const [bookingDetails, setBookingDetails] = useState<IBookingDetails>({
-    date: "",
+    date: new Date().toLocaleDateString(),
     time: 18,
     guests: 1
   })

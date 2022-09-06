@@ -6,10 +6,6 @@ interface IBookingPhaseProps {
 }
 
 export const BookingPhase = (props: IBookingPhaseProps) => {
-
-    
-
-
     return <>
         <div className="booking-phase-display">
             <div className={`booking-phase phase-date ${props.phase === 1 && 'current'}`} onClick={() => props.changePhase(1)}>
