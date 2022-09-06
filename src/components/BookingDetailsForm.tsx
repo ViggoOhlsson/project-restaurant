@@ -5,7 +5,7 @@ interface IBookingDetailsFormProps {
     changeBookingDetails(bookingDetails: IBookingDetails): void
 }
 
-export const BookingDetailsform = (props: IBookingDetailsFormProps) => {
+export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
 
     const [date, setDate] = useState("")
     const [time, setTime] = useState(18)

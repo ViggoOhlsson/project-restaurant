@@ -35,7 +35,7 @@ export const BookingPhase = (props: IBookingPhaseProps) => {
                 </span>
             </div>
             <div className="dot"></div>
-            <div className={`booking-phase phase-date ${props.phase === 4 && 'current'}`} onClick={() => props.changePhase(4)}>
+            <div className={`booking-phase phase-date ${props.phase === 4 && 'current'}`}>
                 <span className="phase-number">
                     4
                 </span>

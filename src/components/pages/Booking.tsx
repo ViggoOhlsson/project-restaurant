@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IBooking, IBookingPrimitive } from "../../models/IBooking";
 import { IBookingDetails } from "../../models/IBookingDetails";
 import { IBookingGuestInfo } from "../../models/IBookingGuestInfo";
-import { BookingDetailsform } from "../BookingDetailsForm";
+import { BookingDetailsForm } from "../BookingDetailsForm";
 import { BookingGuestInfoForm } from "../BookingGuestInfoForm";
 import { BookingPhase } from "../BookingPhase";
 import { BookingReview } from "../BookingReview";
@@ -44,6 +44,7 @@ export function Booking() {
   }
 
   const placeBooking = async () => {
+    let success = false
     let body = { 
       time: bookingDetails.time,
       date: bookingDetails.date,
@@ -54,13 +55,18 @@ export function Booking() {
     };
     console.log(body);
     try {
+      console.log("trying...")
       let res = await axios.post("http://localhost:8000/book", body);
-      let emailRes = await axios.post("http://localhost:8000/send-email",res.data);
+      // let emailRes = await axios.post("http://localhost:8000/send-email", res.data);
       console.log("booking sent:", res);
-      console.log(emailRes);
+      // console.log(emailRes);
+      success = true
+
     } catch (err) {
       console.log(err);
-    } finally {
+    } 
+    if (success) {
+      console.log("changing phase")
       changePhase(4);
       setTimeout(() => {
         navigate("/")
@@ -91,12 +97,13 @@ export function Booking() {
     <main className="booking-page">
       <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
       <div className="form-container">
-        {phase === 1 && ( <BookingDetailsform changeBookingDetails={changeBookingDetails} /> )}
+        {phase === 1 && ( <BookingDetailsForm changeBookingDetails={changeBookingDetails} /> )}
         {phase === 2 && ( <BookingGuestInfoForm changeBookingGuestInfo={changeBookingGuestInfo} />)}
         {phase === 3 && ( <BookingReview booking={booking} placeBooking={placeBooking}/>)}
         {phase === 4 && ( <div className="phase-container redirect-phase">
             <i className="fa-solid fa-check"></i>
             <h2>Reservation Complete!</h2>
+            <span>You will soon be redirected...</span>
           </div> )}
       </div>
       {phase < 3 && (
