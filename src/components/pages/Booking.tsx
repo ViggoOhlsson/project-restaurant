@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { IBooking, IBookingPrimitive } from "../../models/IBooking";
 import { IBookingDetails } from "../../models/IBookingDetails";
 import { IBookingGuestInfo } from "../../models/IBookingGuestInfo";
 import { BookingDetailsform } from "../BookingDetailsForm";
@@ -14,8 +15,13 @@ export function Booking() {
 
   const [phase, setPhase] = useState(1);
 
-  const [booking, setBooking] = useState({
-    
+  const [booking, setBooking] = useState<IBookingPrimitive>({
+    name: "",
+    email: "",
+    phone: 0,
+    time: 18,
+    guests: 0,
+    date: ""
   })
 
   const [bookingDetails, setBookingDetails] = useState<IBookingDetails>({
@@ -37,15 +43,15 @@ export function Booking() {
     setBookingGuestInfo(bookingGuestInfo)
   }
 
-  const [time, setTime] = useState(18);
-  const [date, setDate] = useState("");
-  const [guests, setGuests] = useState(1);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(0);
   const placeBooking = async () => {
-    let body = { time, date, guests, name, email, phone };
+    let body = { 
+      time: bookingDetails.time,
+      date: bookingDetails.date,
+      guests: bookingDetails.guests,
+      name: bookingGuestInfo.name,
+      email: bookingGuestInfo.email,
+      phone: bookingGuestInfo.phone
+    };
     console.log(body);
     try {
       let res = await axios.post("http://localhost:8000/book", body);
@@ -68,9 +74,18 @@ export function Booking() {
     console.log("changed phase to:", to);
     setPhase(to);
   };
+
   useEffect(() => {
-    setDate(new Date().toLocaleDateString());
-  }, []);
+    let booking = {
+      date: bookingDetails.date,
+      time: bookingDetails.time,
+      guests: bookingDetails.guests,
+      name: bookingGuestInfo.name,
+      email: bookingGuestInfo.email,
+      phone: bookingGuestInfo.phone
+    }
+    setBooking(booking)
+  }, [bookingDetails, bookingGuestInfo])
 
   return (
     <main className="booking-page">
@@ -78,13 +93,11 @@ export function Booking() {
       <div className="form-container">
         {phase === 1 && ( <BookingDetailsform changeBookingDetails={changeBookingDetails} /> )}
         {phase === 2 && ( <BookingGuestInfoForm changeBookingGuestInfo={changeBookingGuestInfo} />)}
-        {phase === 3 && ( <BookingReview booking={}/>)}
-        {phase === 4 && (
-          <div className="phase-container redirect-phase">
+        {phase === 3 && ( <BookingReview booking={booking} placeBooking={placeBooking}/>)}
+        {phase === 4 && ( <div className="phase-container redirect-phase">
             <i className="fa-solid fa-check"></i>
             <h2>Reservation Complete!</h2>
-          </div>
-        )}
+          </div> )}
       </div>
       {phase < 3 && (
         <div className="next-phase-wrapper">

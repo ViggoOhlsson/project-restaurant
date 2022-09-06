@@ -1,11 +1,20 @@
-import { IBooking } from "../models/IBooking";
+import axios from "axios";
+import { IBooking, IBookingPrimitive } from "../models/IBooking";
 
 interface IBookingReviewProps {
-    booking: IBooking
-    placeBooking: void
+    booking: IBookingPrimitive
+    placeBooking: () => void
 }
 
 export const BookingReview = (props: IBookingReviewProps) => {
+
+  const book = () => {
+    props.placeBooking()
+  }
+
+  const validate = () => {
+    axios.get("http://locahost/validate")
+  }
 
 
     return <div className="phase-container review-phase">
@@ -28,12 +37,12 @@ export const BookingReview = (props: IBookingReviewProps) => {
             <div className="customer-info-container">
               <p>Contact Information</p>
               <div>
-                <p>{props.booking.customer.name}</p>
-                <p>{props.booking.customer.email}</p>
-                <p>{props.booking.customer.phone}</p>
+                <p>{props.booking.name}</p>
+                <p>{props.booking.email}</p>
+                <p>{props.booking.phone}</p>
               </div>
             </div>
-            <button onClick={placeBooking} className="submit-button">
+            <button onClick={book} className="submit-button">
               <i className="fa-solid fa-check"></i>
               <span>Place Booking</span>
             </button>
