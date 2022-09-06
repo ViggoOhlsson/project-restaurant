@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 
 const linkStyle = {
@@ -20,6 +20,8 @@ export function CustomerCancel() {
 
   const [deleteBooking, setDeleteBooking] = useState(false);
 
+  const [adminView, setAdminView] = useState("");
+
   const [booking, setBooking] = useState<IBooking>({
     date: new Date(),
     time: 0,
@@ -36,8 +38,12 @@ export function CustomerCancel() {
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
     axios.get("http://localhost:8000/getbooking?id=" + id).then((res) => {
-      console.log(res);
-      setBooking(res.data);
+      if (res.data === "error") {
+        setAdminView("notfound");
+      } else {
+        setBooking(res.data);
+        setAdminView("found");
+      }
     });
   }, []);
 
@@ -52,9 +58,12 @@ export function CustomerCancel() {
     setDeleteBooking(true);
   }
 
-  return (
-    <>
-      {!deleteBooking ? (
+  function displayHtml() {
+    if (adminView === "notfound") {
+      console.log(adminView);
+      return <Navigate to={"/*"}></Navigate>;
+    } else if (!deleteBooking) {
+      return (
         <div className="cancel__container">
           <div className="cancel__container--text">
             <i className=" cancel__container--text fa-solid fa-circle-exclamation"></i>
@@ -116,7 +125,9 @@ export function CustomerCancel() {
             </div>
           </div>
         </div>
-      ) : (
+      );
+    } else {
+      return (
         <div className="cancelled">
           <p className="cancelled__text">
             Your reservation has been cancelled!
@@ -127,7 +138,9 @@ export function CustomerCancel() {
             </Link>
           </button>
         </div>
-      )}
-    </>
-  );
+      );
+    }
+  }
+
+  return <>{displayHtml()}</>;
 }
