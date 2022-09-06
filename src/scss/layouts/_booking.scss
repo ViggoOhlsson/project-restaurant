@@ -11,7 +11,7 @@
 
     @include typography.inter();
     @include mixins.flex(column, center, center, 60px);
-    margin: 0 0 400px;
+    margin: 0 0 120px;
 
     .booking-phase-display {
         display: grid;
@@ -124,7 +124,7 @@
         border-radius: 15px;
         .info-container {
             @include mixins.flex(column, initial, initial, 20px);
-            padding: 60px 40px;
+            padding: 60px 40px 0px 40px;
             div {
                 @include mixins.flex(column, initial, initial, 10px);
                 p {
@@ -223,5 +223,21 @@
             opacity: 1;
             transform: scale(1);
         }
+    }
+}
+
+.gdpr__info{
+    margin: 0px 10px 30px 10px;
+    @include mixins.flex(column, center, center, 0);
+    &-text{
+        font-size: 0.6rem;
+        color: #a6a6a6;
+        text-align: center;
+    }
+    
+    &-link{
+        font-size: 0.6rem;
+        color: #a6a6a6;
+
     }
 }

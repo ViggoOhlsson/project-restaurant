@@ -1,24 +1,10 @@
-import { Link, Outlet } from "react-router-dom";
-
-export function Layout() {
+export function Footer() {
   return (
     <>
-      <nav className="nav">
-        <div className="nav__logo--container">
-          <Link to="/">
-            <img src={require("../assets/logoo.png")} alt="Logo" />
-          </Link>
-        </div>
-        {/* <Link to="/">Home</Link> 
-        <Link to="/book">Create Booking</Link> 
-        <Link to="/admin">Admin</Link> 
-        <Link to="/test">404 test</Link>  */}
-      </nav>
-      <Outlet></Outlet>
       <footer className="footer">
         <div className="footer__main">
           <div className="footer__main--logo">
-            <img src={require("../assets/logoo.png")} alt="Logo" />
+            <img src={require("../../assets/logoo.png")} alt="Logo" />
           </div>
           <h2 className="footer__main--heading">GET IN TOUCH</h2>
           <form className="footer__main--form">

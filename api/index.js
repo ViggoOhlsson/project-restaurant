@@ -5,7 +5,12 @@ const nodemailer = require("nodemailer");
 const { Types } = require("mongoose");
 const BookingModel = require("./models/BookingModel");
 const CustomerModel = require("./models/CustomerModel");
-const { customerExists, isFullyBooked, guestsToTables } = require("./utils");
+const {
+  customerExists,
+  isFullyBooked,
+  guestsToTables,
+  multipleBookings,
+} = require("./utils");
 const port = 8000;
 const app = express();
 
@@ -41,7 +46,8 @@ app.get("/getbooking", async (req, res) => {
     res.send(booking);
     return;
   } catch (err) {
-    res.send(err);
+    console.log(err);
+    res.send("error");
     return;
   }
 });
@@ -127,7 +133,12 @@ app.post("/book", async (req, res) => {
     customer: customer._id,
   });
 
-  if (await isFullyBooked(date, time, booking.tables)) {
+  // if (await isFullyBooked(date, time, booking.tables)) {
+  //   console.log("Day & time is fully booked");
+  //   res.send({ msg: "That day and time is fully booked." });
+  //   return;
+  // }
+  if (await isFullyBooked(date, time, booking.tables, booking)) {
     console.log("Day & time is fully booked");
     res.send({ msg: "That day and time is fully booked." });
     return;
@@ -154,30 +165,33 @@ app.post("/book", async (req, res) => {
   });
 });
 
+//Bör vara delete
 //Tar bort en bokning via admin sidan
-app.post("/admindeletebooking/:id", async (req, res) => {
-  let id = req.params.id;
-  console.log(req.params.id);
-  BookingModel.deleteOne({ _id: id }, (err, result) => {
-    console.log(result);
-    res.send(result);
-  });
+app.delete("/admindeletebooking/:booking", async (req, res) => {
+  let booking = JSON.parse(req.params.booking);
+  let moreReservations = await multipleBookings(booking);
+
+  if (!moreReservations) {
+    CustomerModel.deleteOne({ _id: booking.customer }, (err, result) => {});
+  }
+  BookingModel.deleteOne({ _id: booking._id }, (err, result) => {});
+  console.log("hello");
+  res.send(true);
 });
 
 //Redigerar en bokning, inklusive customer via admin sidan
 app.post("/admineditbooking/:booking", async (req, res) => {
   const booking = JSON.parse(req.params.booking);
   const customer = booking.customer;
-//If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
+  //If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
   if (
     await isFullyBooked(
       booking.date,
       booking.time,
-      guestsToTables(booking.guests)
+      guestsToTables(booking.guests),
+      booking
     )
   ) {
-    console.log("Day & time is fully booked");
-    // res.send({ msg: "Not enought tables available" });
     res.send(true);
     return;
   } else {
@@ -209,9 +223,8 @@ app.post("/admineditbooking/:booking", async (req, res) => {
 });
 
 app.post("/send-email", async (req, res) => {
-  // let { booking.date, time, guests, name, email, phone } = req.body;
-
-  console.log("hej" + req.body.customer.email);
+  const newdate = req.body.booking.date;
+  const date = new Date(newdate).toLocaleDateString();
 
   var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -231,7 +244,7 @@ app.post("/send-email", async (req, res) => {
       "! We welcome you to Cena at " +
       req.body.booking.time +
       "o'clock on the " +
-      req.body.booking.date +
+      date +
       ". Where a table of " +
       req.body.booking.guests +
       " will be waiting for you. To cancel your reservation, please follow the link: http://localhost:3000/cancel/" +
@@ -247,8 +260,41 @@ app.post("/send-email", async (req, res) => {
   });
 });
 
-app.post("/cancel/:id", async (req, res) => {
+app.delete("/cancel/:id", async (req, res) => {
   let id = req.params.id;
+  let booking = await BookingModel.findOne({ _id: id });
+  let customer = await CustomerModel.findOne({ _id: booking.customer });
+  const newdate = booking.date;
+  const date = new Date(newdate).toLocaleDateString();
+
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "cenamatgatan@gmail.com",
+      pass: "deefoqwvuimsluss",
+    },
+  });
+  var mailOptions = {
+    from: "cenamatgatan@gmail.com",
+    to: customer.email,
+    subject: "Booking Confirmation",
+    text:
+      "Hello " +
+      customer.name +
+      "! We have cancelled your reservation at " +
+      booking.time +
+      " o'clock on the " +
+      date +
+      ". We hope to see you again soon!",
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+
   BookingModel.deleteOne({ _id: id }, (err, result) => {
     console.log(result);
     res.send(result);
