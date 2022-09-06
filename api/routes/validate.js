@@ -11,3 +11,5 @@ app.post("/dateandtime", async (req, res) => {
         fullyBooked
     })
 })
+
+module.exports = app

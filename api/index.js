@@ -25,6 +25,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use("/validate", require("./routes/validate"))
+
 app.get("/", async (req, res) => {
   res.send({
     msg: "Hello World!",
