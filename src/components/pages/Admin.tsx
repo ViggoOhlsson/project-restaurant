@@ -2,6 +2,8 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
+import { EarlyBookings } from "../adminComponents/EarlyBookings";
+import { LateBookings } from "../adminComponents/LateBookings";
 import { Loader } from "../Loader";
 
 const linkStyle = {
@@ -84,44 +86,12 @@ export function Admin() {
 
   //Går igenom bokningarna med tiden 18 och skapar html
   const earlyBookings = earlyBooking.map((booking) => {
-    return (
-      <>
-        <div key={booking._id} className="admin__bookings__early">
-          <p className="admin__bookings--info">{booking.customer.name}</p>
-          <p className="admin__bookings--info">Party of {booking.guests}</p>
-          <p className="admin__bookings--info">{booking.customer.phone}</p>
-          <p className="admin__bookings--info admin__bookings--info-email">
-            {booking.customer.email}
-          </p>
-          <Link
-            className="admin__bookings--a"
-            to={"/admin/edit-booking/" + booking._id}
-          >
-            {" "}
-            <i className="admin__bookings__icon fa-solid fa-pen"></i>
-          </Link>
-        </div>
-      </>
-    );
+    return <EarlyBookings booking={booking}></EarlyBookings>;
   });
 
   //Går igenom bokningarna med tiden 21 och skapar html
   const lateBookings = lateBooking.map((booking) => {
-    return (
-      <>
-        <div key={booking._id} className="admin__bookings__late">
-          <p className="admin__bookings--info">{booking.customer.name}</p>
-          <p className="admin__bookings--info">Party of {booking.guests}</p>
-          <p className="admin__bookings--info">{booking.customer.phone}</p>
-          <p className="admin__bookings--info admin__bookings--info-email">
-            {booking.customer.email}
-          </p>
-          <Link to={"/admin/edit-booking/" + booking._id}>
-            <i className="admin__bookings__icon fa-solid fa-pen"></i>
-          </Link>
-        </div>
-      </>
-    );
+    return <LateBookings booking={booking}></LateBookings>;
   });
 
   return (
