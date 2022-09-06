@@ -128,15 +128,6 @@ export function Admin() {
             ></input>
           </div>
           <div className="buttons">
-            <button
-              onClick={() => {
-                setSortedBookings([]);
-                findBooking(date.slice(0, 10));
-              }}
-              className="admin__search__input-button"
-            >
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
             <Link to={"/admin/add-new"} style={linkStyle}>
               <i className="fa-solid fa-calendar-plus"></i>
             </Link>
@@ -149,10 +140,10 @@ export function Admin() {
           </p>
           <h2 className="admin__bookings--heading">Early sitting</h2>
 
-          {earlyBooking.length > 0 ? earlyBookings : <p>No reservations</p>}
+          {earlyBooking.length > 0 ? earlyBookings : <p className="admin__bookings__empty">No reservations</p>}
           <h2 className="admin__bookings--heading">Late sitting</h2>
 
-          {lateBooking.length > 0 ? lateBookings : <p>No reservations</p>}
+          {lateBooking.length > 0 ? lateBookings : <p className="admin__bookings__empty">No reservations</p>}
         </div>
       </div>
     </>
