@@ -7,6 +7,7 @@ interface IEditFormProps {
   fullyBooked: boolean;
   handleSave(e: FormEvent): void;
   changeInfo(e: ChangeEvent<HTMLInputElement>): void;
+  changeSelect(e: ChangeEvent<HTMLSelectElement>): void;
   changeUser(e: ChangeEvent<HTMLInputElement>): void;
 }
 export const EditForm = (props: IEditFormProps) => {
@@ -34,7 +35,25 @@ export const EditForm = (props: IEditFormProps) => {
           </div>
           <div className="form__time">
             <label htmlFor="time">Time</label>
-            <input
+            <select name="time" id="name" onChange={props.changeSelect}>
+              {props.editingBooking.time === 18 && (
+                <>
+                  <option value="18" selected>
+                    18
+                  </option>
+                  <option value="21">21</option>
+                </>
+              )}
+              {props.editingBooking.time === 21 && (
+                <>
+                  <option value="18">18</option>
+                  <option value="21" selected>
+                    21
+                  </option>
+                </>
+              )}
+            </select>
+            {/* <input
               type="number"
               name="time"
               step="3"
@@ -43,7 +62,7 @@ export const EditForm = (props: IEditFormProps) => {
               value={props.editingBooking.time}
               onChange={props.changeInfo}
               placeholder="Time"
-            />
+            /> */}
           </div>
           <div className="form__guests">
             <label htmlFor="guests">Guests</label>

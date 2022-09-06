@@ -52,6 +52,11 @@ export function AdminAdd() {
     }
   }
 
+  //Uppdaterar select-elementet för tiden
+  function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
+    setEditing({ ...editing, [e.target.name]: +e.target.value });
+  }
+
   //Uppdaterar setEditing med kundinformation
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
     setEditing({
@@ -72,6 +77,7 @@ export function AdminAdd() {
           <EditForm
             handleSave={handleSave}
             changeUser={handleUserChange}
+            changeSelect={handleSelectChange}
             changeInfo={handleInfoChange}
             editingBooking={editing}
             fullyBooked={fullyBooked}
