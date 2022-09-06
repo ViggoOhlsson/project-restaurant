@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IBooking, IBookingPrimitive } from "../models/IBooking";
+import { IBooking, IBookingPrimitive } from "../../models/IBooking";
 
 interface IBookingReviewProps {
     booking: IBookingPrimitive

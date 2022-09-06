@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { IBooking, IBookingPrimitive } from "../../models/IBooking";
 import { IBookingDetails } from "../../models/IBookingDetails";
 import { IBookingGuestInfo } from "../../models/IBookingGuestInfo";
-import { BookingDetailsForm } from "../BookingDetailsForm";
-import { BookingGuestInfoForm } from "../BookingGuestInfoForm";
-import { BookingPhase } from "../BookingPhase";
-import { BookingReview } from "../BookingReview";
+import { BookingDetailsForm } from "../bookingComponents/BookingDetailsForm";
+import { BookingGuestInfoForm } from "../bookingComponents/BookingGuestInfoForm";
+import { BookingPhase } from "../bookingComponents/BookingPhase";
+import { BookingReview } from "../bookingComponents/BookingReview";
 
 export function Booking() {
   document.title = "Booking";

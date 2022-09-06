@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { IBookingGuestInfo } from "../models/IBookingGuestInfo"
+import { IBookingGuestInfo } from "../../models/IBookingGuestInfo"
 
 interface IBookingGuestInfoForm {
     changeBookingGuestInfo(bookingGuestInfo: IBookingGuestInfo): void

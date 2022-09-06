@@ -1,6 +1,6 @@
 import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
-import { IBookingDetails } from "../models/IBookingDetails"
+import { IBookingDetails } from "../../models/IBookingDetails"
 
 interface IBookingDetailsFormProps {
     changeBookingDetails(bookingDetails: IBookingDetails): void
