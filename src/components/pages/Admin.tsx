@@ -2,6 +2,7 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
+import { Loader } from "../Loader";
 
 const linkStyle = {
   color: "#d8d8d8",
@@ -18,6 +19,14 @@ export function Admin() {
   const [lateBooking, setLateBooking] = useState<IBooking[]>([]);
 
   const [date, setDate] = useState(new Date().toLocaleDateString());
+
+  const [loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
+  }, []);
 
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
@@ -144,15 +153,21 @@ export function Admin() {
         </div>
 
         <div className="admin__bookings">
-          <p className="admin__bookings--date">
-            {new Date(date).toDateString()}
-          </p>
-          <h2 className="admin__bookings--heading">Early sitting</h2>
+          {loader ? (
+            <Loader></Loader>
+          ) : (
+            <>
+              <p className="admin__bookings--date">
+                {new Date(date).toDateString()}
+              </p>
+              <h2 className="admin__bookings--heading">Early sitting</h2>
 
-          {earlyBooking.length > 0 ? earlyBookings : <p>No reservations</p>}
-          <h2 className="admin__bookings--heading">Late sitting</h2>
+              {earlyBooking.length > 0 ? earlyBookings : <p>No reservations</p>}
+              <h2 className="admin__bookings--heading">Late sitting</h2>
 
-          {lateBooking.length > 0 ? lateBookings : <p>No reservations</p>}
+              {lateBooking.length > 0 ? lateBookings : <p>No reservations</p>}
+            </>
+          )}
         </div>
       </div>
     </>

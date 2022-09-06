@@ -5,12 +5,15 @@ import { IBooking } from "../../models/IBooking";
 import { EditConfirmed } from "../adminComponents/EditConfirmed";
 import { EditDeleteConfirm } from "../adminComponents/EditDeleteConfirm";
 import { EditForm } from "../adminComponents/EditForm";
+import { Loader } from "../Loader";
 
 export function AdminEdit() {
   const [id, setId] = useState(useParams().id);
 
   const [fullyBooked, setFullyBooked] = useState(false);
   const [adminView, setAdminView] = useState("");
+
+  const [loader, setLoader] = useState(true);
 
   const [booking, setBooking] = useState<IBooking>({
     date: new Date(),
@@ -37,6 +40,10 @@ export function AdminEdit() {
       phone: 0,
     },
   });
+
+  setTimeout(() => {
+    setLoader(false);
+  }, 1000);
 
   //Söker igenom alla bokningar i databasen efter bokningen med rätt id
   useEffect(() => {
@@ -133,5 +140,5 @@ export function AdminEdit() {
     }
   }
 
-  return <main>{displayView()}</main>;
+  return <main>{loader ? <Loader></Loader> : displayView()}</main>;
 }
