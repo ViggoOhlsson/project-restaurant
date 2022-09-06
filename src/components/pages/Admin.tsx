@@ -13,9 +13,9 @@ export function Admin() {
 
   const [sortedBookings, setSortedBookings] = useState<IBooking[]>([]);
 
-  const [earlyBookings, setEarlyBookings] = useState<IBooking[]>([]);
+  const [earlyBooking, setEarlyBooking] = useState<IBooking[]>([]);
 
-  const [lateBookings, setLateBookings] = useState<IBooking[]>([]);
+  const [lateBooking, setLateBooking] = useState<IBooking[]>([]);
 
   const [date, setDate] = useState(new Date().toLocaleDateString());
 
