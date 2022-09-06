@@ -2,8 +2,7 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
-import { EarlyBookings } from "../adminComponents/EarlyBookings";
-import { LateBookings } from "../adminComponents/LateBookings";
+import { ShowBookings } from "../adminComponents/ShowBookings";
 import { Loader } from "../Loader";
 
 const linkStyle = {
@@ -86,12 +85,12 @@ export function Admin() {
 
   //Går igenom bokningarna med tiden 18 och skapar html
   const earlyBookings = earlyBooking.map((booking) => {
-    return <EarlyBookings booking={booking}></EarlyBookings>;
+    return <ShowBookings booking={booking}></ShowBookings>;
   });
 
   //Går igenom bokningarna med tiden 21 och skapar html
   const lateBookings = lateBooking.map((booking) => {
-    return <LateBookings booking={booking}></LateBookings>;
+    return <ShowBookings booking={booking}></ShowBookings>;
   });
 
   return (

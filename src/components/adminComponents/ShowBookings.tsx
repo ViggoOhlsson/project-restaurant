@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 
-interface ILateBookingsProps {
+interface IShowBookingsProps {
   booking: IBooking;
 }
 
-export function LateBookings(props: ILateBookingsProps) {
+export function ShowBookings(props: IShowBookingsProps) {
   return (
     <>
-      <div key={props.booking._id} className="admin__bookings__late">
+      <div key={props.booking._id} className="admin__bookings__early">
         <p className="admin__bookings--info">{props.booking.customer.name}</p>
         <p className="admin__bookings--info">Party of {props.booking.guests}</p>
         <p className="admin__bookings--info">{props.booking.customer.phone}</p>
