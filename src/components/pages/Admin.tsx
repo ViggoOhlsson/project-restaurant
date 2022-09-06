@@ -17,48 +17,51 @@ export function Admin() {
 
   const [lateBooking, setLateBooking] = useState<IBooking[]>([]);
 
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date().toLocaleDateString());
 
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
     axios.get("http://localhost:8000/getallbookings").then((res) => {
-      console.log(res);
       setBookings(res.data);
     });
   }, []);
 
   useEffect(() => {
-    setDate(new Date().toLocaleDateString());
-  }, []);
+    findBooking(date.slice(0, 10));
+  }, [bookings]);
 
   //Låter admin välja ett date
   function changeDate(e: ChangeEvent<HTMLInputElement>) {
+    setSortedBookings([]);
     setDate(e.target.value);
+    findBooking(e.target.value);
   }
 
-  //Tar emot date som admin valt och går igenom alla bokningar för att sortera ut de med rätt datum
-  function findBooking(findDate: string) {
-    let newDate = new Date(findDate);
+  function findBooking(date: string) {
+    let foundBookings: IBooking[] = [];
+
     for (let i = 0; i < bookings.length; i++) {
       let found = false;
-      if (bookings[i].date.toString() === newDate.toISOString()) {
-        for (let i = 0; i < sortedBookings.length; i++) {
-          if (sortedBookings[i]._id === bookings[i]._id) {
+      if (bookings[i].date.toString().slice(0, 10) === date) {
+        for (let j = 0; j < foundBookings.length; j++) {
+          if (foundBookings[j]._id === bookings[i]._id) {
             found = true;
           }
         }
+
         if (!found) {
-          setSortedBookings((sortedBookings) => [
-            ...sortedBookings,
-            bookings[i],
-          ]);
+          foundBookings.push(bookings[i]);
         }
       }
     }
+    setSortedBookings(foundBookings);
   }
 
   //Delar upp bokningarna efter tid
   useEffect(() => {
+    setEarlyBooking([]);
+    setLateBooking([]);
+
     for (let i = 0; i < sortedBookings.length; i++) {
       const booking = sortedBookings[i];
       if (booking.time === 18) {
@@ -128,7 +131,7 @@ export function Admin() {
             <button
               onClick={() => {
                 setSortedBookings([]);
-                findBooking(date);
+                findBooking(date.slice(0, 10));
               }}
               className="admin__search__input-button"
             >
@@ -146,10 +149,10 @@ export function Admin() {
           </p>
           <h2 className="admin__bookings--heading">Early sitting</h2>
 
-          {earlyBookings}
+          {earlyBooking.length > 0 ? earlyBookings : <p>No reservations</p>}
           <h2 className="admin__bookings--heading">Late sitting</h2>
 
-          {lateBookings}
+          {lateBooking.length > 0 ? lateBookings : <p>No reservations</p>}
         </div>
       </div>
     </>
