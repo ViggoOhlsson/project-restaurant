@@ -9,6 +9,8 @@
 .admin{
     width: 95%;
     margin: 0 auto;
+    @include mixins.flex(column, center, center, 2rem);
+
     @include typography.inter();
     @include mixins.tablet{
         width: 90%;
@@ -19,10 +21,10 @@
     }
     
     &__search{
-        
-        margin-top:100px;    
+        margin-top: 30px;
+        width: 500px;
         position: relative;
-        @include mixins.flex(row, center, center, 1rem);
+        @include mixins.flex(row, center, center, 2rem);
     
     &--field{
         width: 50%;
@@ -55,17 +57,10 @@
         }
     }
     .buttons{
-        @include mixins.flex(row, center, end, 1rem);
-
-        .admin__search__input-button{
-            color: $icons;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
         .fa-calendar-plus{
+            color: $icons;
             text-align: center;
-            
+            font-size: 1.4rem;
         }
     }
             
@@ -78,14 +73,45 @@
         text-align: center;
         border-radius: 10px;
         padding: 40px;
-        margin-top: 40px;
         margin-bottom: 40px;
 
-
         @include mixins.desktop{
-            width: 80%;  
-            padding: 10px;
-            margin: 40px auto;            
+            width: 900px;  
+            padding: 10px 10px 40px 10px;         
+        }
+        &--table--container {
+            overflow-x: auto;
+            width: 100%;
+        }
+        &--table {
+            width: 100%;
+            overflow-x: auto;
+            border-spacing: 0 5px;
+            @include mixins.desktop {
+                table-layout: fixed;    
+
+            }
+            &--row {
+                position: relative;
+                padding: 10px;
+                cursor: pointer;
+                padding: 0;
+                overflow: hidden;
+                border-radius: 50px;
+                th,td {
+                    padding: 10px;
+
+                }
+                .edit-icon {
+                    opacity: 0;
+                }
+                &:hover {
+                    background-color: rgba(0,0,0,0.1);
+                    .edit-icon {
+                        opacity: 1;
+                    }
+                }
+            }
         }
 
         &--date{
@@ -98,28 +124,30 @@
         &--heading{
             font-weight: 400;
             font-size: 1rem;
+        }
 
+        &__empty{
+            color: #928D8D;
+            font-size: 0.8rem;
+            font-weight: 400;
         }
 
         &__early, &__late{
-            @include mixins.flex(column, left, top, 2rem);
+            @include mixins.flex(column, left, top, 0.5rem);
             text-align: center;
             position: relative;
-            padding: 10px;
+            padding: 5px;
             border-radius: 10px;
-            // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
             box-shadow:$bookings-boxShadow;            
-            width: 80%;
+            width: 95%;
             
             @include mixins.tablet{
                 @include mixins.flex(row, center, top, 0.2rem);
-                text-align: center;      
-                width: 90%;          
+                text-align: center;           
             }
             
             @include mixins.desktop{
-                justify-content: space-between;   
-                // width: 9%;                        
+                justify-content: space-between;                         
             }
         }
 

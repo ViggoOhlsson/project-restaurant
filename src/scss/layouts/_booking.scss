@@ -118,13 +118,34 @@
                 }
             }
         }
+        .guests-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            input {
+                padding: 20px;
+                background-color: white;
+                border: none;
+                border-radius: 17px;
+            }
+        }
+        .available {
+            align-self: center;
+            color: white;
+            
+            &-false {
+                color: red;
+            }
+        }
     }
     .info-phase {
         background-color: white;
         border-radius: 15px;
         .info-container {
             @include mixins.flex(column, initial, initial, 20px);
-            padding: 60px 40px 0px 40px;
+            padding: 60px 40px;
             div {
                 @include mixins.flex(column, initial, initial, 10px);
                 p {

@@ -25,7 +25,16 @@ const utils = {
     }
   },
   //Kollar om dage och tiden har tillräckligt många lediga bord
-  isFullyBooked: async (date, time, tables, booking) => {
+  isFullyBooked: async (date, time, tables) => {
+
+    let bookings = await BookingModel.find(
+      { date: date, time: time },
+      { _id: -1, tables: 1 }
+    ).lean();
+    let bookedTables = bookings.reduce((amt, booking) => amt + booking.tables, 0);
+    return bookedTables + tables > 15;
+  },
+  isFullyBookedEdit: async (date, time, tables, booking) => {
     let existingBooking = await BookingModel.findOne({_id: booking._id})
 
     let bookings = await BookingModel.find(

@@ -2,11 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
-
-const linkStyle = {
-  color: "#928D8D",
-  textDecoration: "none",
-};
+import { ShowSingleBooking } from "../adminComponents/ShowSingleBooking";
 
 const linkStyle2 = {
   color: "#DCD4E2",
@@ -58,76 +54,14 @@ export function CustomerCancel() {
     setDeleteBooking(true);
   }
 
-  function displayHtml() {
-    if (adminView === "notfound") {
-      console.log(adminView);
-      return <Navigate to={"/*"}></Navigate>;
-    } else if (!deleteBooking) {
-      return (
-        <div className="cancel__container">
-          <div className="cancel__container--text">
-            <i className=" cancel__container--text fa-solid fa-circle-exclamation"></i>
-            <p>Are you sure you want to cancel this reservation?</p>
-          </div>
-          <div className="cancel__container--box">
-            <div className="cancel__container--box__bookings">
-              <div className="cancel__container--box__bookings-booking-info">
-                <p className="cancel__container--box__bookings-booking-info__heading">
-                  Date
-                </p>
-                <span className="cancel__container--box__bookings-booking-info__values">
-                  {new Date(booking.date).toDateString()}
-                </span>
-              </div>
-              <div className="cancel__container--box__bookings-booking-info">
-                <p className="cancel__container--box__bookings-booking-info__heading">
-                  Guests
-                </p>
-                <span className="cancel__container--box__bookings-booking-info__values">
-                  {booking.guests}
-                </span>
-              </div>
-              <div className="cancel__container--box__bookings-booking-info">
-                <p className="cancel__container--box__bookings-booking-info__heading">
-                  Time
-                </p>
-                <span className="cancel__container--box__bookings-booking-info__values">
-                  {booking.time}
-                </span>
-              </div>
-            </div>
-            <div className="cancel__container--box-customer-info">
-              <p className="cancel__container--box-customer-info__heading">
-                Contact information
-              </p>
-              <span className="cancel__container--box-customer-info__values">
-                {booking.customer.name}
-              </span>
-              <span className="cancel__container--box-customer-info__values">
-                {booking.customer.phone}
-              </span>
-              <span className="cancel__container--box-customer-info__values">
-                {booking.customer.email}
-              </span>
-            </div>
-            <div className="cancel__container--box-buttons">
-              <button
-                onClick={deleteReservation}
-                className="cancel__container--box-buttons__delete"
-              >
-                Yes, I'm sure!
-              </button>
-              <button className="cancel__container--box-buttons__regret">
-                <Link to={"/"} style={linkStyle}>
-                  No, keep my table!
-                </Link>
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
+  return (
+    <>
+      {!deleteBooking ? (
+        <ShowSingleBooking
+          booking={booking}
+          deleteReservation={deleteReservation}
+        ></ShowSingleBooking>
+      ) : (
         <div className="cancelled">
           <p className="cancelled__text">
             Your reservation has been cancelled!
@@ -138,9 +72,7 @@ export function CustomerCancel() {
             </Link>
           </button>
         </div>
-      );
-    }
-  }
-
-  return <>{displayHtml()}</>;
+      )}
+    </>
+  );
 }
