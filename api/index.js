@@ -161,7 +161,7 @@ app.post("/book", async (req, res) => {
   // }
   if (await isFullyBooked(date, time, booking.tables)) {
     console.log("Day & time is fully booked");
-    res.send({ msg: "That day and time is fully booked." });
+    res.send(false);
     return;
   }
   console.log("Day & time has available tables");
