@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IBooking } from "../../models/IBooking";
+import { IValidateForm } from "../../models/IValidateForm";
 import { EditConfirmed } from "../adminComponents/EditConfirmed";
 import { EditForm } from "../adminComponents/EditForm";
 
@@ -21,25 +22,36 @@ export function AdminAdd() {
     },
   });
 
+  const [validateBooking, setValidateBooking] = useState<IValidateForm>({
+    name: true,
+    email: true,
+    phone: true,
+    time: true,
+    date: true,
+    guests: true,
+  });
+
   async function handleSave(e: FormEvent) {
     e.preventDefault();
-    let date = editing.date;
-    let time = editing.time;
-    let guests = editing.guests;
-    let name = editing.customer.name;
-    let email = editing.customer.email;
-    let phone = editing.customer.phone;
-
-    let body = { date, time, guests, name, email, phone };
-    try {
-      let res = await axios.post("http://localhost:8000/book", body);
-      setAdminView("done");
-      let emailRes = await axios.post(
-        "http://localhost:8000/send-email",
-        res.data
-      );
-    } catch (err) {
-      console.log(err);
+    if(validateForm()){
+      let date = editing.date;
+      let time = editing.time;
+      let guests = editing.guests;
+      let name = editing.customer.name;
+      let email = editing.customer.email;
+      let phone = editing.customer.phone;
+  
+      let body = { date, time, guests, name, email, phone };
+      try {
+        let res = await axios.post("http://localhost:8000/book", body);
+        setAdminView("done");
+        let emailRes = await axios.post(
+          "http://localhost:8000/send-email",
+          res.data
+        );
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
@@ -65,6 +77,49 @@ export function AdminAdd() {
     });
   }
 
+  function validateForm() {
+    let checkValid: IValidateForm = {
+      name: true,
+      email: true,
+      phone: true,
+      time: true,
+      date: true,
+      guests: true,
+    };
+    if (!editing.customer.name) {
+      checkValid.name = false;
+    }
+    if (!editing.customer.email) {
+      checkValid.email = false;
+    }
+    if (!editing.customer.phone) {
+      checkValid.phone = false;
+    }
+    if (!editing.date) {
+      checkValid.date = false;
+    }
+    if (!editing.guests) {
+      checkValid.guests = false;
+    }
+    if (!editing.time) {
+      checkValid.time = false;
+    }
+
+    setValidateBooking(checkValid);
+    if (
+      !checkValid.name ||
+      !checkValid.email ||
+      !checkValid.phone ||
+      !checkValid.date ||
+      !checkValid.guests ||
+      !checkValid.time
+    ) {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   function displayView() {
     if (adminView === "done") {
       return <EditConfirmed parentView="add" booking={editing}></EditConfirmed>;
@@ -80,6 +135,7 @@ export function AdminAdd() {
             changeSelect={handleSelectChange}
             changeInfo={handleInfoChange}
             editingBooking={editing}
+            validate={validateBooking}
             fullyBooked={fullyBooked}
           ></EditForm>
         </div>
