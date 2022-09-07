@@ -20,12 +20,13 @@ main {
   font-size: 10pt;
   padding: 40px;
   width: 95%;
+  margin-bottom: 40px;
 
-  @include mixins.tablet{
+  @include mixins.tablet {
     width: 70%;
   }
 
-  @include mixins.desktop{
+  @include mixins.desktop {
     width: 600px;
   }
 
@@ -96,18 +97,28 @@ main {
       background-color: #fff;
       @include mixins.flex(column, center, center, 1.2rem);
 
-      input {
+      input,
+      select {
         background-color: #f2f2f2;
         border: none;
         padding: 10px 12px 10px 12px;
         border-radius: 10px;
       }
 
+      .div__error {
+        @include mixins.flex(row, center, center, 0.5rem);
+      }
+
       .form__error {
-        width: 100%;
-        color: $delete-dark;
-        padding: 8px 0px 8px 0px;
-        border-radius: 10px;
+        // width: 100%;
+        color: rgb(169, 35, 35);
+        // background-color: #f8d1d1;
+        padding: 5px;
+        font-size: 8pt;
+        border-radius: 4px;
+        &--small{
+          padding: 0px
+        }
       }
 
       .form__info {
@@ -181,16 +192,15 @@ main {
 //ADMIN ADD STYLING//
 /////////////////////
 
-
-.admin-add{
+.admin-add {
   margin: 0 auto;
   margin-bottom: 50px;
 
-  @include mixins.tablet{
+  @include mixins.tablet {
     width: 60%;
   }
 
-  @include mixins.desktop{
+  @include mixins.desktop {
     width: 50%;
   }
 }
