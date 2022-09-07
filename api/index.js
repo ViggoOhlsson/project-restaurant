@@ -298,7 +298,7 @@ app.delete("/cancel/:id", async (req, res) => {
   var mailOptions = {
     from: "cenamatgatan@gmail.com",
     to: customer.email,
-    subject: "Booking Confirmation",
+    subject: "Booking Cancelled",
     text:
       "Hello " +
       customer.name +

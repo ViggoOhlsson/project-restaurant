@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 import { ShowSingleBooking } from "../adminComponents/ShowSingleBooking";
 
@@ -15,6 +15,8 @@ export function CustomerCancel() {
   const [id, setId] = useState(params.id);
 
   const [deleteBooking, setDeleteBooking] = useState(false);
+
+  const [adminView, setAdminView] = useState("");
 
   const [booking, setBooking] = useState<IBooking>({
     date: new Date(),
@@ -32,8 +34,12 @@ export function CustomerCancel() {
   //Anropar api och hämtar alla bokningar
   useEffect(() => {
     axios.get("http://localhost:8000/getbooking?id=" + id).then((res) => {
-      console.log(res);
-      setBooking(res.data);
+      if (res.data === "error") {
+        setAdminView("notfound");
+      } else {
+        setBooking(res.data);
+        setAdminView("found");
+      }
     });
   }, []);
 

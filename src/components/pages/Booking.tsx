@@ -15,58 +15,56 @@ export function Booking() {
 
   const [phase, setPhase] = useState(1);
 
-
-  const [date, setDate] = useState(new Date())
-  const [time, setTime] = useState(18)
-  const [guests, setGuests] = useState(1)
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState(0)
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(18);
+  const [guests, setGuests] = useState(1);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(0);
 
   const changePhone = (phone: number) => {
-    setPhone(phone)
-  }
+    setPhone(phone);
+  };
   const changeName = (name: string) => {
-    setName(name)
-  }
+    setName(name);
+  };
   const changeEmail = (email: string) => {
-    setEmail(email)
-  }
+    setEmail(email);
+  };
   const changeDate = (date: Date) => {
-    setDate(date)
-  }
+    setDate(date);
+  };
   const changeTime = (time: number) => {
-    setTime(time)
-  }
+    setTime(time);
+  };
   const changeGuests = (guests: number) => {
-    console.log("changing guests")
-    setGuests(guests)
-  }
+    console.log("changing guests");
+    setGuests(guests);
+  };
 
   const placeBooking = async () => {
-    let success = false
-    let body:IBookingPrimitive = {
+    let success = false;
+    let body: IBookingPrimitive = {
       name: name,
       email: email,
       phone: phone,
       guests: guests,
       date: date.toLocaleDateString(),
-      time: time
-    }
+      time: time,
+    };
     console.log(body);
     try {
-      console.log("trying...")
+      console.log("trying...");
       let res = await axios.post("http://localhost:8000/book", body);
       // let emailRes = await axios.post("http://localhost:8000/send-email", res.data);
       console.log("booking sent:", res);
       // console.log(emailRes);
-      success = true
-
+      success = true;
     } catch (err) {
       console.log(err);
-    } 
+    }
     if (success) {
-      console.log("changing phase")
+      console.log("changing phase");
       changePhase(4);
       setTimeout(() => {
         navigate("/");
@@ -85,14 +83,49 @@ export function Booking() {
     <main className="booking-page">
       <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
       <div className="form-container">
-        {phase === 1 && ( <BookingDetailsForm changePhase={changePhase} time={time} date={date} guests={guests} changeTime={changeTime} changeDate={changeDate} changeGuests={changeGuests} /> )}
-        {phase === 2 && ( <BookingGuestInfoForm email={email} name={name} phone={phone} changeEmail={changeEmail} changePhone={changePhone} changeName={changeName} changePhase={changePhase}/>)}
-        {phase === 3 && ( <BookingReview placeBooking={placeBooking} booking={{time: time, date: date.toLocaleDateString(), name: name, email: email, phone: phone, guests: guests}} changePhase={changePhase}/>)}
-        {phase === 4 && ( <div className="phase-container redirect-phase">
+        {phase === 1 && (
+          <BookingDetailsForm
+            changePhase={changePhase}
+            time={time}
+            date={date}
+            guests={guests}
+            changeTime={changeTime}
+            changeDate={changeDate}
+            changeGuests={changeGuests}
+          />
+        )}
+        {phase === 2 && (
+          <BookingGuestInfoForm
+            email={email}
+            name={name}
+            phone={phone}
+            changeEmail={changeEmail}
+            changePhone={changePhone}
+            changeName={changeName}
+            changePhase={changePhase}
+          />
+        )}
+        {phase === 3 && (
+          <BookingReview
+            placeBooking={placeBooking}
+            booking={{
+              time: time,
+              date: date.toLocaleDateString(),
+              name: name,
+              email: email,
+              phone: phone,
+              guests: guests,
+            }}
+            changePhase={changePhase}
+          />
+        )}
+        {phase === 4 && (
+          <div className="phase-container redirect-phase">
             <i className="fa-solid fa-check"></i>
             <h2>Reservation Complete!</h2>
             <span>You will soon be redirected...</span>
-          </div> )}
+          </div>
+        )}
       </div>
     </main>
   );
