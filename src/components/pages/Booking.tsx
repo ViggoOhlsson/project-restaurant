@@ -85,22 +85,10 @@ export function Booking() {
           {phase === 1 && (
             <div className="phase-container date-phase">
               <div className="date-container">
-                {/* <input
-                  type="date"
-                  min={new Date().toISOString().split("T")[0]}
-                  defaultValue={date}
-                  onChange={changeDate}
-                ></input> */}
-                {/* <BookingDatePicker
-                  changeDate={() => {
-                    changeDate(date);
-                  }}
-                ></BookingDatePicker> */}
                 <div className="app">
                   <div className="calendar-container">
                     <Calendar onChange={setDate} value={date} />
                   </div>
-                  {/* <div className="text-center">Selected date: {date}</div> */}
                 </div>
               </div>
 
@@ -133,6 +121,7 @@ export function Booking() {
                     type="text"
                     placeholder="Name"
                     onChange={changeName}
+                    className="book-name"
                   ></input>
                 </div>
                 <div>
@@ -141,6 +130,7 @@ export function Booking() {
                     type="email"
                     placeholder="Email"
                     onChange={changeEmail}
+                    className="book-email"
                   ></input>
                 </div>
                 <div>
@@ -149,13 +139,14 @@ export function Booking() {
                     type="tel"
                     placeholder="Phone number"
                     onChange={changePhone}
+                    className="book-phone"
                   ></input>
                 </div>
                 <div>
                   <p>How big is your party?</p>
                   <input
                     type="number"
-                    className="guests-input"
+                    className="guests-input book-guests"
                     onChange={changeGuests}
                     value={guests}
                   ></input>
