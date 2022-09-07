@@ -1,24 +1,22 @@
-
 import { IBookingPrimitive } from "../../models/IBooking";
 
 interface IBookingReviewProps {
-    booking: IBookingPrimitive
-    placeBooking: () => void
-    changePhase: (phase: number) => void
+  booking: IBookingPrimitive;
+  placeBooking: () => void;
+  changePhase: (phase: number) => void;
 }
 
 export const BookingReview = (props: IBookingReviewProps) => {
-
   const book = () => {
-    props.placeBooking()
-  }
-  
+    props.placeBooking();
+  };
+
   const prev = () => {
-    props.changePhase(2)
-  }
+    props.changePhase(2);
+  };
 
-
-    return <>
+  return (
+    <>
       <div className="phase-container review-phase">
         <div className="booking-info-container">
           <div className="date">
@@ -50,9 +48,10 @@ export const BookingReview = (props: IBookingReviewProps) => {
         </button>
       </div>
       <div className="change-phase-wrapper">
-          <div className="navigator" onClick={prev} >
-              <i className="fa-solid fa-angle-left"></i> Previous
-          </div>
+        <div className="navigator" onClick={prev}>
+          <i className="fa-solid fa-angle-left"></i> Previous
+        </div>
       </div>
     </>
-}
+  );
+};

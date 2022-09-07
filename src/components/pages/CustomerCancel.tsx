@@ -36,6 +36,7 @@ export function CustomerCancel() {
     axios.get("http://localhost:8000/getbooking?id=" + id).then((res) => {
       if (res.data === "error") {
         setAdminView("notfound");
+        console.log("res.data: " + res.data);
       } else {
         setBooking(res.data);
         setAdminView("found");
@@ -45,34 +46,41 @@ export function CustomerCancel() {
 
   useEffect(() => {
     if (!deleteBooking) return;
-    axios.delete("http://localhost:8000/cancel/" + id).then((res) => {
-      console.log(res);
-    });
+    axios.delete("http://localhost:8000/cancel/" + id).then((res) => {});
   });
 
   function deleteReservation() {
     setDeleteBooking(true);
   }
 
-  return (
-    <>
-      {!deleteBooking ? (
-        <ShowSingleBooking
-          booking={booking}
-          deleteReservation={deleteReservation}
-        ></ShowSingleBooking>
-      ) : (
-        <div className="cancelled">
-          <p className="cancelled__text">
-            Your reservation has been cancelled!
-          </p>
-          <button className="cancelled__button">
-            <Link to={"/book"} style={linkStyle2}>
-              Make a new reservation
-            </Link>
-          </button>
-        </div>
-      )}
-    </>
-  );
+  function displayHtml() {
+    if (adminView === "notfound") {
+      console.log(adminView);
+      return <Navigate to={"/*"}></Navigate>;
+    } else {
+      return (
+        <>
+          {!deleteBooking ? (
+            <ShowSingleBooking
+              booking={booking}
+              deleteReservation={deleteReservation}
+            ></ShowSingleBooking>
+          ) : (
+            <div className="cancelled">
+              <p className="cancelled__text">
+                Your reservation has been cancelled!
+              </p>
+              <button className="cancelled__button">
+                <Link to={"/book"} style={linkStyle2}>
+                  Make a new reservation
+                </Link>
+              </button>
+            </div>
+          )}
+        </>
+      );
+    }
+  }
+
+  return <>{displayHtml()}</>;
 }
