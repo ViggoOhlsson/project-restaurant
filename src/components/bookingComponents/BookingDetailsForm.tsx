@@ -1,11 +1,17 @@
 import axios from "axios"
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, EventHandler, ReactEventHandler, useEffect, useState } from "react"
 import { IBookingDetails } from "../../models/IBookingDetails"
 import { BookingDatePicker } from "./BookingDatePicker"
 import Calendar from "react-calendar"
+import ht from "date-fns/locale/ht"
 
 interface IBookingDetailsFormProps {
-    changeBookingDetails(bookingDetails: IBookingDetails): void
+    date: Date,
+    time: number,
+    guests: number,
+    changeTime: (time: number) => void
+    changeGuests: (guests: number) => void
+    changeDate: (date: Date) => void
 }
 
 export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
@@ -15,17 +21,6 @@ export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
     const [guests, setGuests] = useState(1)
     const [fullyBooked, setFullyBooked] = useState(false)
 
-    // const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
-    //     console.log("Date:", e.target.value);
-    //     setDate(e.target.value);
-    // };
-    const changeGuests = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log("Changed Booking Info")
-        let val = parseInt(e.target.value)
-        if (val > 90) val = 90
-        if (val < 1 ) val = 1
-        setGuests(val)
-    }
 
     useEffect(() => {
         axios.post("http://localhost:8000/validate/dateandtime", {date, time, guests})
@@ -34,30 +29,33 @@ export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
         })
     }, [guests, time, date])
 
-    useEffect(() => {
-        props.changeBookingDetails({
-            date: date,
-            time: time,
-            guests: guests
-        })
+    const handleGuests = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log("called!")
+        let val = parseInt(e.target.value) || 1
+        if (val > 90 ) val = 90
+        setGuests(val)
+        props.changeGuests(val)
+    }
+    const handleDate = (e: ChangeEvent<HTMLInputElement>) => {
+        props.changeDate(new Date(e.target.value))
+    }
 
-    }, [time, date, guests])
 
     return <div className="phase-container date-phase">
         <div className="date-container">
-            <Calendar onChange={setDate} value={date} />
+            <Calendar onChange={() => {}} value={props.date} defaultValue={props.date}/>
             {/* <input type="date" min={new Date().toISOString().split("T")[0]} defaultValue={new Date().toLocaleDateString()} onChange={changeDate}></input> */}
         </div>
         <div className="time-container">
             <span className="title">Time</span>
             <div className="choice-wrapper">
-                <span className={`${time === 18 && "selected"}`} onClick={() => setTime(18)}>18 - 20</span>
-                <span className={`${time === 21 && "selected"}`} onClick={() => setTime(21)}>21 - 23</span>
+                <span className={`${props.time === 18 && "selected"}`} onClick={() => props.changeTime(18)}>18 - 20</span>
+                <span className={`${props.time === 21 && "selected"}`} onClick={() => props.changeTime(21)}>21 - 23</span>
             </div>
         </div>
         <div className="guests-container">
             <span>Guests</span>
-            <input type="number" onChange={changeGuests} value={guests}/>
+            <input type="number" onChange={handleGuests} value={props.guests}/>
         </div>
         {fullyBooked && <p className="available available-false">There are no available tables</p> || <p className="available">There are available tables</p>}
     </div>

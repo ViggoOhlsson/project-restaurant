@@ -146,6 +146,9 @@
         .info-container {
             @include mixins.flex(column, initial, initial, 20px);
             padding: 60px 40px;
+            .error {
+                color: red
+            }
             div {
                 @include mixins.flex(column, initial, initial, 10px);
                 p {

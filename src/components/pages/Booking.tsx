@@ -24,6 +24,13 @@ export function Booking() {
     date: new Date()
   })
 
+  const [date, setDate] = useState(new Date())
+  const [time, setTime] = useState(18)
+  const [guests, setGuests] = useState(1)
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState(0)
+
   const [bookingDetails, setBookingDetails] = useState<IBookingDetails>({
     date: new Date(),
     time: 18,
@@ -36,11 +43,24 @@ export function Booking() {
     phone: 1112223344
   })
 
-  const changeBookingDetails = (bookingDetails: IBookingDetails) => {
-    setBookingDetails(bookingDetails)
+  const changePhone = (phone: number) => {
+    setPhone(phone)
   }
-  const changeBookingGuestInfo = (bookingGuestInfo: IBookingGuestInfo) => {
-    setBookingGuestInfo(bookingGuestInfo)
+  const changeName = (name: string) => {
+    setName(name)
+  }
+  const changeEmail = (email: string) => {
+    setEmail(email)
+  }
+  const changeDate = (date: Date) => {
+    setDate(date)
+  }
+  const changeTime = (time: number) => {
+    setTime(time)
+  }
+  const changeGuests = (guests: number) => {
+    console.log("changing guests")
+    setGuests(guests)
   }
 
   const placeBooking = async () => {
@@ -81,24 +101,12 @@ export function Booking() {
     setPhase(to);
   };
 
-  useEffect(() => {
-    let booking = {
-      date: bookingDetails.date,
-      time: bookingDetails.time,
-      guests: bookingDetails.guests,
-      name: bookingGuestInfo.name,
-      email: bookingGuestInfo.email,
-      phone: bookingGuestInfo.phone
-    }
-    setBooking(booking)
-  }, [bookingDetails, bookingGuestInfo])
-
   return (
     <main className="booking-page">
       <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
       <div className="form-container">
-        {phase === 1 && ( <BookingDetailsForm changeBookingDetails={changeBookingDetails} /> )}
-        {phase === 2 && ( <BookingGuestInfoForm changeBookingGuestInfo={changeBookingGuestInfo} />)}
+        {phase === 1 && ( <BookingDetailsForm time={time} date={date} guests={guests} changeTime={changeTime} changeDate={changeDate} changeGuests={changeGuests} /> )}
+        {phase === 2 && ( <BookingGuestInfoForm email={email} name={name} phone={phone} changeEmail={changeEmail} changePhone={changePhone} changeName={changeName}/>)}
         {phase === 3 && ( <BookingReview booking={booking} placeBooking={placeBooking}/>)}
         {phase === 4 && ( <div className="phase-container redirect-phase">
             <i className="fa-solid fa-check"></i>
