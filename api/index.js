@@ -138,8 +138,10 @@ app.post("/cleardb", async (req, res) => {
 });
 
 app.post("/book", async (req, res) => {
+  console.log(req.body)
   let { date, time, guests, name, email, phone } = req.body;
   if (guests < 1) guests = 1;
+  console.log("date:", date)
 
   let customer = new CustomerModel({ name: name, email: email, phone: phone });
   let booking = new BookingModel({
@@ -149,13 +151,14 @@ app.post("/book", async (req, res) => {
     tables: guestsToTables(guests),
     customer: customer._id,
   });
+  console.log("date in booking:", booking.date)
 
   // if (await isFullyBooked(date, time, booking.tables)) {
   //   console.log("Day & time is fully booked");
   //   res.send({ msg: "That day and time is fully booked." });
   //   return;
   // }
-  if (await isFullyBooked(date, time, booking.tables, booking)) {
+  if (await isFullyBooked(date, time, booking.tables)) {
     console.log("Day & time is fully booked");
     res.send({ msg: "That day and time is fully booked." });
     return;
