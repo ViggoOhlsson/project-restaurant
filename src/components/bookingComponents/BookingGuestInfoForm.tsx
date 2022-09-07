@@ -8,13 +8,10 @@ interface IBookingGuestInfoForm {
     changeName: (name: string) => void
     changeEmail: (email: string) => void
     changePhone: (num: number) => void
+    changePhase: (phase: number) => void
 }
 
 export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
-
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState(0)
 
     const [nameError, setNameError] = useState("")
     const [emailError, setEmailError] = useState("")
@@ -27,7 +24,7 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
         props.changeEmail(e.target.value)
     }
     const handlePhone = (e: ChangeEvent<HTMLInputElement>) => {
-        props.changePhone(parseInt(e.target.value))
+        props.changePhone(0 + parseInt(e.target.value) || 0)
     }
     const validateName = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.value == "" || e.target.value.length < 2) {
@@ -56,10 +53,22 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
             setPhoneError("Phone number required")
             return
         }
+        if (e.target.value.length != 9 ) {
+            setPhoneError("Invalid length of phone number")
+            return
+        }
         setPhoneError("")
     }
 
-    return <div className="phase-container info-phase">
+    const next = () => {
+        if (!nameError && !emailError && !phoneError) props.changePhase(3)
+    }
+    const prev = () => {
+        props.changePhase(1)
+    }
+
+    return <>
+    <div className="phase-container info-phase">
     <div className="info-container">
       <div>
         <p>What name do you want to book in?</p>
@@ -78,5 +87,13 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
       </div>
     </div>
   </div>
-    
+    <div className="change-phase-wrapper">
+        <div className="navigator" onClick={prev}>
+            <i className="fa-solid fa-angle-left"></i> Previous
+        </div>
+        <div className="navigator" onClick={next}>
+            Next <i className="fa-solid fa-angle-right"></i>
+        </div>
+    </div>
+</>
 }

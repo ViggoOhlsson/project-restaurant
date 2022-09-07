@@ -15,14 +15,6 @@ export function Booking() {
 
   const [phase, setPhase] = useState(1);
 
-  const [booking, setBooking] = useState<IBookingPrimitive>({
-    name: "",
-    email: "",
-    phone: 0,
-    time: 18,
-    guests: 0,
-    date: new Date()
-  })
 
   const [date, setDate] = useState(new Date())
   const [time, setTime] = useState(18)
@@ -53,7 +45,14 @@ export function Booking() {
 
   const placeBooking = async () => {
     let success = false
-    let body = booking
+    let body:IBookingPrimitive = {
+      name: name,
+      email: email,
+      phone: phone,
+      guests: guests,
+      date: date,
+      time: time
+    }
     console.log(body);
     try {
       console.log("trying...")
@@ -75,17 +74,6 @@ export function Booking() {
     }
   };
 
-  useEffect(() => {
-    setBooking({
-      name: name,
-      time: time,
-      date: date,
-      guests: guests,
-      email: email,
-      phone: phone
-    })
-  }, [email, name, phone, guests, date, time])
-
   const changePhase = (to: number) => {
     if (to < 1) to = 1;
     if (to > 4) to = 4;
@@ -97,23 +85,15 @@ export function Booking() {
     <main className="booking-page">
       <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
       <div className="form-container">
-        {phase === 1 && ( <BookingDetailsForm time={time} date={date} guests={guests} changeTime={changeTime} changeDate={changeDate} changeGuests={changeGuests} /> )}
-        {phase === 2 && ( <BookingGuestInfoForm email={email} name={name} phone={phone} changeEmail={changeEmail} changePhone={changePhone} changeName={changeName}/>)}
-        {phase === 3 && ( <BookingReview booking={booking} placeBooking={placeBooking}/>)}
+        {phase === 1 && ( <BookingDetailsForm changePhase={changePhase} time={time} date={date} guests={guests} changeTime={changeTime} changeDate={changeDate} changeGuests={changeGuests} /> )}
+        {phase === 2 && ( <BookingGuestInfoForm email={email} name={name} phone={phone} changeEmail={changeEmail} changePhone={changePhone} changeName={changeName} changePhase={changePhase}/>)}
+        {phase === 3 && ( <BookingReview placeBooking={placeBooking} booking={{time: time, date: date, name: name, email: email, phone: phone, guests: guests}} changePhase={changePhase}/>)}
         {phase === 4 && ( <div className="phase-container redirect-phase">
             <i className="fa-solid fa-check"></i>
             <h2>Reservation Complete!</h2>
             <span>You will soon be redirected...</span>
           </div> )}
       </div>
-      {phase < 3 && (
-        <div className="next-phase-wrapper">
-          <span onClick={() => changePhase(phase + 1)}>Continue</span>
-          <span>
-            <i className="fa-solid fa-angle-right"></i>
-          </span>
-        </div>
-      )}
     </main>
   );
 }

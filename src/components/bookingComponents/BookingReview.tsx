@@ -1,9 +1,10 @@
-import axios from "axios";
-import { IBooking, IBookingPrimitive } from "../../models/IBooking";
+
+import { IBookingPrimitive } from "../../models/IBooking";
 
 interface IBookingReviewProps {
     booking: IBookingPrimitive
     placeBooking: () => void
+    changePhase: (phase: number) => void
 }
 
 export const BookingReview = (props: IBookingReviewProps) => {
@@ -11,13 +12,14 @@ export const BookingReview = (props: IBookingReviewProps) => {
   const book = () => {
     props.placeBooking()
   }
-
-  const validate = () => {
-    axios.get("http://locahost/validate")
+  
+  const prev = () => {
+    props.changePhase(2)
   }
 
 
-    return <div className="phase-container review-phase">
+    return <>
+    <div className="phase-container review-phase">
             <div className="booking-info-container">
               <div className="date">
                 <span>Date</span>
@@ -47,4 +49,10 @@ export const BookingReview = (props: IBookingReviewProps) => {
               <span>Place Booking</span>
             </button>
           </div>
+          <div className="change-phase-wrapper">
+              <div className="navigator" onClick={prev} >
+                  <i className="fa-solid fa-angle-left"></i> Previous
+              </div>
+          </div>
+    </>
 }
