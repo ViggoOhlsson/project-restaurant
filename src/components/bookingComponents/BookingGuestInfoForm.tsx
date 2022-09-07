@@ -69,23 +69,23 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
 
     return <>
     <div className="phase-container info-phase">
-    <div className="info-container">
+    <form className="info-container">
       <div>
         <p>What name do you want to book in?</p>
-        <input type="text" placeholder="Name" onChange={handleName} onBlur={validateName} value={props.name} ></input>
+        <input type="text" name="name" placeholder="Name" onChange={handleName} onBlur={validateName} value={props.name} ></input>
         {nameError && <p className="error"><i className="fa-solid fa-warning"></i> {nameError}</p>}
       </div>
       <div>
         <p>Where do you want to get the confirmation?</p>
-        <input type="email" placeholder="Email" onChange={handleEmail} onBlur={validateEmail} value={props.email} ></input>
+        <input type="email" name="email" placeholder="Email" onChange={handleEmail} onBlur={validateEmail} value={props.email} ></input>
         {emailError && <p className="error"><i className="fa-solid fa-warning"></i> {emailError}</p>}
       </div>
       <div>
         <p>How can we contact you?</p>
-        <input type="tel" placeholder="Phone number" onChange={handlePhone} onBlur={validatePhone} value={props.phone} ></input>
+        <input type="tel" name="phone" placeholder="Phone number" onChange={handlePhone} onBlur={validatePhone} value={props.phone} ></input>
         {phoneError && <p className="error"><i className="fa-solid fa-warning"></i> {phoneError}</p>}
       </div>
-    </div>
+    </form>
   </div>
     <div className="change-phase-wrapper">
         <div className="navigator" onClick={prev}>
