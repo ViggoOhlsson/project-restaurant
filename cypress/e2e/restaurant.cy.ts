@@ -22,5 +22,49 @@ describe("restaurant testing", () => {
 
   it("searches bookings", () => {
     cy.visit("http://localhost:3000/admin");
+    cy.get(".admin__bookings__early").should("exist");
+  });
+
+  it("should go to edit", () => {
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".admin__bookings__icon").first().click();
+  });
+
+  it("should edit name", () => {
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".admin__bookings__icon").first().click();
+    cy.get(".form__userName input").clear().type("filippo bellango");
+    cy.get(".form__update").click();
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".admin__bookings__early p")
+      .first()
+      .should("contain", "filippo bellango");
+  });
+
+  it("should not submit new edits", () => {
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".admin__bookings__icon").first().click();
+    cy.get(".form__userName input").clear();
+    cy.get(".form__update").click();
+    cy.get(".div__error").should("exist");
+  });
+
+  it("should add new reservation", () => {
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".fa-calendar-plus").click();
+    cy.get('input[name="date"]').invoke("val");
+    cy.get(".form__guests").type("5");
+    cy.get(".form__user .form__userName").type("Sebastian");
+    cy.get(".form__user .form__email").type("sebastian@mail.se");
+    cy.get(".form__user .form__phone").type("0701234567");
+    cy.get(".form__update").click();
+    cy.get(".overview__user span").first().should("contain", "Sebastian");
+  });
+
+  it("should not submit new booking", () => {
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".fa-calendar-plus").click();
+    cy.get(".form__update").click();
+    cy.get(".div__error").first().should("exist");
   });
 });
