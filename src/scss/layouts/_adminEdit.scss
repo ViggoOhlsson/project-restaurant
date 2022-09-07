@@ -42,10 +42,12 @@ main {
 
     &--overview {
       @include mixins.flex(column, center, center, 1.5rem);
+      .overview__heading {
+        font-weight: 400;
+      }
       .overview__info {
         @include mixins.flex(row, center, center, 1.5rem);
         span {
-          //Måste kanske lägga till detta i fontlänken
           font-weight: bold;
         }
       }
@@ -59,6 +61,9 @@ main {
         .overview__user {
           @include mixins.flex(row, center, space-around, 0.5rem);
           flex-wrap: wrap;
+          span {
+            font-weight: bold;
+          }
         }
       }
     }
