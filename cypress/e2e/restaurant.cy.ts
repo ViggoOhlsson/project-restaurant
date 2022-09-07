@@ -3,6 +3,10 @@ describe("restaurant testing", () => {
     cy.visit("http://localhost:3000");
   });
 
+  //////////
+  ///BOOK///
+  //////////
+
   it("goes to book route", () => {
     cy.visit("http://localhost:3000");
     cy.get(".home__container__button").click();
@@ -20,10 +24,16 @@ describe("restaurant testing", () => {
     cy.get(".submit-button").click();
   });
 
+  ///////////////
+  /////ADMIN/////
+  ///////////////
+
   it("searches bookings", () => {
     cy.visit("http://localhost:3000/admin");
     cy.get(".admin__bookings__early").should("exist");
   });
+
+  //ADMIN EDIT TESTS
 
   it("should go to edit", () => {
     cy.visit("http://localhost:3000/admin");
@@ -48,6 +58,8 @@ describe("restaurant testing", () => {
     cy.get(".form__update").click();
     cy.get(".div__error").should("exist");
   });
+
+  ///ADMIN ADD TESTS
 
   it("should add new reservation", () => {
     cy.visit("http://localhost:3000/admin");
