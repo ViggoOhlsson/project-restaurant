@@ -31,18 +31,6 @@ export function Booking() {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState(0)
 
-  const [bookingDetails, setBookingDetails] = useState<IBookingDetails>({
-    date: new Date(),
-    time: 18,
-    guests: 1
-  })
-
-  const [bookingGuestInfo, setBookingGuestInfo] = useState<IBookingGuestInfo>({
-    name: "",
-    email: "",
-    phone: 1112223344
-  })
-
   const changePhone = (phone: number) => {
     setPhone(phone)
   }
@@ -65,14 +53,7 @@ export function Booking() {
 
   const placeBooking = async () => {
     let success = false
-    let body = { 
-      time: bookingDetails.time,
-      date: bookingDetails.date,
-      guests: bookingDetails.guests,
-      name: bookingGuestInfo.name,
-      email: bookingGuestInfo.email,
-      phone: bookingGuestInfo.phone
-    };
+    let body = booking
     console.log(body);
     try {
       console.log("trying...")
@@ -93,6 +74,17 @@ export function Booking() {
       }, 3000);
     }
   };
+
+  useEffect(() => {
+    setBooking({
+      name: name,
+      time: time,
+      date: date,
+      guests: guests,
+      email: email,
+      phone: phone
+    })
+  }, [email, name, phone, guests, date, time])
 
   const changePhase = (to: number) => {
     if (to < 1) to = 1;

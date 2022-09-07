@@ -30,8 +30,12 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
         props.changePhone(parseInt(e.target.value))
     }
     const validateName = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value == "" ) {
+        if (e.target.value == "" || e.target.value.length < 2) {
             setNameError("Name required")
+            return
+        }
+        if (e.target.value.length > 64) {
+            setNameError("Name too long")
             return
         }
         setNameError("")
@@ -45,14 +49,14 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
             setEmailError("Invalid email")
             return
         }
-        setNameError("")
+        setEmailError("")
     }
     const validatePhone = (e: ChangeEvent<HTMLInputElement>) => {
         if (parseInt(e.target.value) == 0 ) {
             setPhoneError("Phone number required")
             return
         }
-        setNameError("")
+        setPhoneError("")
     }
 
     return <div className="phase-container info-phase">
