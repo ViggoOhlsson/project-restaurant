@@ -2,6 +2,7 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
+import { IValidateForm } from "../../models/IValidateForm";
 import { EditConfirmed } from "../adminComponents/EditConfirmed";
 import { EditDeleteConfirm } from "../adminComponents/EditDeleteConfirm";
 import { EditForm } from "../adminComponents/EditForm";
@@ -14,6 +15,14 @@ export function AdminEdit() {
   const [adminView, setAdminView] = useState("");
 
   const [loader, setLoader] = useState(true);
+  const [validateBooking, setValidateBooking] = useState<IValidateForm>({
+    name: true,
+    email: true,
+    phone: true,
+    time: true,
+    date: true,
+    guests: true,
+  });
 
   const [booking, setBooking] = useState<IBooking>({
     date: new Date(),
@@ -81,6 +90,11 @@ export function AdminEdit() {
     }
   }
 
+  //Uppdaterar select-elementet för tiden
+  function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
+    setEditing({ ...editing, [e.target.name]: +e.target.value });
+  }
+
   //Uppdaterar setEditing med kundinformation
   function handleUserChange(e: ChangeEvent<HTMLInputElement>) {
     setEditing({
@@ -89,9 +103,54 @@ export function AdminEdit() {
     });
   }
 
+  function validateForm() {
+    let checkValid: IValidateForm = {
+      name: true,
+      email: true,
+      phone: true,
+      time: true,
+      date: true,
+      guests: true,
+    };
+    if (!editing.customer.name || editing.customer.name.length < 0 || editing.customer.name.length > 64) {
+      checkValid.name = false;
+    }
+    if (!editing.customer.email) {
+      checkValid.email = false;
+    }
+    if (!editing.customer.phone) {
+      checkValid.phone = false;
+    }
+    if (!editing.date) {
+      checkValid.date = false;
+    }
+    if (!editing.guests) {
+      checkValid.guests = false;
+    }
+    if (!editing.time) {
+      checkValid.time = false;
+    }
+
+    setValidateBooking(checkValid);
+    if (
+      !checkValid.name ||
+      !checkValid.email ||
+      !checkValid.phone ||
+      !checkValid.date ||
+      !checkValid.guests ||
+      !checkValid.time
+    ) {
+      return false;
+    }else{
+      return true
+    }
+  }
+
   function handleSave(e: FormEvent) {
     e.preventDefault();
-    setBooking(editing);
+    if (validateForm()) {
+      setBooking(editing);
+    }
   }
 
   function deleteBooking() {
@@ -124,6 +183,8 @@ export function AdminEdit() {
             handleSave={handleSave}
             changeUser={handleUserChange}
             changeInfo={handleInfoChange}
+            changeSelect={handleSelectChange}
+            validate={validateBooking}
             editingBooking={editing}
             fullyBooked={fullyBooked}
           ></EditForm>
