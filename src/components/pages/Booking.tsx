@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { IBooking, IBookingPrimitive } from "../../models/IBooking";
 import { IBookingDetails } from "../../models/IBookingDetails";
 import { IBookingGuestInfo } from "../../models/IBookingGuestInfo";
-import { BookingDetailsForm } from "../BookingDetailsForm";
-import { BookingGuestInfoForm } from "../BookingGuestInfoForm";
-import { BookingPhase } from "../BookingPhase";
-import { BookingReview } from "../BookingReview";
+import { BookingDetailsForm } from "../bookingComponents/BookingDetailsForm";
+import { BookingGuestInfoForm } from "../bookingComponents/BookingGuestInfoForm";
+import { BookingPhase } from "../bookingComponents/BookingPhase";
+import { BookingReview } from "../bookingComponents/BookingReview";
 
 export function Booking() {
   document.title = "Booking";
@@ -21,38 +21,39 @@ export function Booking() {
     phone: 0,
     time: 18,
     guests: 0,
-    date: "",
+    date: new Date(),
   });
 
-  const [bookingDetails, setBookingDetails] = useState<IBookingDetails>({
-    date: new Date().toLocaleDateString(),
-    time: 18,
-    guests: 1,
-  });
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(18);
+  const [guests, setGuests] = useState(1);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(0);
 
-  const [bookingGuestInfo, setBookingGuestInfo] = useState<IBookingGuestInfo>({
-    name: "",
-    email: "",
-    phone: 1112223344,
-  });
-
-  const changeBookingDetails = (bookingDetails: IBookingDetails) => {
-    setBookingDetails(bookingDetails);
+  const changePhone = (phone: number) => {
+    setPhone(phone);
   };
-  const changeBookingGuestInfo = (bookingGuestInfo: IBookingGuestInfo) => {
-    setBookingGuestInfo(bookingGuestInfo);
+  const changeName = (name: string) => {
+    setName(name);
+  };
+  const changeEmail = (email: string) => {
+    setEmail(email);
+  };
+  const changeDate = (date: Date) => {
+    setDate(date);
+  };
+  const changeTime = (time: number) => {
+    setTime(time);
+  };
+  const changeGuests = (guests: number) => {
+    console.log("changing guests");
+    setGuests(guests);
   };
 
   const placeBooking = async () => {
     let success = false;
-    let body = {
-      time: bookingDetails.time,
-      date: bookingDetails.date,
-      guests: bookingDetails.guests,
-      name: bookingGuestInfo.name,
-      email: bookingGuestInfo.email,
-      phone: bookingGuestInfo.phone,
-    };
+    let body = booking;
     console.log(body);
     try {
       console.log("trying...");
@@ -73,6 +74,17 @@ export function Booking() {
     }
   };
 
+  useEffect(() => {
+    setBooking({
+      name: name,
+      time: time,
+      date: date,
+      guests: guests,
+      email: email,
+      phone: phone,
+    });
+  }, [email, name, phone, guests, date, time]);
+
   const changePhase = (to: number) => {
     if (to < 1) to = 1;
     if (to > 4) to = 4;
@@ -80,28 +92,28 @@ export function Booking() {
     setPhase(to);
   };
 
-  useEffect(() => {
-    let booking = {
-      date: bookingDetails.date,
-      time: bookingDetails.time,
-      guests: bookingDetails.guests,
-      name: bookingGuestInfo.name,
-      email: bookingGuestInfo.email,
-      phone: bookingGuestInfo.phone,
-    };
-    setBooking(booking);
-  }, [bookingDetails, bookingGuestInfo]);
-
   return (
     <main className="booking-page">
       <BookingPhase phase={phase} changePhase={changePhase}></BookingPhase>
       <div className="form-container">
         {phase === 1 && (
-          <BookingDetailsForm changeBookingDetails={changeBookingDetails} />
+          <BookingDetailsForm
+            time={time}
+            date={date}
+            guests={guests}
+            changeTime={changeTime}
+            changeDate={changeDate}
+            changeGuests={changeGuests}
+          />
         )}
         {phase === 2 && (
           <BookingGuestInfoForm
-            changeBookingGuestInfo={changeBookingGuestInfo}
+            email={email}
+            name={name}
+            phone={phone}
+            changeEmail={changeEmail}
+            changePhone={changePhone}
+            changeName={changeName}
           />
         )}
         {phase === 3 && (
