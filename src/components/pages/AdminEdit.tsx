@@ -14,9 +14,7 @@ export function AdminEdit() {
   const [fullyBooked, setFullyBooked] = useState(false);
   const [adminView, setAdminView] = useState("");
 
-<<<<<<< HEAD
   const [loader, setLoader] = useState(true);
-=======
   const [validateBooking, setValidateBooking] = useState<IValidateForm>({
     name: true,
     email: true,
@@ -25,7 +23,6 @@ export function AdminEdit() {
     date: true,
     guests: true,
   });
->>>>>>> feature/admin-edit
 
   const [booking, setBooking] = useState<IBooking>({
     date: new Date(),
