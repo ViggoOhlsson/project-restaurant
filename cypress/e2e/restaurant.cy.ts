@@ -5,7 +5,7 @@ describe("restaurant testing", () => {
 
   //////////
   ///BOOK///
-  //////////
+  ////////
 
   it("goes to book route", () => {
     cy.visit("http://localhost:3000");
@@ -76,6 +76,19 @@ describe("restaurant testing", () => {
   it("should not submit new booking", () => {
     cy.visit("http://localhost:3000/admin");
     cy.get(".fa-calendar-plus").click();
+    cy.get(".form__update").click();
+    cy.get(".div__error").first().should("exist");
+  });
+
+  // EJ KLAR
+  it("should not add new reservation because fully booked", () => {
+    cy.visit("http://localhost:3000/admin");
+    cy.get(".fa-calendar-plus").click();
+    cy.get('input[name="date"]').invoke("val");
+    cy.get(".form__guests").type("100");
+    cy.get(".form__user .form__userName").type("Maja");
+    cy.get(".form__user .form__email").type("maja@mail.se");
+    cy.get(".form__user .form__phone").type("0701234568");
     cy.get(".form__update").click();
     cy.get(".div__error").first().should("exist");
   });
