@@ -26,7 +26,7 @@ export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
     }
     useEffect(() => {
         console.log("checking booking")
-        axios.post("http://localhost:8000/validate/dateandtime", {date, time, guests})
+        axios.post("http://localhost:8000/validate/dateandtime", {date: date.toLocaleDateString(), time, guests})
         .then(result => {
             setFullyBooked(result.data.fullyBooked) 
             console.log(fullyBooked)

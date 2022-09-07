@@ -4,6 +4,7 @@ const app = express.Router()
 
 
 app.post("/dateandtime", async (req, res) => {
+    console.log("validating body:", req.body)
     let { date, time, guests } = req.body
     let fullyBooked = await isFullyBooked(date, time, guestsToTables(guests))
 
