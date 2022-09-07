@@ -85,12 +85,12 @@ export function Admin() {
 
   //Går igenom bokningarna med tiden 18 och skapar html
   const earlyBookings = earlyBooking.map((booking) => {
-    return <ShowBookings booking={booking}></ShowBookings>;
+    return <ShowBookings key={booking._id} booking={booking}></ShowBookings>;
   });
 
   //Går igenom bokningarna med tiden 21 och skapar html
   const lateBookings = lateBooking.map((booking) => {
-    return <ShowBookings booking={booking}></ShowBookings>;
+    return <ShowBookings key={booking._id} booking={booking}></ShowBookings>;
   });
 
   return (
