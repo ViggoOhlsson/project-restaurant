@@ -33,22 +33,26 @@ export function AdminAdd() {
 
   async function handleSave(e: FormEvent) {
     e.preventDefault();
-    if(validateForm()){
-      let date = editing.date;
+    if (validateForm()) {
+      let date = editing.date.toLocaleDateString();
       let time = editing.time;
       let guests = editing.guests;
       let name = editing.customer.name;
       let email = editing.customer.email;
       let phone = editing.customer.phone;
-  
+
       let body = { date, time, guests, name, email, phone };
       try {
         let res = await axios.post("http://localhost:8000/book", body);
-        setAdminView("done");
-        let emailRes = await axios.post(
-          "http://localhost:8000/send-email",
-          res.data
-        );
+        if (!res.data) {
+          setFullyBooked(true);
+        }else{
+          setAdminView("done");
+          let emailRes = await axios.post(
+            "http://localhost:8000/send-email",
+            res.data
+          );
+        }
       } catch (err) {
         console.log(err);
       }
@@ -115,7 +119,7 @@ export function AdminAdd() {
       !checkValid.time
     ) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
