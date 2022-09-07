@@ -37,13 +37,14 @@ export const BookingDetailsForm = (props: IBookingDetailsFormProps) => {
         props.changeGuests(val)
     }
     const handleDate = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value)
         props.changeDate(new Date(e.target.value))
     }
 
 
     return <div className="phase-container date-phase">
         <div className="date-container">
-            <Calendar onChange={() => {}} value={props.date} defaultValue={props.date}/>
+            <Calendar onChange={() => handleDate} value={props.date}/>
             {/* <input type="date" min={new Date().toISOString().split("T")[0]} defaultValue={new Date().toLocaleDateString()} onChange={changeDate}></input> */}
         </div>
         <div className="time-container">
