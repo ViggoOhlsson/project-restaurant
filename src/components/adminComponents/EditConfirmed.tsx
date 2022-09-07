@@ -67,16 +67,16 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
             </span>
           </div>
           <div className="overview__guests">
-            <h4>Guests</h4>
+            <h4 className="overview__heading">Guests</h4>
             <span>{props.booking.guests}</span>
           </div>
           <div className="overview__time">
-            <h4>Time</h4>
+            <h4 className="overview__heading">Time</h4>
             <span>{props.booking.time}</span>
           </div>
         </div>
         <div className="overview__contact">
-          <h4>Contact information</h4>
+          <h4 className="overview__heading">Contact information</h4>
           <div className="overview__user">
             <span>{props.booking.customer.name}</span>
             <span>{props.booking.customer.phone}</span>

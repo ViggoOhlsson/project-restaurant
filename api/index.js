@@ -10,6 +10,7 @@ const {
   isFullyBooked,
   guestsToTables,
   multipleBookings,
+  isFullyBookedEdit,
 } = require("./utils");
 const port = 8000;
 const app = express();
@@ -205,7 +206,7 @@ app.post("/admineditbooking/:booking", async (req, res) => {
   const customer = booking.customer;
   //If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
   if (
-    await isFullyBooked(
+    await isFullyBookedEdit(
       booking.date,
       booking.time,
       guestsToTables(booking.guests),
