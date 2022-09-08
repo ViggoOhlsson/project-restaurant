@@ -59,23 +59,14 @@ export const EditForm = (props: IEditFormProps) => {
             ) : (
               <label htmlFor="time">Time</label>
             )}
-            <select name="time" id="name" onChange={props.changeSelect}>
-              {props.editingBooking.time === 18 && (
-                <>
-                  <option value="18" selected>
-                    18
-                  </option>
-                  <option value="21">21</option>
-                </>
-              )}
-              {props.editingBooking.time === 21 && (
-                <>
-                  <option value="18">18</option>
-                  <option value="21" selected>
-                    21
-                  </option>
-                </>
-              )}
+            <select
+              defaultValue={props.editingBooking.time}
+              name="time"
+              id="name"
+              onChange={props.changeSelect}
+            >
+              <option value="18">18</option>
+              <option value="21">21</option>
             </select>
           </div>
           <div className="form__guests">
