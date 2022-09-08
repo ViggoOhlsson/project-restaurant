@@ -12,15 +12,10 @@ const linkStyle = {
 
 export function Admin() {
   const [bookings, setBookings] = useState<IBooking[]>([]);
-
   const [sortedBookings, setSortedBookings] = useState<IBooking[]>([]);
-
   const [earlyBooking, setEarlyBooking] = useState<IBooking[]>([]);
-
   const [lateBooking, setLateBooking] = useState<IBooking[]>([]);
-
   const [date, setDate] = useState(new Date().toLocaleDateString());
-
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
@@ -36,6 +31,7 @@ export function Admin() {
     });
   }, []);
 
+  //Hittar bokningar för dagens datum och körs då useState booking ändras
   useEffect(() => {
     findBooking(date.slice(0, 10));
   }, [bookings]);

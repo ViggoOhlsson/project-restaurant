@@ -82,6 +82,7 @@ export function AdminAdd() {
     });
   }
 
+  //Kontrollerar att alla fält innehåller värden
   function validateForm() {
     let checkValid: IValidateForm = {
       name: true,
