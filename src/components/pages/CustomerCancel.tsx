@@ -36,7 +36,6 @@ export function CustomerCancel() {
     axios.get("http://localhost:8000/getbooking?id=" + id).then((res) => {
       if (res.data === "error") {
         setAdminView("notfound");
-        console.log("res.data: " + res.data);
       } else {
         setBooking(res.data);
         setAdminView("found");
@@ -44,18 +43,19 @@ export function CustomerCancel() {
     });
   }, []);
 
+  //Kollar om deleted är true och raderar bokningen
   useEffect(() => {
     if (!deleteBooking) return;
     axios.delete("http://localhost:8000/cancel/" + id).then((res) => {});
   });
 
+  //När man trycker radera, sätts denna till true
   function deleteReservation() {
     setDeleteBooking(true);
   }
 
   function displayHtml() {
     if (adminView === "notfound") {
-      console.log(adminView);
       return <Navigate to={"/*"}></Navigate>;
     } else {
       return (

@@ -1,16 +1,16 @@
 describe("restaurant testing", () => {
-  // it("passes", () => {
-  //   cy.visit("http://localhost:3000");
-  // });
+  it("passes", () => {
+    cy.visit("http://localhost:3000");
+  });
 
   //////////
   ///BOOK///
   ////////
 
-  // it("goes to book route", () => {
-  //   cy.visit("http://localhost:3000");
-  //   cy.get(".home__container__button").click();
-  // });
+  it("goes to book route", () => {
+    cy.visit("http://localhost:3000");
+    cy.get(".home__container__button").click();
+  });
 
   it("makes a reservation", () => {
     cy.visit("http://localhost:3000/book");
