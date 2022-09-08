@@ -1,26 +1,26 @@
 describe("restaurant testing", () => {
-  it("passes", () => {
-    cy.visit("http://localhost:3000");
-  });
+  // it("passes", () => {
+  //   cy.visit("http://localhost:3000");
+  // });
 
   //////////
   ///BOOK///
   ////////
 
-  it("goes to book route", () => {
-    cy.visit("http://localhost:3000");
-    cy.get(".home__container__button").click();
-  });
+  // it("goes to book route", () => {
+  //   cy.visit("http://localhost:3000");
+  //   cy.get(".home__container__button").click();
+  // });
 
   it("makes a reservation", () => {
     cy.visit("http://localhost:3000/book");
     cy.get(".react-calendar__tile--active").click();
     cy.get(".selected").click();
-    cy.get(".next-phase-wrapper").click();
+    cy.get(".navigator").click();
     cy.get(".book-name").type("filippa");
     cy.get(".book-email").type("filippabellage@live.se");
     cy.get(".book-phone").type("0707752170");
-    cy.get(".next-phase-wrapper").click();
+    cy.get(".navigator").eq(1).click();
     cy.get(".submit-button").click();
   });
 
@@ -33,7 +33,7 @@ describe("restaurant testing", () => {
     cy.get(".admin__bookings__early").should("exist");
   });
 
-  //ADMIN EDIT TESTS
+  // //ADMIN EDIT TESTS
 
   it("should go to edit", () => {
     cy.visit("http://localhost:3000/admin");
@@ -90,6 +90,6 @@ describe("restaurant testing", () => {
     cy.get(".form__user .form__email").type("maja@mail.se");
     cy.get(".form__user .form__phone").type("0701234568");
     cy.get(".form__update").click();
-    cy.get(".div__error").first().should("exist");
+    cy.get(".form__error").first().should("exist");
   });
 });
