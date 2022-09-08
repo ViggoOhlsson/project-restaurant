@@ -75,6 +75,7 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
             <input
               type="text"
               name="name"
+              className="book-name"
               placeholder="Name"
               onChange={handleName}
               onBlur={validateName}
@@ -91,6 +92,7 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
             <input
               type="email"
               name="email"
+              className="book-email"
               placeholder="Email"
               onChange={handleEmail}
               onBlur={validateEmail}
@@ -108,6 +110,7 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
               type="tel"
               name="phone"
               placeholder="Phone number"
+              className="book-phone"
               onChange={handlePhone}
               onBlur={validatePhone}
               value={props.phone}
