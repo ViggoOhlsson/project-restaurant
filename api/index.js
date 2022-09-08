@@ -154,11 +154,6 @@ app.post("/book", async (req, res) => {
   });
   console.log("date in booking:", booking.date)
 
-  // if (await isFullyBooked(date, time, booking.tables)) {
-  //   console.log("Day & time is fully booked");
-  //   res.send({ msg: "That day and time is fully booked." });
-  //   return;
-  // }
   if (await isFullyBooked(date, time, booking.tables)) {
     console.log("Day & time is fully booked");
     res.send(false);
@@ -186,8 +181,7 @@ app.post("/book", async (req, res) => {
   });
 });
 
-//Bör vara delete
-//Tar bort en bokning via admin sidan
+//Tar bort en bokning via adminsidan
 app.delete("/admindeletebooking/:booking", async (req, res) => {
   let booking = JSON.parse(req.params.booking);
   let moreReservations = await multipleBookings(booking);
@@ -204,7 +198,7 @@ app.delete("/admindeletebooking/:booking", async (req, res) => {
 app.post("/admineditbooking/:booking", async (req, res) => {
   const booking = JSON.parse(req.params.booking);
   const customer = booking.customer;
-  //If - !customerExist skapa ny customer? + Kolla om det finns mer än en av de gamla och om nej - radera den customern
+
   if (
     await isFullyBookedEdit(
       booking.date,
@@ -317,7 +311,6 @@ app.delete("/cancel/:id", async (req, res) => {
   });
 
   BookingModel.deleteOne({ _id: id }, (err, result) => {
-    console.log(result);
     res.send(result);
   });
 });
