@@ -80,7 +80,6 @@ describe("restaurant testing", () => {
     cy.get(".div__error").first().should("exist");
   });
 
-  // EJ KLAR
   it("should not add new reservation because fully booked", () => {
     cy.visit("http://localhost:3000/admin");
     cy.get(".fa-calendar-plus").click();

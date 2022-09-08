@@ -33,8 +33,9 @@ export function AdminAdd() {
 
   async function handleSave(e: FormEvent) {
     e.preventDefault();
+
     if (validateForm()) {
-      let date = editing.date.toLocaleDateString();
+      let date = new Date(editing.date).toLocaleDateString();
       let time = editing.time;
       let guests = editing.guests;
       let name = editing.customer.name;
@@ -46,7 +47,7 @@ export function AdminAdd() {
         let res = await axios.post("http://localhost:8000/book", body);
         if (!res.data) {
           setFullyBooked(true);
-        }else{
+        } else {
           setAdminView("done");
           let emailRes = await axios.post(
             "http://localhost:8000/send-email",
