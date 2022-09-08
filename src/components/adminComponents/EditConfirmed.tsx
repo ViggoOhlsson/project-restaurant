@@ -32,6 +32,7 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
     window.location.reload();
   }
 
+  //Kollar vilken förälder som körs och anpassar text därefter
   function buttonText() {
     if (props.parentView === "edit") {
       return "Edit changes";
@@ -42,6 +43,7 @@ export const EditConfirmed = (props: IEditConfirmedProps) => {
     }
   }
 
+  //Kollar vilken förälder som körs och anpassar text därefter
   function HeadingText() {
     if (props.parentView === "edit") {
       return "Reservation updated";

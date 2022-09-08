@@ -5,267 +5,263 @@
 @use "../variables";
 @use "../mixins";
 
-
-
 .booking-page {
+  @include typography.inter();
+  @include mixins.flex(column, center, center, 60px);
+  margin: 0 0 120px;
 
-    @include typography.inter();
-    @include mixins.flex(column, center, center, 60px);
-    margin: 0 0 120px;
-
-    .booking-phase-display {
-        display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        gap: 20px;
-        user-select: none;
-        button {
-            border: none;
-            background-color: rgba(255, 255, 255, 0.15);
-            color: white;
-            @include typography.inter();
-            font-weight: bold;
-            border-radius: 50%;
-        }
-        .dot {
-            height: 5px;
-            width: 5px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.15);
-            align-self: center;
-            justify-self: center;
-        }
-        .booking-phase {
-            align-items: center;
-            color:white;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            transition: all 0.2s;   
-            .phase-number {
-                transition: all 0.1s;
-                background-color: rgba(255, 255, 255, 0.15);
-                height: 20px;
-                width: 20px;
-                border-radius: 50%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 0.6em;
-            }
-            .phase-name {
-                transition: all 0.1s;
-                position: absolute;
-                bottom: -20px;
-                font-size: 0.7em;
-                color: rgba(255,255,255,0.15);
-            }
-        }
-        .current {
-            transform: scale(1.1);
-            .phase-number {
-                background-color: rgba(255,255,255,1);
-                color: black
-            }
-            .phase-name {
-                color: rgba(255,255,255,1);
-            }
-        }
+  .booking-phase-display {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 20px;
+    user-select: none;
+    button {
+      border: none;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      @include typography.inter();
+      font-weight: bold;
+      border-radius: 50%;
     }
-    .form-container {
-        transition: height 0.1s;
+    .dot {
+      height: 5px;
+      width: 5px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.15);
+      align-self: center;
+      justify-self: center;
     }
-    .phase-container {
-        animation: fade-in 0.15s linear;
-        width: 375px;
-        @include mixins.flex(column, initial, initial, 35px);
-    }
-    .date-phase {
-        .date-container {
-            aspect-ratio: 4/3;
-            background-color: white;
-            @include mixins.flex(row, center, center);
-            border-radius: 17px;
-            input {
-                border: none;
-                outline: none;
-                font-size: 1.3em
-            }
-        }
-        .time-container {
-            @include mixins.flex(column, initial, initial, 10px);
-
-            .title {
-                align-self: center;
-                color: white;
-            }
-            .choice-wrapper {
-                color: black;
-                background-color: white;
-                padding: 10px;
-                border-radius: 17px;
-                @include mixins.flex(row, center, initial, 30px);
-                span {
-                    padding: 10px;
-                    cursor: pointer;
-                    transition: all 0.15s;
-                    border-radius: 200px;
-                    font-size: 0.85em;
-                }
-                .selected {
-                    background-color: rgba($color: #000000, $alpha: 0.15);
-                    font-weight: bold
-                }
-            }
-        }
-        .guests-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            input {
-                padding: 20px;
-                background-color: white;
-                border: none;
-                border-radius: 17px;
-            }
-        }
-        .available {
-            align-self: center;
-            color: white;
-            
-            &-false {
-                color: red;
-            }
-        }
-    }
-    .info-phase {
-        background-color: white;
-        border-radius: 15px;
-        .info-container {
-            @include mixins.flex(column, initial, initial, 20px);
-            padding: 60px 40px;
-            .error {
-                color: red
-            }
-            div {
-                @include mixins.flex(column, initial, initial, 10px);
-                p {
-                    font-size: 0.75em;
-                }
-                input {
-                    background-color: rgba(0, 0, 0, 0.1);
-                    padding: 10px;
-                    border: none;
-                    border-radius: 5px;
-                    font-size: 0.75em;
-                }
-                .guests-input {
-                    justify-self: left;
-                }
-            }
-        }
-    }
-    .review-phase {
-        background-color: white;
-        border-radius: 15px;
+    .booking-phase {
+      align-items: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.2s;
+      .phase-number {
+        transition: all 0.1s;
+        background-color: rgba(255, 255, 255, 0.15);
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
         display: flex;
-        flex-direction: column;
-        padding: 30px;
-        // align-items: center;
-        .booking-info-container {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            div {
-                gap: 5px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                p {
-                    font-weight: bold;
-                }
-            }
-        }
-        .customer-info-container {
-            @include mixins.flex(column, initial, center, 20px);
-            div {
-                font-weight: bold;
-                align-self: flex-start;
-                @include mixins.flex(column, flex-start, flex-start, 5px);
-            }
-        }
-        .submit-button {
-            @include mixins.flex(row, flex-start, center, 15px);
-            padding: 15px 15px;
-            align-self: center;
-            border: none;
-            background-color: rgba(0, 0, 0, 0.2);
-            font-weight: bold;
-            @include typography.inter();
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.1s;
-            &:hover, &:focus {
-                background-color: variables.$primary-purple;
-                color: white;
-            }
-        }
+        justify-content: center;
+        align-items: center;
+        font-size: 0.6em;
+      }
+      .phase-name {
+        transition: all 0.1s;
+        position: absolute;
+        bottom: -20px;
+        font-size: 0.7em;
+        color: rgba(255, 255, 255, 0.15);
+      }
     }
-    .redirect-phase {
+    .current {
+      transform: scale(1.1);
+      .phase-number {
+        background-color: rgba(255, 255, 255, 1);
+        color: black;
+      }
+      .phase-name {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  .form-container {
+    transition: height 0.1s;
+  }
+  .phase-container {
+    animation: fade-in 0.15s linear;
+    width: 375px;
+    @include mixins.flex(column, initial, initial, 35px);
+  }
+  .date-phase {
+    .date-container {
+      aspect-ratio: 4/3;
+      background-color: white;
+      @include mixins.flex(row, center, center);
+      border-radius: 17px;
+      input {
+        border: none;
+        outline: none;
+        font-size: 1.3em;
+      }
+    }
+    .time-container {
+      @include mixins.flex(column, initial, initial, 10px);
+
+      .title {
+        align-self: center;
+        color: white;
+      }
+      .choice-wrapper {
+        color: black;
+        background-color: white;
+        padding: 10px;
+        border-radius: 17px;
+        @include mixins.flex(row, center, initial, 30px);
+        span {
+          padding: 10px;
+          cursor: pointer;
+          transition: all 0.15s;
+          border-radius: 200px;
+          font-size: 0.85em;
+        }
+        .selected {
+          background-color: rgba($color: #000000, $alpha: 0.15);
+          font-weight: bold;
+        }
+      }
+    }
+    .guests-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      input {
+        padding: 20px;
+        background-color: white;
+        border: none;
+        border-radius: 17px;
+      }
+    }
+    .available {
+      align-self: center;
+      color: white;
+
+      &-false {
+        color: red;
+      }
+    }
+  }
+  .info-phase {
+    background-color: white;
+    border-radius: 15px;
+    .info-container {
+      @include mixins.flex(column, initial, initial, 20px);
+      padding: 60px 40px;
+      .error {
+        color: red;
+      }
+      div {
+        @include mixins.flex(column, initial, initial, 10px);
+        p {
+          font-size: 0.75em;
+        }
+        input {
+          background-color: rgba(0, 0, 0, 0.1);
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          font-size: 0.75em;
+        }
+        .guests-input {
+          justify-self: left;
+        }
+      }
+    }
+  }
+  .review-phase {
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    .booking-info-container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      div {
+        gap: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        p {
+          font-weight: bold;
+        }
+      }
+    }
+    .customer-info-container {
+      @include mixins.flex(column, initial, center, 20px);
+      div {
+        font-weight: bold;
+        align-self: flex-start;
+        @include mixins.flex(column, flex-start, flex-start, 5px);
+      }
+    }
+    .submit-button {
+      @include mixins.flex(row, flex-start, center, 15px);
+      padding: 15px 15px;
+      align-self: center;
+      border: none;
+      background-color: rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+      @include typography.inter();
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.1s;
+      &:hover,
+      &:focus {
+        background-color: variables.$primary-purple;
         color: white;
-        i {
-            height:120px;
-            border-radius: 50%;
-            background-color: #73B09E;
-            font-size: 5em;
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: variables.$primary-purple;
-        }
+      }
     }
-    .change-phase-wrapper {
-        color: white;
-        display: flex;
-        gap: 40px;
-        cursor: pointer;
-        justify-content: space-evenly;
-        padding: 20px 0;
-        align-items: center;
-        .navigator {
-            &:hover {
-                color: lightgray;
-            }
-        }
+  }
+  .redirect-phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    i {
+      height: 120px;
+      border-radius: 50%;
+      background-color: #73b09e;
+      font-size: 5em;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: variables.$primary-purple;
     }
-    @keyframes fade-in {
-        0% {
-            opacity: 0;
-            transform: scale(0.85);
-        }
-        100% {
-            opacity: 1;
-            transform: scale(1);
-        }
+  }
+  .change-phase-wrapper {
+    color: white;
+    display: flex;
+    gap: 40px;
+    cursor: pointer;
+    justify-content: space-evenly;
+    padding: 20px 0;
+    align-items: center;
+    .navigator {
+      &:hover {
+        color: lightgray;
+      }
     }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 
-.gdpr__info{
-    margin: 0px 10px 30px 10px;
-    @include mixins.flex(column, center, center, 0);
-    &-text{
-        font-size: 0.6rem;
-        color: #a6a6a6;
-        text-align: center;
-    }
-    
-    &-link{
-        font-size: 0.6rem;
-        color: #a6a6a6;
+.gdpr__info {
+  margin: 0px 10px 30px 10px;
+  @include mixins.flex(column, center, center, 0);
+  &-text {
+    font-size: 0.6rem;
+    color: #a6a6a6;
+    text-align: center;
+  }
 
-    }
+  &-link {
+    font-size: 0.6rem;
+    color: #a6a6a6;
+  }
 }

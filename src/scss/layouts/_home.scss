@@ -2,50 +2,46 @@
 @use "../base/typography";
 @import "../variables";
 
+.home {
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  background-image: url("../../assets/logo.png");
+  @include mixins.flex(column, space-evenly, center, 2rem);
 
-.home{
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    background-image: url("../../assets/logo.png");
-    @include mixins.flex(column, space-evenly, center, 2rem);
+  ///////////////
+  // SECTIONS //
+  /////////////
+  &__logo {
+    width: 100px;
+    height: 100px;
 
-    &__logo{
-        // position: absolute;
-        width: 100px;
-        height: 100px;
-        // left: 44%;
-        // top: 30%;
-        
-        img{
-            width: 100%;
-            border-radius: 5px;        
-        }
-
+    img {
+      width: 100%;
+      border-radius: 5px;
     }
-    &__container{
+  }
+  &__container {
+    &__button {
+      cursor: pointer;
+      transition: all 235ms ease-in-out;
+      padding: 13px;
+      border: none;
+      border-radius: 30px;
+      background-color: $primary-orange;
+      color: #f0f0f0;
+      @include typography.inter;
 
-        &__button{
-        cursor: pointer;
-        transition: all 235ms ease-in-out;
-        padding: 13px;
-        border: none;
-        border-radius: 30px;
-        background-color: $primary-orange;
-        color: #f0f0f0;
-        @include typography.inter;
-        
-        &:hover {
-            box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
-            transform: translate3d(0, 2px, 0);
-        }
-        
-        &:focus {
-            box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
-        } 
+      &:hover {
+        box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+        transform: translate3d(0, 2px, 0);
+      }
+
+      &:focus {
+        box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
+      }
     }
+  }
 }
-}
-

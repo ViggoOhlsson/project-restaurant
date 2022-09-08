@@ -55,7 +55,7 @@ app.get("/getbooking", async (req, res) => {
   }
 });
 
-//Hämtar alla bokningar, bör användas av ändast av admin
+//Hämtar alla bokningar, bör användas av endast av admin
 app.get("/getallbookings", async (req, res) => {
   let { id } = req.query;
   try {
@@ -108,7 +108,6 @@ app.get("/checkcustomer", async (req, res) => {
 
   try {
     let customer = await CustomerModel.findOne({ email: email }).lean();
-    // (customer) ? res.send({msg: "Customer Exists!", customer}) : res.send({msg: "Customer Does Not Exist!", customer});
 
     customer
       ? res.send({
@@ -237,6 +236,7 @@ app.post("/admineditbooking/:booking", async (req, res) => {
   res.send(false);
 });
 
+//Skickar bekräftelsemail på bokning
 app.post("/send-email", async (req, res) => {
   const newdate = req.body.booking.date;
   const date = new Date(newdate).toLocaleDateString();
@@ -275,6 +275,7 @@ app.post("/send-email", async (req, res) => {
   });
 });
 
+//Avbokning via mail - samt bekräftelse
 app.delete("/cancel/:id", async (req, res) => {
   let id = req.params.id;
   let booking = await BookingModel.findOne({ _id: id });

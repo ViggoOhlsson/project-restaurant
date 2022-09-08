@@ -112,7 +112,11 @@ export function AdminEdit() {
       date: true,
       guests: true,
     };
-    if (!editing.customer.name || editing.customer.name.length < 0 || editing.customer.name.length > 64) {
+    if (
+      !editing.customer.name ||
+      editing.customer.name.length < 0 ||
+      editing.customer.name.length > 64
+    ) {
       checkValid.name = false;
     }
     if (!editing.customer.email) {
@@ -141,8 +145,8 @@ export function AdminEdit() {
       !checkValid.time
     ) {
       return false;
-    }else{
-      return true
+    } else {
+      return true;
     }
   }
 
@@ -156,7 +160,6 @@ export function AdminEdit() {
   function deleteBooking() {
     let bookingObject = JSON.stringify(editing);
 
-    //Bör vara delete
     axios
       .delete("http://localhost:8000/admindeletebooking/" + bookingObject)
       .then((res) => {
