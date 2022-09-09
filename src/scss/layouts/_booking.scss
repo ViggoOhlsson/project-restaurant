@@ -127,68 +127,6 @@
         border-radius: 17px;
       }
     }
-<<<<<<< HEAD
-    .review-phase {
-        background-color: white;
-        border-radius: 15px;
-        display: flex;
-        flex-direction: column;
-        padding: 30px;
-        .booking-info-container {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            div {
-                gap: 5px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                span {
-                    font-size: 0.8em;
-                }
-                p {
-                    font-weight: bold;
-                    font-size: 1em
-                }
-            }
-        }
-        .customer-info-container {
-            @include mixins.flex(column, initial, center, 20px);
-            div {
-                font-size: 0.8em;
-                font-weight: bold;
-                align-self: flex-start;
-                width: 100%;
-                @include mixins.flex(column, center, center, 5px);
-            }
-        }
-        .gdpr {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.7em;
-            &-error {
-                color: red;
-                input {
-                    border-color: red
-                }
-            }
-        }
-        .submit-button {
-            @include mixins.flex(row, flex-start, center, 15px);
-            padding: 15px 15px;
-            align-self: center;
-            border: none;
-            background-color: rgba(0, 0, 0, 0.2);
-            font-weight: bold;
-            @include typography.inter();
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.1s;
-            &:hover, &:focus {
-                background-color: variables.$primary-green;
-            }
-=======
     .available {
       align-self: center;
       color: white;
@@ -221,7 +159,6 @@
         }
         .guests-input {
           justify-self: left;
->>>>>>> 3499cdfd8dcaf7ed1058032fded78f1b6a48a167
         }
       }
     }
@@ -249,8 +186,15 @@
       @include mixins.flex(column, initial, center, 20px);
       div {
         font-weight: bold;
-        align-self: flex-start;
-        @include mixins.flex(column, flex-start, flex-start, 5px);
+        @include mixins.flex(column, center, center, 5px);
+      }
+    }
+    .gdpr {
+      @include mixins.flex(row, initial, center, 5px);
+      flex-wrap: wrap;
+      font-size: 0.7em;
+      &-error {
+        color: salmon
       }
     }
     .submit-button {
