@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { IBookingPrimitive } from "../../models/IBooking";
 
 interface IBookingReviewProps {
@@ -7,7 +8,15 @@ interface IBookingReviewProps {
 }
 
 export const BookingReview = (props: IBookingReviewProps) => {
+  const [gdprCheck, setGdprCheck] = useState(false)
+
+  const [gdprError, setGdprError] = useState(false)
+
   const book = () => {
+    if(!gdprCheck) {
+      setGdprError(true)
+      return
+    }
     props.placeBooking();
   };
 
@@ -37,10 +46,13 @@ export const BookingReview = (props: IBookingReviewProps) => {
         <div className="customer-info-container">
           <p>Contact Information</p>
           <div>
-            <p>{props.booking.name}</p>
+            <p>{props.booking.name} - {props.booking.phone}</p>
             <p>{props.booking.email}</p>
-            <p>{props.booking.phone}</p>
           </div>
+        </div>
+        <div className={`gdpr ${gdprError && 'gdpr-error'}`}>
+          <input type="checkbox" checked={gdprCheck} onInput={() => {setGdprCheck(!gdprCheck); setGdprError(false)}} name="gdpr" className="gdpr-check"/>
+          <label htmlFor="gdpr"> Privacy Policy bla bla bla <a href="https://gdpr-info.eu/">GDPR</a> check this</label>
         </div>
         <button onClick={book} className="submit-button">
           <i className="fa-solid fa-check"></i>

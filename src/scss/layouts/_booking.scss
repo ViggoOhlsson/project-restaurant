@@ -172,7 +172,6 @@
         display: flex;
         flex-direction: column;
         padding: 30px;
-        // align-items: center;
         .booking-info-container {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -181,17 +180,36 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                span {
+                    font-size: 0.8em;
+                }
                 p {
                     font-weight: bold;
+                    font-size: 1em
                 }
             }
         }
         .customer-info-container {
             @include mixins.flex(column, initial, center, 20px);
             div {
+                font-size: 0.8em;
                 font-weight: bold;
                 align-self: flex-start;
-                @include mixins.flex(column, flex-start, flex-start, 5px);
+                width: 100%;
+                @include mixins.flex(column, center, center, 5px);
+            }
+        }
+        .gdpr {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7em;
+            &-error {
+                color: red;
+                input {
+                    border-color: red
+                }
             }
         }
         .submit-button {
@@ -206,8 +224,7 @@
             cursor: pointer;
             transition: all 0.1s;
             &:hover, &:focus {
-                background-color: variables.$primary-purple;
-                color: white;
+                background-color: variables.$primary-green;
             }
         }
     }
