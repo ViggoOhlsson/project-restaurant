@@ -24,6 +24,12 @@ describe("restaurant testing", () => {
     cy.get(".submit-button").click();
   });
 
+  // it("inputs faulty information", () => {
+  //   cy.visit("http://localhost:3000/book");
+  //   cy.get("navigator").click()
+  //   cy.get()
+  // }) 
+
   ///////////////
   /////ADMIN/////
   ///////////////
