@@ -17,14 +17,14 @@ const utils = {
 
   multipleBookings: async (booking) => {
     let bookings = await BookingModel.find({ customer: booking.customer });
-    console.log(bookings.length);
+   
     if(bookings.length === 1){
         return false;
     }else{
         return true;
     }
   },
-  //Kollar om dage och tiden har tillräckligt många lediga bord
+  //Kollar om dagen och tiden har tillräckligt många lediga bord vid skapande av bokning
   isFullyBooked: async (date, time, tables) => {
     
     let bookings = await BookingModel.find(
@@ -34,6 +34,8 @@ const utils = {
     let bookedTables = bookings.reduce((amt, booking) => amt + booking.tables, 0);
     return bookedTables + tables > 15;
   },
+
+  //Kollar om dagen har tillräckligt många lediga bord vid en redigering av bokning
   isFullyBookedEdit: async (date, time, tables, booking) => {
     let existingBooking = await BookingModel.findOne({_id: booking._id})
 

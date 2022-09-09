@@ -1,5 +1,5 @@
 export interface IBookingGuestInfo {
-    name: string
-    email:string
-    phone:number
+  name: string;
+  email: string;
+  phone: number;
 }

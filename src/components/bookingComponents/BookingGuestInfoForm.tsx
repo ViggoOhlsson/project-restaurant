@@ -60,7 +60,15 @@ export const BookingGuestInfoForm = (props: IBookingGuestInfoForm) => {
   };
 
   const next = () => {
-    if (!nameError && !emailError && !phoneError && props.name && props.phone && props.email) props.changePhase(3);
+    if (
+      !nameError &&
+      !emailError &&
+      !phoneError &&
+      props.name &&
+      props.phone &&
+      props.email
+    )
+      props.changePhase(3);
   };
   const prev = () => {
     props.changePhase(1);

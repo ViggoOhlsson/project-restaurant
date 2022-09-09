@@ -7,17 +7,17 @@ export interface IBooking {
 }
 
 export interface IBookingPrimitive {
-  date: string
-  time: number
-  guests: number
-  email: string
-  name: string
-  phone: number
+  date: string;
+  time: number;
+  guests: number;
+  email: string;
+  name: string;
+  phone: number;
 }
 
 export interface ICustomer {
-  _id: string
-  name: string
-  email: string
-  phone: number
+  _id: string;
+  name: string;
+  email: string;
+  phone: number;
 }

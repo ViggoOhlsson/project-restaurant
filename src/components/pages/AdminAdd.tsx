@@ -82,6 +82,7 @@ export function AdminAdd() {
     });
   }
 
+  //Kontrollerar att alla fält innehåller värden
   function validateForm() {
     let checkValid: IValidateForm = {
       name: true,
@@ -91,7 +92,11 @@ export function AdminAdd() {
       date: true,
       guests: true,
     };
-    if (!editing.customer.name) {
+    if (
+      !editing.customer.name ||
+      editing.customer.name.length < 0 ||
+      editing.customer.name.length > 64
+    ) {
       checkValid.name = false;
     }
     if (!editing.customer.email) {
